@@ -2,7 +2,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 import express from 'express';
 import connectDB from './config/db.js';
-import User from './models/User.js';
+import router from './routes/adminRoutes.js';
 
 const app = express();
 
@@ -13,26 +13,18 @@ connectDB();
 // middle ware
 app.use(express.json());
 
-// routes
-// import useRoutes from './routes/userRoutes.js';
-// app.use('/api/products', useRoutes );
+app.use('/api/admin', router);
 
-app.get('/test', async (req, res) => {
-  try {
-    const user = new User({
-      id: 1,
-      name: 'John Doe',
-      email: 'test@gmail.com',
-      password: '1234',
-    });
-    await user.save();
-    res.send('Test route working');
-  } catch (error) {
-    res.status(500).send('Server Error');
-  }
-});
+// // Handle unmatched routes
+// app.all('*', (req, res) => {
+//   console.log('Unmatched request:', req.method, req.path);
+//   res.status(404).send('Route not found');
+// });
 
 // listening to server
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
+
+
+export default app;

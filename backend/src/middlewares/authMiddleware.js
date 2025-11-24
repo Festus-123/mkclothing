@@ -1,7 +1,7 @@
 // addmin middleware to protect routes
 import jwt from 'jsonwebtoken';
 
-export const protect = (req, res, next) => {
+const protect = (req, res, next) => {
   let token;
   if (
     req.headers.authorization &&
@@ -19,3 +19,5 @@ export const protect = (req, res, next) => {
     return res.status(401).json({ message: 'No token, authorization denied' });
   }
 };
+
+export default protect;
