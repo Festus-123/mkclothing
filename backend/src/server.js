@@ -1,6 +1,7 @@
 import dotenv from 'dotenv';
 dotenv.config();
 import express from 'express';
+import cors from 'cors';
 import connectDB from './config/db.js';
 import router from './routes/adminRoutes.js';
 
@@ -9,6 +10,11 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 
 connectDB();
+
+app.use(cors({
+    origin: 'http://localhost:5173',
+    credentials: true,
+}));
 
 // middle ware
 app.use(express.json());

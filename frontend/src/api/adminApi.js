@@ -1,6 +1,6 @@
 const API_URL = "http://localhost:5000/api/admin";
 
-export const logIn = async (email, password) => {
+export const logInAdmin = async (email, password) => {
     try {
         const res = await fetch(`${API_URL}/login`, {
             method: "POST",
@@ -19,7 +19,7 @@ export const getDashboard = async (token) => {
     try {
         const res = await fetch(`${API_URL}/dashboard`, {
             method: "GET",
-            header: { authorization: `Bearer ${token}` },
+            headers: { authorization: `Bearer ${token}` },
         });
         const data = await res.json();
         if(!res.ok) {
