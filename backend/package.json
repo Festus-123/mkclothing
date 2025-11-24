@@ -1,0 +1,20 @@
+{
+  "name": "mk-backend",
+  "version": "1.0.0",
+  "description": "",
+  "homepage": "https://github.com/Festus123/mkclothing#readme",
+  "bugs": {
+    "url": "https://github.com/Festus123/mkclothing/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Festus123/mkclothing.git"
+  },
+  "license": "ISC",
+  "author": "Festus & israel",
+  "type": "module",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}
