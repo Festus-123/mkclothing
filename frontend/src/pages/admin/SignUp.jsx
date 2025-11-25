@@ -1,28 +1,31 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { signUpAdmin } from '../../api/adminApi';
 import { useNavigate } from 'react-router-dom';
-import { logInAdmin } from '../../api/adminApi';
-import { setEmail, setPassword, setError } from '../../redux/slices/authSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  setName,
+  setEmail,
+  setPassword,
+  setError,
+} from '../../redux/slices/authSlice';
 
-const SignIn = () => {
+const SignUp = () => {
   const dispatch = useDispatch();
   const auth = useSelector((state) => state.auth);
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    
     try {
-      const data = await logInAdmin(auth.email, auth.password);
-      if (data) {
-        localStorage.setItem('adminToken', data.token);
-        navigate('/dashboard');
-      }
+        const data = await signUpAdmin(auth.name, auth.email, auth.password);
+        if(!data) throw new Error('Sign up failed');
+        navigate('/signin');
     } catch (error) {
-      console.error('Login failed:', error);
-      dispatch(setError('Err msg', error.message));
+        console.error("Signup failed", error)
+        dispatch(setError("Err msg", error.message));
     }
-  };
+  }
   return (
     <div>
       <header className="login-header">
@@ -32,6 +35,18 @@ const SignIn = () => {
       <main>
         <h1>Sign In to Admin</h1>
         <form className="login-form" onSubmit={handleSubmit}>
+          <div className="form-group">
+            <label htmlFor="name" className="label">
+              Name:
+            </label>
+            <input
+              type="text"
+              className="input"
+              value={auth.name}
+              onChange={(e) => dispatch(setName(e.target.value))}
+              required
+            />
+          </div>
           <div className="form-group">
             <label htmlFor="email" className="label">
               Email:
@@ -66,4 +81,4 @@ const SignIn = () => {
   );
 };
 
-export default SignIn;
+export default SignUp;

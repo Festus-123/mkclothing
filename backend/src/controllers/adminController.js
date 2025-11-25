@@ -1,25 +1,64 @@
 // Admin Controller
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
+import Admin from '../models/Admin.js';
+
+// Generate token
+const generateToken = (id) => {
+  return jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: '30d' });
+};
+
+// Admin Sign up
+export const signUpAdmin = async (req, res) => {
+  try {
+    const { name, email, password } = req.body;
+
+    const adminExists = await Admin.findOne({ email });
+    if (adminExists) {
+      return res.status(400).json({ message: 'Admin already exists' });
+    }
+
+    const admin = await Admin.create({ name, email, password });
+
+    res.send({
+      message: 'Admin registered successfully',
+      token: generateToken(admin._id),
+      admin: {
+        id: admin._id,
+        name: admin.name,
+        email: admin.email,
+      },
+    });
+  } catch (error) {
+    console.log("server error", error)
+    res.status(500).json({ message: 'Server error' });
+  }
+};
 
 export const loginAdmin = async (req, res) => {
-  const { email, password } = req.body;
-  const ADMIN_EMAIL = process.env.ADMIN_EMAIL;
-  const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD; // hashed or plain for now
+  try {
+    const { email, password } = req.body;
 
-  console.log(req.body); // Debugging line to check env variables
-  console.log(`Admin Email: ${ADMIN_EMAIL}, Admin Password: ${ADMIN_PASSWORD}`); // Debugging line to check env variables
-  // console.log(process.env.ADMIN_EMAIL)
-  if (email === process.env.ADMIN_EMAIL) {
-    console.log(true);
+    const admin = await Admin.findOne({ email });
+    if (!admin) {
+      return res.status(400).json({ message: 'Invalid email or password' });
+    }
+
+    const isMatch = await admin.matchPassword(password);
+    if (!isMatch) {
+      return res.status(400).json({ message: 'Invalid email or password' });
+    }
+
+    res.json({
+      message: 'Login successful',
+      token: generateToken(admin._id),
+      admin: {
+        id: admin._id,
+        name: admin.name,
+        email: admin.email,
+      },
+    });
+  } catch (error) {
+    res.status(500).json({ message: 'Server error' });
   }
-  if (email !== ADMIN_EMAIL || password !== ADMIN_PASSWORD) {
-    return res.status(401).json({ message: 'Invalid credentials' });
-  }
-
-  const token = jwt.sign({ email }, process.env.JWT_SECRET, {
-    expiresIn: '1d',
-  });
-
-  res.json({ token });
 };
