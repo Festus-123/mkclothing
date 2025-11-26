@@ -1,11 +1,13 @@
 import React from "react";
+import './styles/variable.css';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import store from "./redux/store.js";
 import { Provider } from "react-redux";
 import ProtectedRoute from "./routes/ProtectedRoute.jsx";
 
-import SignUp from "./pages/admin/SignUp.jsx";
-import SignIn from "./pages/admin/SignIn.jsx";
+// import SignUp from "./pages/admin/register/SignUp.jsx";
+import PageError from "./components/admin/404page/404page.jsx";
+import SignIn from "./pages/admin/register/SignIn.jsx";
 import Dashboard from "./pages/admin/Dashboard.jsx";
 
 function App() {
@@ -14,7 +16,7 @@ function App() {
     <Provider store={store}>
       <BrowserRouter>
         <Routes>
-          <Route path="/signup" element={<SignUp />}/>
+          <Route path="/signup" element={<PageError />}/>
           <Route path="/signin" element={<SignIn />} />
           <Route 
             path="/dashboard" 
