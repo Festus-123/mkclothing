@@ -4,10 +4,11 @@ import protect from '../middlewares/authMiddleware.js';
 
 const router = express.Router();
 
-
-
 // admin sign up
-router.post('/signup', signUpAdmin);
+router.post('/signup', (req, res) => {
+  console.log('Signup disabled');
+  res.status(503).json({ message: 'Sign up is currently disabled' });
+});
 
 // admin log in
 router.post('/login', loginAdmin);

@@ -1,0 +1,164 @@
+/* global style */
+*{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: poppins, sans-serif;
+}
+/* ---- Main Container ---- */
+.container {
+  position: relative;   /* important */
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 100px;
+  overflow: hidden; /* optional but clean */
+}
+
+/* Background image with reduced opacity using overlay */
+.container::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+
+  background:url('../../../assets/images/clothe-bg.jpg') ;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  opacity: 0.7; 
+  z-index: -1;  
+}
+
+
+/* ---- Header ---- */
+.login-header {
+  color: var(--TEXT_WHITE);
+  align-items: center;
+  justify-content: center;
+
+  background-color: var(--BACKGROUND_MAIN);
+  width: 100%;
+  height: 10%;
+}
+.login-header h1 {
+  text-align: center;
+  font-weight: normal;
+  margin-top: 20px;
+}
+
+/* ---- Main Form Section ---- */
+.main {
+  /* background: #ffffff12; */
+  /* backdrop-filter: blur(6px); */
+
+  width: 90%;
+  max-width: 420px;
+
+  padding: var(--SPACING-LG);
+  border-radius: var(--RADIUS-CARD);
+  border: var(--BORDER-THIN) solid rgba(255, 255, 255, 0.2);
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.main h1 {
+  font-size: var(--SIZING-PARAGRAPH);
+  color: var(--TEXT_WHITE);
+  margin-bottom: var(--SPACING-LG);
+}
+
+/* ---- Form ---- */
+.Register {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: var(--SPACING-MD);
+}
+
+/* ---- Form Group ---- */
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.label {
+  font-size: var(--SIZING-CAPTION);
+  color: var(--TEXT_WHITE);
+  margin-bottom: var(--SPACING-SM);
+}
+
+/* ---- Inputs ---- */
+.input {
+  width: 100%;
+  padding: 14px;
+  border: none;
+  border-radius: var(--RADIUS-INPUT);
+  border-bottom: var(--BORDER-THIN) solid white;
+
+  /* background: rgba(255, 255, 255, 0.9); */
+  background: transparent;
+  color: var(--TEXT_WHITE); 
+  outline: none;
+  font-size: var(--SIZING-CAPTION);
+}
+
+.input:focus {
+  border-color: var(--BUTTON_SOLID) solid white;
+}
+
+/* ---- Submit Button ---- */
+.login-button {
+  margin-top: var(--SPACING-MD);
+  padding: 10px;
+
+  width: 100%;
+  text-align: center;
+  font-size: var(--SIZING-CAPTION);
+  font-weight: 600;
+
+  border: none;
+  border-radius: var(--RADIUS-BUTTON);
+
+  background: linear-gradient(
+    90deg,
+    var(--BUTTON_GRADIENT_START),
+    var(--BUTTON_GRADIENT_END)
+  );
+  color: var(--TEXT_WHITE);
+
+  cursor: pointer;
+  transition: 0.2s ease-in-out;
+}
+
+.login-button:hover {
+  transform: translateY(-2px);
+  background: linear-gradient(
+    90deg,
+    var(--HOVER_GRADIENT_START),
+    var(--HOVER_GRADIENT_END)
+  );
+}
+
+/* --- Navigate link */
+.link{
+    color: var(--TEXT_WHITE);
+    font-size: 10px;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+/* ---- Error Message ---- */
+.error-message {
+  margin-top: var(--SPACING-SM);
+  color: var(--BORDER_RED);
+  font-size: var(--SIZING-CAPTION);
+  text-align: center;
+}

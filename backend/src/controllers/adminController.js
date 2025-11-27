@@ -1,6 +1,7 @@
 // Admin Controller
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
+import { sendEmail } from '../utils/emailServices.js';
 import Admin from '../models/Admin.js';
 
 // Generate token
@@ -48,6 +49,18 @@ export const loginAdmin = async (req, res) => {
     if (!isMatch) {
       return res.status(400).json({ message: 'Invalid email or password' });
     }
+
+    // Email message
+    const loginMessage = `
+      <h2>Login Alert</h2>
+      <p>Hello ${admin.name},</p>
+      <p>You just logged into your Admin Dashboard.</p>
+      <p><strong>Date:</strong> ${new Date().toLocaleString()}</p>
+      <p><strong>IP:</strong> ${req.ip}</p>
+      <p>If this wasn't you, please secure your account immediately.</p>
+    `;
+
+    await sendEmail(admin.email, 'Admin Login Alert', loginMessage);
 
     res.json({
       message: 'Login successful',
