@@ -11,14 +11,8 @@ const Dashboard = () => {
 
   useEffect(() => {
     const fetchDashboard = async () => {
-      const token = localStorage.getItem('adminToken');
-      if (!token) {
-        navigate('/signin');
-        return;
-      }
-
       try {
-        const data = await getDashboard(token);
+        const data = await getDashboard();
         if (!data) throw new Error('No data received');
         dispatch(setMessage(data.message));
       } catch (error) {
