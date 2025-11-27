@@ -11,7 +11,7 @@ const analyticsSlice = createSlice({
     reducers: {
         setMessage: (state, action) => {
             state.message = action.payload;
-        },
+        }, 
     },
 });
 

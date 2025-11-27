@@ -20,6 +20,7 @@ export const logInAdmin = async (email, password) => {
         const res = await fetch(`${API_URL}/login`, {
             method: "POST",
             headers: {"Content-Type": "application/json"},
+            credentials: 'include', 
             body: JSON.stringify({ email, password }),
         });
         const data = await res.json();
@@ -27,14 +28,14 @@ export const logInAdmin = async (email, password) => {
         return data;
     } catch (error) {
         console.error(error)
-    }
+    } 
 }
 
-export const getDashboard = async (token) => {
+export const getDashboard = async () => {
     try {
         const res = await fetch(`${API_URL}/dashboard`, {
             method: "GET",
-            headers: { authorization: `Bearer ${token}` },
+            credentials: 'include',
         });
         const data = await res.json();
         if(!res.ok) {
