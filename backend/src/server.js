@@ -5,6 +5,7 @@ import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import connectDB from './config/db.js';
 import router from './routes/adminRoutes.js';
+import productRoutes from './routes/ProductRoutes.js'
 
 const app = express();
 
@@ -23,6 +24,11 @@ app.use(
 app.use(express.json());
 app.use(cookieParser());
 app.use('/api/admin', router);
+
+app.use("/uploads", express.static("uploads"));
+
+app.use('/api/admin/products', productRoutes)
+
 
 
 // listening to server

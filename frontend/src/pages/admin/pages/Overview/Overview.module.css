@@ -1,0 +1,8 @@
+
+
+.chatSection {
+    display: flex;
+    align-items: center;
+    padding: var(--SPACING-XS);
+    gap: 30px;
+}
