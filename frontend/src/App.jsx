@@ -9,7 +9,11 @@ import ProtectedRoute from "./routes/ProtectedRoute.jsx";
 // import SignUp from "./pages/admin/register/SignUp.jsx";
 import PageError from "./components/admin/404page/404page.jsx";
 import SignIn from "./pages/admin/register/SignIn.jsx";
-import Dashboard from "./pages/admin/Dashboard.jsx";
+import Dashboard from "./pages/admin/dashboard/Dashboard.jsx";
+
+// dashboard pages
+import Overview from "./pages/admin/pages/Overview/Overview.jsx";
+import AddProduct from "./pages/admin/pages/add-products/AddProduct.jsx";
 
 function App() {
   return (
@@ -18,7 +22,7 @@ function App() {
         <Routes>
           <Route path="/signup" element={<PageError />}/>
 
-          <Route path="/signup" element={<SignUp />} />
+          {/* <Route path="/signup" element={<SignUp />} /> */}
           <Route path="/signin" element={<SignIn />} />
 
           <Route
@@ -28,8 +32,14 @@ function App() {
                 <Dashboard />
               </ProtectedRoute>
             }
-          />
+          >
+            <Route index element={<Overview />} />
+            <Route path="products" element={<AddProduct />}/>
 
+            <Route path="*" element={<PageError />} />
+          </Route>
+          
+          <Route path="*" element={<PageError />} />
         </Routes>
       </BrowserRouter>
     </Provider>

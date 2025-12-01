@@ -6,7 +6,8 @@ const analyticsSchema = new mongoose.Schema({
     interactions: [
         {
             date: String,
-            favorites: Number
+            favorites: Number,
+            orders: Number
         }
     ],
     reviews: [

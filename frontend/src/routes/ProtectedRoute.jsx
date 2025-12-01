@@ -1,3 +1,4 @@
+import React from 'react';
 import { useEffect,} from 'react';
 import { Navigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
@@ -23,6 +24,6 @@ export default function ProtectedRoute({ children }) {
     verifyAuth();
   }, []);
 
-  if (auth.loading) return <p>Checking authentication...</p>;
+  if (auth.loading) return <p style={{ margin: 20}}>Checking authentication...</p>;
   return auth.authorized ? children : <Navigate to="/signin" replace />;
 }
