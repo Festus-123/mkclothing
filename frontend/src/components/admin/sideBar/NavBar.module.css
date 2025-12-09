@@ -1,0 +1,93 @@
+.navBar {
+  width: 260px;
+  height: 100vh;
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 99;
+
+  padding: var(--SPACING-LG) var(--SPACING-SM);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  background-color: #491011df; 
+  
+  backdrop-filter: blur(8px);
+
+  border-right: var(--BORDER-THICK) solid var(--BORDER_RED);
+  box-shadow: 4px 0 15px #0000004d;
+
+  overflow: hidden;
+}
+
+.navBar::before {
+  content: "";
+  position: absolute;
+  inset: 0; /* Top, left, right, bottom all = 0 */
+
+  background-image: url('../../../assets/images/backgroundImg.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  opacity: 0.25;
+  
+  z-index: -1; 
+}
+
+
+.logoSection {
+  margin-bottom: var(--SPACING-XL);
+  display: flex;
+  align-items: center;
+  gap: 40px;
+}
+
+.logo {
+  color: var(--TEXT_WHITE);
+  font-size: 20px;
+  text-align: left;
+  padding: 0 var(--SPACING-XS);
+}
+
+.linksSection {
+  display: flex;
+  flex-direction: column;
+  gap: var(--SPACING-MD);
+}
+
+.logoutSection {
+  margin-top: auto;
+  padding-bottom: var(--SPACING-LG);
+}
+
+.navBarCollapsed {
+  height: 100vh;
+  background-color: #8080803d;
+}
+
+.toggleSection {
+  cursor: pointer;
+  text-align: center;
+  padding: var(--SPACING-SM);
+}
+
+.toggleSection:hover {
+  background-color: #8080804b;
+  transition: 0.3s ease-in;
+}
+
+.toggleIcon {
+  color: var(--TEXT_WHITE);
+  font-size: 18px;
+}
+
+.toggleIconBack {
+  /* display: flex; */
+  color: black;
+  font-size: 18px;
+  padding: var(--SPACING-SM);
+  z-index: 999;
+  gap: 0;
+}

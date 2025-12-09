@@ -16,7 +16,6 @@ const SignIn = () => {
     try {
       const data = await logInAdmin(auth.email, auth.password);
       if (data) {
-        localStorage.setItem('adminToken', data.token);
         navigate('/dashboard');
       }
     } catch (error) {
