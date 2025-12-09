@@ -1,6 +1,7 @@
 import express from 'express';
 import { signUpAdmin, loginAdmin } from '../controllers/adminController.js';
 import protect from '../middlewares/authMiddleware.js';
+import { getAnalytics } from '../controllers/analyticsController.js';
 
 const router = express.Router();
 
@@ -17,5 +18,7 @@ router.post('/login', loginAdmin);
 router.get('/dashboard', protect, (req, res) => {
   res.json({ message: `Welcome admin ${req.user.email}` });
 });
+
+router.get('/analytics', protect, getAnalytics)
 
 export default router;
