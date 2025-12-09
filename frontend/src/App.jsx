@@ -6,7 +6,7 @@ import store from "./redux/store.js";
 
 import ProtectedRoute from "./routes/ProtectedRoute.jsx";
 
-// import SignUp from "./pages/admin/register/SignUp.jsx";
+import SignUp from "./pages/admin/register/SignUp.jsx";
 import PageError from "./components/admin/404page/404page.jsx";
 import SignIn from "./pages/admin/register/SignIn.jsx";
 import Dashboard from "./pages/admin/Dashboard.jsx";
@@ -16,7 +16,6 @@ function App() {
     <Provider store={store}>
       <BrowserRouter>
         <Routes>
-          <Route path="/signup" element={<PageError />}/>
 
           <Route path="/signup" element={<SignUp />} />
           <Route path="/signin" element={<SignIn />} />
@@ -29,6 +28,9 @@ function App() {
               </ProtectedRoute>
             }
           />
+
+          {/* 404 fallback */}
+          <Route path="*" element={<PageError />} />
 
         </Routes>
       </BrowserRouter>
