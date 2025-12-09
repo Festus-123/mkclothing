@@ -8,7 +8,7 @@ const NavLinks = ({ to, label, icon: Icon, }) => {
       to={to}
       end
       className={({ isActive }) =>
-        isActive ? `${styles.navLink} ${styles.active}` : styles.navLink
+        isActive || to == '/dashboard/products/add' ? `${styles.navLink} ${styles.active}` : styles.navLink
       }
     >
       <span className={styles.text}>{label}</span>

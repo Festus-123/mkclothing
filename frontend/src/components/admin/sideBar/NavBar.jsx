@@ -3,7 +3,7 @@ import styles from './NavBar.module.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { toggleCollapse } from '../../../redux/slices/navbarSlice';
 import { MdDashboard, MdLogout, MdAnalytics, MdMenu} from 'react-icons/md'
-import {FaStore}  from 'react-icons/fa'
+import {FaStore, FaBlog}  from 'react-icons/fa'
 
 import NavLinks from '../NavLinks/NavLinks';
 
@@ -26,8 +26,9 @@ const NavBar = () => {
 
           <nav className={styles.linksSection}>
             <NavLinks label="Overview" to="/dashboard" icon={<MdDashboard />} />
-            <NavLinks label="Analytics" to="/analytics" icon={<MdAnalytics />} />
+            <NavLinks label="Analytics" to="/dashboard/analytics" icon={<MdAnalytics />} />
             <NavLinks label="Products" to="/dashboard/products" icon={<FaStore />} />
+            <NavLinks label="Logs" to="/dashboard/logs" icon={<FaBlog />} />
           </nav>
 
           <div className={styles.logoutSection}>

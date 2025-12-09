@@ -13,7 +13,10 @@ import Dashboard from "./pages/admin/dashboard/Dashboard.jsx";
 
 // dashboard pages
 import Overview from "./pages/admin/pages/Overview/Overview.jsx";
+import Products from "./pages/admin/pages/products/products.jsx";
+import DisplayProducts from "./pages/admin/pages/display-products/DisplayProducts.jsx";
 import AddProduct from "./pages/admin/pages/add-products/AddProduct.jsx";
+import Logs from "./pages/admin/pages/logs/Logs.jsx";
 
 function App() {
   return (
@@ -34,8 +37,16 @@ function App() {
             }
           >
             <Route index element={<Overview />} />
-            <Route path="products" element={<AddProduct />}/>
+            <Route 
+            path="products"
+            element={
+              <Products />
+            }>
+              <Route index element={<DisplayProducts />} />
+              <Route path="add" element={<AddProduct />}/>
+            </Route>
 
+            <Route path="logs" element={<Logs />}/>
             <Route path="*" element={<PageError />} />
           </Route>
           

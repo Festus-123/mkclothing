@@ -23,30 +23,32 @@ const AddProduct = () => {
     images: [],
   });
 
-useEffect(() => {
-  if (success) {
-    // Reset form fields
-    setFormData({
-      name: "",
-      description: "",
-      category: "",
-      price: "",
-      oldPrice: "",
-      quantity: "",
-      sizes: "",
-      images: [],
-    });
+  useEffect(() => {
+    if (success) {
+      setFormData({
+        name: '',
+        description: '',
+        category: '',
+        price: '',
+        oldPrice: '',
+        quantity: '',
+        sizes: '',
+        images: [],
+      })
 
+      setTimeout(() => dispatch(clearProductState()), 1000);
+    }
+  }, [success, dispatch])
+
+  useEffect(() => {
     // Clear Redux state after 2 seconds
-    setTimeout(() => dispatch(clearProductState()), 2000);
-  }
+    // setTimeout(() => dispatch(clearProductState()), 2000);
 
-  if (error) {
-    // Clear Redux state after 2 seconds (keep fields for correction)
-    setTimeout(() => dispatch(clearProductState()), 2000);
-  }
-}, [success, error]);
-
+    if (error) {
+      // Clear Redux state after 2 seconds (keep fields for correction)
+      setTimeout(() => dispatch(clearProductState()), 2000);
+    }
+  }, [error, dispatch]);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
