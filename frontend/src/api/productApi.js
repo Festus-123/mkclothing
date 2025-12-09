@@ -10,7 +10,7 @@ export const createProductApi = async (productData) => {
 
         const data = await response.json()
 
-        if(!response){
+        if(!response.ok){
             throw new Error(data.message || 'failed to create product')
         }
 
@@ -18,5 +18,22 @@ export const createProductApi = async (productData) => {
     } catch (error) {
         console.log(error)
         throw Error(error)
+    }
+}
+
+export const getProducts = async () => {
+    try {
+        const res = await fetch(`${Api_Url}/`, {
+            method: 'GET',
+            credentials: 'include',
+        })
+
+        if(!res.ok) throw new Error('Failed to get products')
+
+        const data = res.json();
+
+        return data;
+    } catch (error) {
+        console.log(error);
     }
 }
