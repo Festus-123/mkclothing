@@ -8,11 +8,11 @@ import FooterMain from './Footer/FooterMain'
 const Home = () => {
   return (
     <div>
-      <NavbarMain/>
-      <Heromain/>
-      <LitCollectionMain/>
-      <SubHeroMain/>
-      <FooterMain/>
+      <NavbarMain />
+      <Heromain />
+      <LitCollectionMain />
+      <SubHeroMain />
+      <FooterMain />
     </div>
   )
 }

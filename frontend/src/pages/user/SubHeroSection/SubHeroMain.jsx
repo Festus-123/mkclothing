@@ -1,5 +1,6 @@
 import React from 'react'
-import SubHeroButton from './SubHeroButton'
+import SubHeroButton from './SubHeroButton';
+import SubHeroText from './SubHeroText'
 
 const SubHeroMain = () => {
   return (

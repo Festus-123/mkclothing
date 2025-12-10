@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-scroll';
+import { Link } from 'react-router-dom';
 
 const links = [
   { link: 'Home', section: 'home' },
@@ -16,8 +16,8 @@ const NavbarLinks = () => {
           <Link
             className=""
             to={link.section}
-            smooth={true}
-            spy={true}
+            smooth="true"
+            spy=""
             duration={500}
             offset={-130}
           >
