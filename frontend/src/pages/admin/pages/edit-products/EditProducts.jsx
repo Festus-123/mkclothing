@@ -1,33 +1,42 @@
-import React, { useState, useEffect } from "react";
-import styles from "./EditProducts.module.css";
-import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
-import { updateProduct, getProductById, clearProductState } from "../../../../redux/slices/productsSlice";
-import { FaTag, FaListAlt, FaDollarSign, FaImage } from "react-icons/fa";
-import { AiOutlineStock } from "react-icons/ai";
+import React, { useState, useEffect } from 'react';
+import styles from './EditProducts.module.css';
+import { useDispatch, useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import {
+  updateProduct,
+  getProductById,
+  clearProductState,
+} from '../../../../redux/slices/productsSlice';
+import { FaTag, FaListAlt, FaDollarSign, FaImage } from 'react-icons/fa';
+import { AiOutlineStock } from 'react-icons/ai';
 
 const EditProducts = () => {
+  const Navigate = useNavigate();
   const { id } = useParams();
-  console.log("id",id)
+  // console.log("id",id)
 
   const dispatch = useDispatch();
-  const { product, loading, error, success } = useSelector((state) => state.products)
+  const { product, loading, error, success } = useSelector(
+    (state) => state.products
+  );
+  console.log(product)
 
   const [formData, setFormData] = useState({
-    name: "",
-    description: "",
-    category: "",
-    price: "",
-    oldPrice: "",
-    quantity: "",
+    name: '',
+    description: '',
+    category: '',
+    price: '',
+    oldPrice: '',
+    quantity: '',
   });
 
   const [images, setImages] = useState([]);
 
   // Fetch product by ID
   useEffect(() => {
-    // if(id) return;
-    dispatch(getProductById(id))
+    if (!id) return;
+    dispatch(getProductById(id));
   }, [id, dispatch]);
 
   useEffect(() => {
@@ -37,11 +46,17 @@ const EditProducts = () => {
         description: product.description,
         category: product.category,
         price: product.price,
-        oldPrice: product.oldPrice,
+        oldPrice: product.oldPrice ?? product.price,
         quantity: product.quantity,
       });
+
+      const formatImages = product.images.map((url) => ({
+        preview: url,
+        file: null,
+      }));
+      setImages(formatImages);
     }
-  }, [product])
+  }, [product]);
 
   // Handle Text Fields
   const handleChange = (e) => {
@@ -50,50 +65,86 @@ const EditProducts = () => {
 
   // Handle Image File Upload
   const handleImages = (e) => {
-    setImages([...e.target.files]);
+    const newFiles = Array.from(e.target.files);
+
+    const filePreviews = newFiles.map((file) => ({
+      file,
+      preview: URL.createObjectURL(file),
+    }));
+
+    setImages((prev) => [...prev, ...filePreviews]);
   };
 
   // Submit Data
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    console.log('working');
     const data = new FormData();
+    console.log("formdata:", data)
 
     Object.keys(formData).forEach((key) => {
       data.append(key, formData[key]);
     });
 
     // Images (optional)
-    images.forEach((img) => data.append("images", img));
+    images.forEach((img) => {
+      if (img.file) {
+        data.append('images', img.file);
+      }
+    });
 
-    dispatch(updateProduct(id, data));
+    dispatch(updateProduct({ id, formData: data }));
+    console.log(updateProduct({id, formData: data }))
+    Navigate('/dashboard/products');
   };
 
   useEffect(() => {
-    if(success){
-      dispatch(clearProductState())
-    }
-  }, [success, dispatch])
+    if (success) {
+      setFormData({
+        name: '',
+        description: '',
+        category: '',
+        price: '',
+        oldPrice: '',
+        quantity: '',
+      });
 
-  if (loading || !product) return <p>Loading product...</p>;
+      setImages([]);
+    }
+    dispatch(clearProductState());
+  }, [success, dispatch]);
+
+  // if (loading || !product) return <p>Loading product...</p>;
 
   return (
     <div className={styles.container}>
       <h2 className={styles.title}>Edit Product</h2>
 
+      {success && <p className={styles.success}>{success}</p>}
+      {error && <p className={styles.error}>Unable to update product</p>}
+
       <form className={styles.form} onSubmit={handleSubmit}>
-        
         {/* Existing Image Preview */}
         <div className={styles.previewContainer}>
           <div className={styles.imagesContainer}>
-            {product.images.map((img, index) => (
-              <img key={index} src={img} alt="preview" className={styles.preview} />
+            {images.map((img, index) => (
+              <img
+                key={index}
+                src={img.preview}
+                alt="preview"
+                className={styles.preview}
+              />
             ))}
           </div>
 
           <div className={styles.importImage}>
             <FaImage className={styles.icon} />
-            <input type="file" multiple accept="image/*" onChange={handleImages} />
+            <input
+              type="file"
+              multiple
+              accept="image/*"
+              onChange={handleImages}
+            />
           </div>
         </div>
 
@@ -115,6 +166,7 @@ const EditProducts = () => {
           <FaListAlt className={styles.icon} />
           <textarea
             name="description"
+            placeholder="Product Description"
             required
             value={formData.description}
             onChange={handleChange}
@@ -133,6 +185,7 @@ const EditProducts = () => {
               <option value="men">Men</option>
               <option value="women">Women</option>
               <option value="kids">Kids</option>
+              <option value="Bi">Bi</option>
             </select>
           </div>
 
@@ -141,6 +194,7 @@ const EditProducts = () => {
             <input
               type="number"
               name="quantity"
+              placeholder="Quantity"
               value={formData.quantity}
               onChange={handleChange}
             />
@@ -154,7 +208,9 @@ const EditProducts = () => {
             <input
               type="number"
               name="oldPrice"
+              placeholder="Prev price"
               required
+              readOnly
               value={formData.oldPrice}
               onChange={handleChange}
             />
@@ -168,6 +224,7 @@ const EditProducts = () => {
             <input
               type="number"
               name="price"
+              placeholder="new price"
               required
               value={formData.price}
               onChange={handleChange}
@@ -175,8 +232,8 @@ const EditProducts = () => {
           </div>
         </div>
 
-        <button className={styles.submitBtn}>
-          Update Product
+        <button className={styles.submitBtn} disabled={loading}>
+          {loading ? 'Updating...' : 'update product'}
         </button>
       </form>
     </div>

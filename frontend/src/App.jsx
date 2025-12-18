@@ -16,6 +16,7 @@ import Overview from "./pages/admin/pages/Overview/Overview.jsx";
 import Products from "./pages/admin/pages/products/products.jsx";
 import DisplayProducts from "./pages/admin/pages/display-products/DisplayProducts.jsx";
 import AddProduct from "./pages/admin/pages/add-products/AddProduct.jsx";
+import EditProducts from "./pages/admin/pages/edit-products/EditProducts.jsx";
 import Logs from "./pages/admin/pages/logs/Logs.jsx";
 
 // user route pages 
@@ -48,6 +49,7 @@ function App() {
             }>
               <Route index element={<DisplayProducts />} />
               <Route path="add" element={<AddProduct />}/>
+              <Route path="edit/:id" element={<EditProducts />}/>
             </Route>
 
           {/* 404 fallback */}

@@ -55,3 +55,18 @@
     font-style: italic;
     font-size: 14px;
 }
+
+.updates {
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    gap: 10px;
+}
+.icon {
+    cursor: pointer;
+    padding: var(--SPACING-XS);
+    border-radius: 25px;
+}
+.icon:hover {
+    background-color: #80808072;
+}
