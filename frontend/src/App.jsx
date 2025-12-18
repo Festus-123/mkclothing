@@ -21,11 +21,16 @@ import DisplayProducts from "./pages/admin/pages/display-products/DisplayProduct
 import AddProduct from "./pages/admin/pages/add-products/AddProduct.jsx";
 // import Logs from "./pages/admin/pages/logs/Logs.jsx";
 
+// user route pages 
+import Home from "./pages/user/Home.jsx";
+
 function App() {
   return (
     <Provider store={store}>
       <BrowserRouter>
         <Routes>
+
+          <Route path="/new/use/Home" element={<Home />}/>
 
           {/* <Route path="/signup" element={<SignUp />} /> */}
           <Route path="/signin" element={<SignIn />} />
