@@ -3,9 +3,7 @@ import NavbarMain from './Navbar/NavbarMain'
 import FooterMain from './Footer/FooterMain'
 import AboutHeroMain from './AboutHeroSection/AboutHeroMain'
 import JourneyMain from './The JourneySection/JourneyMain'
-import MiniCardMain from './MiniCards/MiniCardMain'
-import SubHeroMain from './SubHeroSection/SubHeroMain'
-import ConnectMain from './Connect/ConnectMain'
+import OurvisionMain from './Our vision/OurvisionMain'
 
 
 const About = () => {
@@ -15,9 +13,7 @@ const About = () => {
       <div>
         <AboutHeroMain/>
         <JourneyMain/>
-        <MiniCardMain/>
-        <SubHeroMain/>
-        <ConnectMain/>
+        <OurvisionMain/>
       </div>
       <FooterMain/>
     </div>

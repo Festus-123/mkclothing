@@ -8,20 +8,26 @@ const links = [
   { link: 'Contact', section: 'contact' },
 ];
 
-const NavbarLinks = () => {
+const NavbarLinks = ({ isMobile = false }) => {
   return (
-    <ul>
-      {links.map((link, index) => (
-        <li className="" key={index}>
+    <ul
+      className={`flex gap-6 text-sm text-gray-700 ${
+        isMobile ? 'flex-col items-center space-y-4' : 'items-center'
+      }`}
+    >
+      {links.map((item) => (
+        <li key={item.section}>
           <Link
-            className=""
-            to={link.section}
-            smooth="true"
-            spy=""
+            to={item.section}
+            smooth={true}
+            spy={true}
             duration={500}
-            offset={-130}
+            offset={-100}
+            activeClass="after:w-full"
+            className="cursor-pointer relative after:absolute after:left-0 after:-bottom-1 after:h-[2px] after:w-0 after:bg-orange-500 after:transition-all"
+            aria-current="page"
           >
-            {link.link}
+            {item.link}
           </Link>
         </li>
       ))}
