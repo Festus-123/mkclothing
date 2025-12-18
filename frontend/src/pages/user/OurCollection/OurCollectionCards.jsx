@@ -1,6 +1,6 @@
 import React from 'react'
 
-const HeroGradient = () => {
+const OurCollectionCards = () => {
   return (
     <div>
       
@@ -8,4 +8,4 @@ const HeroGradient = () => {
   )
 }
 
-export default HeroGradient
+export default OurCollectionCards

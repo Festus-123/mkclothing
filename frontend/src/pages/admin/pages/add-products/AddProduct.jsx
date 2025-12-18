@@ -34,18 +34,14 @@ const AddProduct = () => {
         quantity: '',
         sizes: '',
         images: [],
-      })
+      });
 
       setTimeout(() => dispatch(clearProductState()), 1000);
     }
-  }, [success, dispatch])
+  }, [success, dispatch]);
 
   useEffect(() => {
-    // Clear Redux state after 2 seconds
-    // setTimeout(() => dispatch(clearProductState()), 2000);
-
     if (error) {
-      // Clear Redux state after 2 seconds (keep fields for correction)
       setTimeout(() => dispatch(clearProductState()), 2000);
     }
   }, [error, dispatch]);
@@ -54,13 +50,28 @@ const AddProduct = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  // ✅ LIMIT TO 5 IMAGES
   const handleImages = (e) => {
-    setFormData({ ...formData, images: Array.from(e.target.files) });
+    const files = Array.from(e.target.files);
+
+    if (files.length > 5) {
+      alert('You can upload a maximum of 5 images');
+      return;
+    }
+
+    setFormData({ ...formData, images: files });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    if (formData.images.length === 0) {
+      alert('Please upload at least one image');
+      return;
+    }
+
     const data = new FormData();
+
     Object.keys(formData).forEach((key) => {
       if (key === 'images') {
         formData.images.forEach((img) => data.append('images', img));
@@ -68,6 +79,7 @@ const AddProduct = () => {
         data.append(key, formData[key]);
       }
     });
+
     dispatch(createProduct(data));
   };
 
@@ -79,6 +91,7 @@ const AddProduct = () => {
       {error && <p className={styles.error}>Unable to add product</p>}
 
       <form className={styles.form} onSubmit={handleSubmit}>
+        {/* Image Preview */}
         <div className={styles.previewContainer}>
           <div className={styles.imagesContainer}>
             {formData.images.map((img, index) => (
@@ -90,15 +103,18 @@ const AddProduct = () => {
               />
             ))}
           </div>
+
           <div className={styles.importImage}>
             <FaImage className={styles.icon} />
             <input
               type="file"
               multiple
               accept="image/*"
-              required
               onChange={handleImages}
             />
+            <p className={styles.imageCount}>
+              {formData.images.length} / 5 images
+            </p>
           </div>
         </div>
 
@@ -120,7 +136,7 @@ const AddProduct = () => {
             placeholder="Product Description"
             required
             onChange={handleChange}
-          ></textarea>
+          />
         </div>
 
         <div className={styles.row}>
@@ -150,8 +166,8 @@ const AddProduct = () => {
             <input
               type="number"
               name="price"
-              required
               placeholder="Price"
+              required
               onChange={handleChange}
             />
           </div>
