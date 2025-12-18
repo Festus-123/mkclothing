@@ -1,13 +1,16 @@
-import React from 'react'
-import SubHeroButton from './SubHeroButton'
+import React from 'react';
+import SubHeroText from './SubHeroText';
+import SubHeroButton from './SubHeroButton';
 
 const SubHeroMain = () => {
   return (
-    <div>
-      <SubHeroText/>
-      <SubHeroButton/>
-    </div>
-  )
-}
+    <section className="max-w-6xl mx-auto px-4 mt-24">
+      <div className="bg-gradient-to-r from-orange-500 to-red-500 rounded-2xl py-10 flex flex-col items-center">
+        <SubHeroText />
+        <SubHeroButton />
+      </div>
+    </section>
+  );
+};
 
-export default SubHeroMain
+export default SubHeroMain;

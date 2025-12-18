@@ -1,6 +1,6 @@
 import React from 'react'
 
-const ConnectButtons = () => {
+const OurCollectionPop = () => {
   return (
     <div>
       
@@ -8,4 +8,4 @@ const ConnectButtons = () => {
   )
 }
 
-export default ConnectButtons
+export default OurCollectionPop
