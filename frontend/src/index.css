@@ -1,6 +1,4 @@
-@tailwindcss/preflight;
-@tailwind utilities;
-@tailwind utilities;
+@import "tailwindcss";
 
 * {
   margin: 0;
