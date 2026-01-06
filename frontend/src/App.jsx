@@ -1,5 +1,5 @@
 import React from "react";
-import './styles/variable.css';
+// import './styles/variable.css';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Provider } from "react-redux";
 import store from "./redux/store.js";
@@ -9,7 +9,7 @@ import Home from "./pages/user/Home.jsx";
 import About from "./pages/user/About.jsx";
 import Collection from "./pages/user/Collection.jsx";
 import Contact from "./pages/user/Contact.jsx";
-// import SignUp from "./pages/admin/register/SignUp.jsx";
+import SignUp from "./pages/admin/register/SignUp.jsx";
 import PageError from "./components/admin/404page/404page.jsx";
 import SignIn from "./pages/admin/register/SignIn.jsx";
 import Dashboard from "./pages/admin/dashboard/Dashboard.jsx";
@@ -30,8 +30,8 @@ function App() {
         <Routes>
 
           {/* <Route path="/signup" element={<SignUp />} /> */}
-          <Route path="/signin" element={<SignIn />} />
           <Route path="/home" element={<Home/>} />
+          <Route path="/signin" element={<SignIn />} />
           <Route path="/about" element={<About/>} />
           <Route path="/collection" element={<Collection/>} />
           <Route path="/contact" element={<Contact/>} />
@@ -71,3 +71,15 @@ function App() {
 }
 
 export default App;
+
+// import React from 'react'
+
+// const App = () => {
+//   return (
+//     <div className='bg-[grey]  p-8'>
+//       <h1 className='font-medium text-lg'>Help Me</h1>
+//     </div>
+//   )
+// }
+
+// export default App

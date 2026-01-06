@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import styles from './EditProducts.module.css';
+// import styles from './EditProducts.module.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
@@ -20,7 +20,7 @@ const EditProducts = () => {
   const { product, loading, error, success } = useSelector(
     (state) => state.products
   );
-  console.log(product)
+  console.log(product);
 
   const [formData, setFormData] = useState({
     name: '',
@@ -80,7 +80,7 @@ const EditProducts = () => {
     e.preventDefault();
     console.log('working');
     const data = new FormData();
-    console.log("formdata:", data)
+    console.log('formdata:', data);
 
     Object.keys(formData).forEach((key) => {
       data.append(key, formData[key]);
@@ -94,7 +94,7 @@ const EditProducts = () => {
     });
 
     dispatch(updateProduct({ id, formData: data }));
-    console.log(updateProduct({id, formData: data }))
+    console.log(updateProduct({ id, formData: data }));
     Navigate('/dashboard/products');
   };
 
@@ -117,28 +117,23 @@ const EditProducts = () => {
   // if (loading || !product) return <p>Loading product...</p>;
 
   return (
-    <div className={styles.container}>
-      <h2 className={styles.title}>Edit Product</h2>
+    <div className="">
+      <h2 className="">Edit Product</h2>
 
-      {success && <p className={styles.success}>{success}</p>}
-      {error && <p className={styles.error}>Unable to update product</p>}
+      {success && <p className="">{success}</p>}
+      {error && <p className="">Unable to update product</p>}
 
-      <form className={styles.form} onSubmit={handleSubmit}>
+      <form className="" onSubmit={handleSubmit}>
         {/* Existing Image Preview */}
-        <div className={styles.previewContainer}>
-          <div className={styles.imagesContainer}>
+        <div className="">
+          <div className="">
             {images.map((img, index) => (
-              <img
-                key={index}
-                src={img.preview}
-                alt="preview"
-                className={styles.preview}
-              />
+              <img key={index} src={img.preview} alt="preview" className="" />
             ))}
           </div>
 
-          <div className={styles.importImage}>
-            <FaImage className={styles.icon} />
+          <div className="">
+            <FaImage className="" />
             <input
               type="file"
               multiple
@@ -149,8 +144,8 @@ const EditProducts = () => {
         </div>
 
         {/* Name */}
-        <div className={styles.inputGroup}>
-          <FaTag className={styles.icon} />
+        <div className="">
+          <FaTag className="" />
           <input
             type="text"
             name="name"
@@ -162,8 +157,8 @@ const EditProducts = () => {
         </div>
 
         {/* Description */}
-        <div className={styles.description}>
-          <FaListAlt className={styles.icon} />
+        <div className="">
+          <FaListAlt className="" />
           <textarea
             name="description"
             placeholder="Product Description"
@@ -174,8 +169,8 @@ const EditProducts = () => {
         </div>
 
         {/* Category + Quantity */}
-        <div className={styles.row}>
-          <div className={styles.inputGroup}>
+        <div className="">
+          <div className="">
             <select
               name="category"
               value={formData.category}
@@ -189,8 +184,8 @@ const EditProducts = () => {
             </select>
           </div>
 
-          <div className={styles.inputGroup}>
-            <AiOutlineStock className={styles.icon} />
+          <div className="">
+            <AiOutlineStock className="" />
             <input
               type="number"
               name="quantity"
@@ -202,9 +197,9 @@ const EditProducts = () => {
         </div>
 
         {/* Old Price */}
-        <div className={styles.row}>
-          <div className={styles.inputGroup}>
-            <FaDollarSign className={styles.icon} />
+        <div className="">
+          <div className="">
+            <FaDollarSign className="" />
             <input
               type="number"
               name="oldPrice"
@@ -218,9 +213,9 @@ const EditProducts = () => {
         </div>
 
         {/* New Price */}
-        <div className={styles.row}>
-          <div className={styles.inputGroup}>
-            <FaDollarSign className={styles.icon} />
+        <div className="">
+          <div className="">
+            <FaDollarSign className="" />
             <input
               type="number"
               name="price"
@@ -232,7 +227,7 @@ const EditProducts = () => {
           </div>
         </div>
 
-        <button className={styles.submitBtn} disabled={loading}>
+        <button className="" disabled={loading}>
           {loading ? 'Updating...' : 'update product'}
         </button>
       </form>

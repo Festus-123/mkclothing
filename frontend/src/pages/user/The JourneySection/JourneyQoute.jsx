@@ -2,7 +2,7 @@ import React from 'react';
 
 const JourneyQoute = () => {
   return (
-    <div className="relative max-w-4xl mx-auto bg-white/70 rounded-2xl p-8 md:p-12 mb-10">
+    <div className="relative w-full max-w-8xl mx-auto bg-white/70 rounded-2xl p-8 md:p-12 mb-10">
       {/* red accent line */}
       <div className="absolute left-0 top-0 h-full w-1 bg-red-600 rounded-l-2xl" />
 
