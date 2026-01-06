@@ -9,7 +9,7 @@ const NavbarMain = () => {
   const toggleMenu = () => setMenuOpen(!menuOpen);
 
   return (
-    <nav className="w-full bg-white shadow-sm fixed top-0 left-0 z-50">
+    <nav className="sticky w-full bg-white shadow-sm top-0 left-0 z-50">
       <div className="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
         {/* Logo */}
         <NavbarLogo />
@@ -26,7 +26,7 @@ const NavbarMain = () => {
           </div>
           <button
             onClick={toggleMenu}
-            className="lg:hidden text-2xl text-gray-700"
+            className="lg:hidden text-2xl text-[gray]-700 cursor-pointer"
           >
             <GiHamburgerMenu />
           </button>
@@ -37,7 +37,7 @@ const NavbarMain = () => {
       {menuOpen && (
         <div className="lg:hidden bg-white border-t py-4">
           <NavbarLinks isMobile />
-          <div className="mt-4 flex justify-center sm:hidden">
+          <div className="mt-4 flex justify-center sm:hidden ">
             <NavbarBtn />
           </div>
         </div>

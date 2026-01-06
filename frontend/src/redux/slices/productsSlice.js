@@ -1,9 +1,9 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { createProductApi, getProducts } from "../../api/productApi";
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { createProductApi, getProducts, getProductsByIdApi, updateProductApi } from '../../api/productApi';
 
 // existing createProduct thunk
 export const createProduct = createAsyncThunk(
-  "products/create",
+  'products/create',
   async (formData, { rejectWithValue }) => {
     try {
       const result = await createProductApi(formData);
@@ -16,7 +16,7 @@ export const createProduct = createAsyncThunk(
 
 // NEW fetchProducts thunk
 export const fetchProducts = createAsyncThunk(
-  "products/fetchAll",
+  'products/fetchAll',
   async (_, { rejectWithValue }) => {
     try {
       const result = await getProducts(); // call your API
@@ -27,13 +27,43 @@ export const fetchProducts = createAsyncThunk(
   }
 );
 
+// fetchProductById thunk 
+export const getProductById = createAsyncThunk(
+    'products/fetchById',
+    async (id, { rejectWithValue }) => {
+        try {
+            const result = await getProductsByIdApi(id);
+            return result.product
+        } catch (error) {
+            console.log(error)
+            return rejectWithValue(error.message)
+        }
+    }
+)
+
+// update productBy id 
+export const updateProduct = createAsyncThunk(
+    'product/updateProduct',
+    async ({id, formData}, { rejectWithValue }) => {
+        try {
+            const result = await updateProductApi(id, formData);
+            console.log('Result.product', result.product)
+            return result.product
+        } catch (error) {
+            console.log(error)
+            return rejectWithValue(error.message)
+        }
+    }
+)
+
 const productSlice = createSlice({
-  name: "products",
+  name: 'products',
   initialState: {
     loading: false,
     success: false,
     error: null,
     products: [],
+    product: null
   },
   reducers: {
     clearProductState: (state) => {
@@ -70,7 +100,38 @@ const productSlice = createSlice({
       .addCase(fetchProducts.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
-      });
+      })
+      .addCase(getProductById.pending, (state) => {
+        state.loading = true;
+        state.error = null
+      })
+      .addCase(getProductById.fulfilled, (state, action) => {
+        state.loading = false;
+        state.product = action.payload
+      })
+      .addCase(getProductById.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload
+      })
+      .addCase(updateProduct.pending, (state) => {
+        state.loading = true;
+        state.error = null
+      })
+      .addCase(updateProduct.fulfilled, (state, action) => {
+        state.loading = false;
+        state.success = true;
+        const index = state.products.findIndex(
+        (p) => p._id === action.payload._id
+        );
+        if (index !== -1) {
+        state.product[index] = action.payload;
+        }
+        state.product = action.payload
+      })
+      .addCase(updateProduct.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
   },
 });
 

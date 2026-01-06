@@ -30,8 +30,43 @@ export const getProducts = async () => {
 
         if(!res.ok) throw new Error('Failed to get products')
 
-        const data = res.json();
+        const data = await res.json();
 
+        return data;
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+export const getProductsByIdApi = async (id) => {
+    try {
+        const res = await fetch(`${Api_Url}/${id}`, {
+            method: 'GET',
+            credentials: 'include'
+        })
+        if(!res.ok) throw new Error('failed to fetch')
+        
+        const data = await res.json();
+
+        return data;
+
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+export const updateProductApi = async (id, formData) => {
+    try {
+        const res = await fetch(`${Api_Url}/${id}`, {
+            method: 'PUT',
+            body: formData,
+            credentials: 'include',
+        })
+
+        if(!res.ok) throw new Error('failed to put data')
+
+        const data = await res.json()
+        console.log("backend response:",data)
         return data;
     } catch (error) {
         console.log(error);

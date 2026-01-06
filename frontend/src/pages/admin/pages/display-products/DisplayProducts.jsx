@@ -1,44 +1,63 @@
-import React from 'react'
-import {  useEffect } from 'react';
-import styles from './DisplayProducts.module.css';
-import { FiPlus } from 'react-icons/fi'
+import React from 'react';
+import { useEffect } from 'react';
+// import styles from './DisplayProducts.module.css';
+import { FiPlus, FiEdit, FiTrash } from 'react-icons/fi';
 import { fetchProducts } from '../../../../redux/slices/productsSlice';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 const DisplayProducts = () => {
-        const dispatch = useDispatch();
-        const {loading, error, products} = useSelector((state) => state.products)
-    
-        useEffect(() => {
-            dispatch(fetchProducts());
-        }, [dispatch]);
-    
-    
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { loading, error, products } = useSelector((state) => state.products);
+
+  useEffect(() => {
+    dispatch(fetchProducts());
+  }, [dispatch]);
+
   return (
-    <div className={styles.container}>
-        <h2 className={styles.title}>Products & Collection</h2>
-        {loading && <p className={styles.success}>Loading...</p>}
-        {error && <p className={styles.error}>{error}</p>}
+    <div className="">
+      <h2 className="">Products & Collection</h2>
+      {loading && <p className="">Loading...</p>}
+      {error && <p className="">{error}</p>}
 
-
-        <div className={styles.productContainer}>
+      <div className="">
         {products.map((product) => (
-          <div key={product._id} className={styles.productCard}>
+          <div key={product._id} className="">
             <img
-              src={product.images[0] || 'https://via.placeholder.com/300x300?text=No+Image'} 
+              src={
+                product.images[0] ||
+                'https://via.placeholder.com/300x300?text=No+Image'
+              }
               alt={product.name}
-              className={styles.productImage}
+              className=""
             />
-            <div className={styles.details}>
-            <h3 className={styles.productName}>{product.name}</h3>
-            <p className={styles.productDescription}>{product.description}</p>
-            <p className={styles.productPrice}>${product.price}</p>
+            <div className="">
+              <h3 className="">{product.name}</h3>
+              <p className="">{product.description}</p>
+              <p className="">${product.price}</p>
+              <div className="">
+                <FiEdit
+                  color="white"
+                  size={24}
+                  onClick={() =>
+                    navigate(`/dashboard/products/edit/${product._id}`)
+                  }
+                  className=""
+                />
+                <FiTrash
+                  color="white"
+                  size={24}
+                  onClick={() => navigate()}
+                  className=""
+                />
+              </div>
             </div>
           </div>
         ))}
-        </div>
+      </div>
     </div>
-  )
-}
+  );
+};
 
-export default DisplayProducts
+export default DisplayProducts;

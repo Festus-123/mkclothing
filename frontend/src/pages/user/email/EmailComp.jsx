@@ -15,21 +15,21 @@ const EmailComp = () => {
   }
 
   return (
-    <section className="w-full px-6 md:px-20 py-20">
-      <div className="max-w-4xl mx-auto">
+    <section className="w-full px-6 md:px-20 py-20 flex flex-col items-center gap-10">
+      <div className=" mx-auto w-full flex flex-col items-center">
         {/* Form */}
-        <div className="space-y-6">
+        <div className=" space-y-6 w-full flex flex-col items-center">
           {/* Our Email */}
-          <div className="flex items-center gap-4">
-            <label className="min-w-[90px] text-sm text-[#8b4a1f]">Our Email :</label>
+          <div className="flex items-center gap-4 w-full lg:w-[60%] p-2">
+            <label className="min-w-22.5 text-sm text-[#8b4a1f]">Our Email :</label>
             <div className="flex-1 rounded-full bg-gray-200 px-6 py-3 text-sm text-gray-600">
               m&kclothing@email.com
             </div>
           </div>
 
           {/* Your Email */}
-          <div className="flex items-center gap-4">
-            <label className="min-w-[90px] text-sm text-[#8b4a1f]">Your Email :</label>
+          <div className="flex items-center gap-4 w-full lg:w-[60%] p-2">
+            <label className="min-w-22.5 text-sm text-[#8b4a1f]">Your Email :</label>
             <input
               type="email"
               placeholder="Enter your email"
@@ -38,8 +38,8 @@ const EmailComp = () => {
           </div>
 
           {/* Description */}
-          <div className="flex items-start gap-4">
-            <label className="min-w-[90px] pt-3 text-sm text-[#8b4a1f]">Description :</label>
+          <div className="flex items-start gap-4 w-full lg:w-[60%] p-2">
+            <label className="min-w-22.5 pt-3 text-sm text-[#8b4a1f]">Description :</label>
             <div className="relative flex-1">
               <textarea
                 placeholder="Could we meet up later..."
@@ -77,17 +77,12 @@ const EmailComp = () => {
           )}
 
           {/* Send Button */}
-          <div className="pt-4">
-            <button className="w-full py-4 rounded-full bg-gradient-to-r from-orange-500 to-red-500 text-white font-medium">
+          <div className="pt-4 w-full lg:w-[60%]">
+            <button className="w-full py-4 rounded-full bg-linear-to-r from-orange-500 to-red-500 text-white font-medium">
               Send Message
             </button>
           </div>
         </div>
-      </div>
-
-      {/* Footer Note */}
-      <div className="mt-20 w-full bg-gradient-to-r from-orange-500 to-red-500 py-6 text-center text-white text-sm">
-        Note if you dont recieve feedback after contacting us within 24hrs please wait a little more
       </div>
     </section>
   )

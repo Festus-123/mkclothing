@@ -4,7 +4,7 @@ import AboutHeroImages from './AboutHeroImages'
 
 const AboutHeroGradient = () => {
   return (
-    <div>
+    <div className=''>
         <AboutHeroText/>
         <AboutHeroImages/>
       

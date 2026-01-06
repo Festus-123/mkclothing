@@ -5,11 +5,11 @@ import HeroImage from './HeroImage';
 
 const HeroMain = () => {
   return (
-    <section className="relative h-screen flex items-center">
+    <section className="relative h-screen flex items-center w-full">
       <HeroImage />
       <HeroGradient />
 
-      <div className="max-w-7xl mx-auto px-4">
+      <div className="max-w-7xl mx-auto">
         <HeroText />
       </div>
     </section>

@@ -5,7 +5,7 @@ import JourneyText2 from './JourneyText2';
 
 const JourneyMain = () => {
   return (
-    <section className="w-full bg-[#faf7f5] px-6 md:px-20 py-20 text-center">
+    <section className="w-full bg-[#faf7f5] px-6 md:px-20 py-20 flex flex-col items-center gap-5">
       <h2 className="text-3xl md:text-4xl font-semibold text-[#8b4a1f] mb-6">
         The Journey
       </h2>

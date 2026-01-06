@@ -2,7 +2,7 @@ import React from 'react';
 
 const FooterMain = () => {
   return (
-    <footer className="bg-[#c96d25] mt-24 text-white">
+    <footer className="bg-[#c96d25] mt-24 text-white w-full">
       <div className="max-w-7xl mx-auto px-4 py-12 grid grid-cols-1 md:grid-cols-3 gap-10">
         {/* Brand */}
         <div>
