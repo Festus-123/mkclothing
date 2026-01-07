@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import styles from './AddProduct.module.css';
+// import styles from './AddProduct.module.css';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   createProduct,
@@ -84,42 +84,40 @@ const AddProduct = () => {
   };
 
   return (
-    <div className={styles.container}>
-      <h2 className={styles.title}>Add New Product</h2>
+    <div className="">
+      <h2 className="">Add New Product</h2>
 
-      {success && <p className={styles.success}>{success}</p>}
-      {error && <p className={styles.error}>Unable to add product</p>}
+      {success && <p className="">{success}</p>}
+      {error && <p className="">Unable to add product</p>}
 
-      <form className={styles.form} onSubmit={handleSubmit}>
+      <form className="" onSubmit={handleSubmit}>
         {/* Image Preview */}
-        <div className={styles.previewContainer}>
-          <div className={styles.imagesContainer}>
+        <div className="">
+          <div className="">
             {formData.images.map((img, index) => (
               <img
                 key={index}
                 src={URL.createObjectURL(img)}
                 alt="preview"
-                className={styles.preview}
+                className=""
               />
             ))}
           </div>
 
-          <div className={styles.importImage}>
-            <FaImage className={styles.icon} />
+          <div className="">
+            <FaImage className="" />
             <input
               type="file"
               multiple
               accept="image/*"
               onChange={handleImages}
             />
-            <p className={styles.imageCount}>
-              {formData.images.length} / 5 images
-            </p>
+            <p className="">{formData.images.length} / 5 images</p>
           </div>
         </div>
 
-        <div className={styles.inputGroup}>
-          <FaTag className={styles.icon} />
+        <div className="">
+          <FaTag className="" />
           <input
             type="text"
             name="name"
@@ -129,8 +127,8 @@ const AddProduct = () => {
           />
         </div>
 
-        <div className={styles.description}>
-          <FaListAlt className={styles.icon} />
+        <div className="">
+          <FaListAlt className="" />
           <textarea
             name="description"
             placeholder="Product Description"
@@ -139,8 +137,8 @@ const AddProduct = () => {
           />
         </div>
 
-        <div className={styles.row}>
-          <div className={styles.inputGroup}>
+        <div className="">
+          <div className="">
             <select name="category" onChange={handleChange}>
               <option value="">Select Category</option>
               <option value="men">Men</option>
@@ -149,8 +147,8 @@ const AddProduct = () => {
             </select>
           </div>
 
-          <div className={styles.inputGroup}>
-            <AiOutlineStock className={styles.icon} />
+          <div className="">
+            <AiOutlineStock className="" />
             <input
               type="number"
               name="quantity"
@@ -160,9 +158,9 @@ const AddProduct = () => {
           </div>
         </div>
 
-        <div className={styles.row}>
-          <div className={styles.inputGroup}>
-            <FaDollarSign className={styles.icon} />
+        <div className="">
+          <div className="">
+            <FaDollarSign className="" />
             <input
               type="number"
               name="price"
@@ -173,7 +171,7 @@ const AddProduct = () => {
           </div>
         </div>
 
-        <button className={styles.submitBtn} disabled={loading}>
+        <button className="" disabled={loading}>
           {loading ? 'Uploading...' : 'Add Product'}
         </button>
       </form>

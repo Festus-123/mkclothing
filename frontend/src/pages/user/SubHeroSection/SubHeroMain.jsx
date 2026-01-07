@@ -4,8 +4,8 @@ import SubHeroButton from './SubHeroButton';
 
 const SubHeroMain = () => {
   return (
-    <section className="max-w-6xl mx-auto px-4 mt-24">
-      <div className="bg-gradient-to-r from-orange-500 to-red-500 rounded-2xl py-10 flex flex-col items-center">
+    <section className="max-w-8xl px-4 w-full lg:w-[90%] mg:w-[90%]">
+      <div className="bg-linear-to-r from-orange-500 to-red-500 rounded-2xl py-10 flex flex-col items-center">
         <SubHeroText />
         <SubHeroButton />
       </div>

@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchAnalyticsData } from '../../../../redux/slices/analyticsSlice';
-import styles from './Overview.module.css';
+// import styles from './Overview.module.css';
 import ReviewsChart from '../../../../components/admin/reviews/ReviewsChart';
 import InteractionsChart from '../../../../components/admin/interactions/InteractionsChart';
 
@@ -19,15 +19,14 @@ const Overview = () => {
 
   return (
     <div>
-        <h2
-          style={{
-            margin: '20px',
-          }}
-        >
-          Analytics
-        </h2>
-      <div className={styles.chatSection}>
-
+      <h2
+        style={{
+          margin: '20px',
+        }}
+      >
+        Analytics
+      </h2>
+      <div className="">
         <ReviewsChart />
         <InteractionsChart />
       </div>

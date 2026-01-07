@@ -14,6 +14,9 @@ export const getProducts = async (req, res) => {
 export const getProductById = async (req, res) => {
   try {
     const product = await Products.findById(req.params.id);
+    if(!product){
+      res.status(404).json({ message: "product nt found"})
+    }
     res.status(200).json({ message: 'success', product });
   } catch (error) {
     res.status(500).json({ message: `failed: ${error.message}` });
@@ -55,13 +58,23 @@ export const addProducts = async (req, res) => {
 
 export const updateProduct = async (req, res) => {
   try {
+
+    const updates = {
+      ...req.body,
+      updatedAt: new Date()
+    }
+
+    if(req.files && req.files.length > 0){
+      updates.images = req.files.map((file) => file.path)
+    }
+    
     const product = await Products.findByIdAndUpdate(
       req.params.id,
-      { ...req.body, updatedAt: new Date() },
+      updates,
       { new: true }
     );
 
-    await Log.create({
+    await Logs.create({
       action: 'UPDATED_PRODUCT',
       description: `Product ${product.name} was updated`,
       createdAt: new Date(),
@@ -75,9 +88,9 @@ export const updateProduct = async (req, res) => {
 
 export const deleteProduct = async (req, res) => {
   try {
-    const product = await Products.findByIdAndDelete();
+    const product = await Products.findByIdAndDelete(req.params.id);
 
-    await Log.create({
+    await Logs.create({
       action: 'DELETED_PRODUCT',
       description: `Product ${product.name} was deleted`,
       createdAt: new Date(),

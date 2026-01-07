@@ -8,9 +8,9 @@ import OurvisionMain from './Our vision/OurvisionMain'
 
 const About = () => {
   return (
-    <div>
+    <div className='flex flex-col items-center justify-center' >
       <NavbarMain/>
-      <div>
+      <div className='w-full flex flex-col items-center justify-center'>
         <AboutHeroMain/>
         <JourneyMain/>
         <OurvisionMain/>
