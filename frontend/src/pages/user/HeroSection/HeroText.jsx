@@ -2,12 +2,12 @@ import React from 'react';
 
 const HeroText = () => {
   return (
-    <div className="max-w-xl text-white">
+    <div className="max-w-4xl text-white">
       <span className="inline-block mb-4 text-xs px-3 py-1 border border-orange-500 text-orange-500 rounded-full">
         New Collection 2025
       </span>
 
-      <h1 className="text-4xl lg:text-5xl font-bold leading-tight">
+      <h1 className="text-4xl lg:text-8xl font-bold leading-tight w-full ">
         Where <span className="text-orange-500">Elegance</span>
         <br />
         Meets Styles

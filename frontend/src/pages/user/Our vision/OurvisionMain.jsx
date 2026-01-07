@@ -53,7 +53,7 @@ const OurvisionMain = () => {
       </div>
 
       {/* Quote Banner */}
-      <div className="w-full bg-gradient-to-r from-orange-600 via-orange-500 to-red-500 py-20 text-center text-white">
+      <div className="w-full flex flex-col items-center gap-5 bg-linear-to-r from-orange-600 via-orange-500 to-red-500 py-20 text-center text-white">
         <div className="max-w-4xl mx-auto px-6">
           <span className="block text-4xl mb-6">❝</span>
           <h3 className="text-2xl md:text-3xl font-medium leading-relaxed mb-4">
@@ -64,8 +64,8 @@ const OurvisionMain = () => {
       </div>
 
       {/* Connect Section */}
-      <div className="px-6 md:px-20 py-24">
-        <div className="max-w-5xl mx-auto rounded-3xl border bg-[#faf7f5] p-10 md:p-14 text-center">
+      <div className="px-6 md:px-20 py-24 w-full border">
+        <div className="max-w-8xl mx-auto rounded-3xl border bg-[#faf7f5] p-10 md:p-14 flex flex-col items-center gap-5">
           <h3 className="text-2xl md:text-3xl font-semibold text-[#8b4a1f] mb-2">
             Let’s Connect
           </h3>

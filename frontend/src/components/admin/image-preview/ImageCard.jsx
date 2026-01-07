@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import styles from './ImageCard.module.css';
-import { useDispatch, useSelector } from 'react-redux';
+// import styles from './ImageCard.module.css';
+// import { useDispatch, useSelector } from 'react-redux';
 import { FaImage } from 'react-icons/fa';
 
 const ImageCard = () => {
@@ -27,8 +27,8 @@ const ImageCard = () => {
   return (
     <div>
       {!preview ? (
-        <div className={styles.inputGroup}>
-          <FaImage className={styles.icon} />
+        <div className="">
+          <FaImage className="" />
           <input
             type="file"
             //   multiple
@@ -37,13 +37,13 @@ const ImageCard = () => {
           />
         </div>
       ) : (
-        <div className={styles.previewContainer}>
+        <div className="">
           {formData.images.map((img, index) => (
             <img
               key={index}
               src={URL.createObjectURL(img)}
               alt="preview"
-              className={styles.preview}
+              className=""
             />
           ))}
         </div>

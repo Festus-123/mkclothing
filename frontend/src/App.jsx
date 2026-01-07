@@ -1,5 +1,5 @@
 import React from "react";
-import './styles/variable.css';
+// import './styles/variable.css';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Provider } from "react-redux";
 import store from "./redux/store.js";
@@ -19,10 +19,9 @@ import Overview from "./pages/admin/pages/Overview/Overview.jsx";
 import Products from "./pages/admin/pages/products/products.jsx";
 import DisplayProducts from "./pages/admin/pages/display-products/DisplayProducts.jsx";
 import AddProduct from "./pages/admin/pages/add-products/AddProduct.jsx";
-// import Logs from "./pages/admin/pages/logs/Logs.jsx";
+import EditProducts from './pages/admin/pages/edit-products/EditProducts.jsx'
+import Logs from "./pages/admin/pages/logs/Logs.jsx";
 
-// user route pages 
-import Home from "./pages/user/Home.jsx";
 
 function App() {
   return (
@@ -30,11 +29,9 @@ function App() {
       <BrowserRouter>
         <Routes>
 
-          <Route path="/new/use/Home" element={<Home />}/>
-
           {/* <Route path="/signup" element={<SignUp />} /> */}
-          <Route path="/signin" element={<SignIn />} />
           <Route path="/home" element={<Home/>} />
+          <Route path="/signin" element={<SignIn />} />
           <Route path="/about" element={<About/>} />
           <Route path="/collection" element={<Collection/>} />
           <Route path="/contact" element={<Contact/>} />
@@ -56,6 +53,7 @@ function App() {
             }>
               <Route index element={<DisplayProducts />} />
               <Route path="add" element={<AddProduct />}/>
+              <Route path="edit/:id" element={<EditProducts />}/>
             </Route>
 
           {/* 404 fallback */}
@@ -73,3 +71,15 @@ function App() {
 }
 
 export default App;
+
+// import React from 'react'
+
+// const App = () => {
+//   return (
+//     <div className='bg-[grey]  p-8'>
+//       <h1 className='font-medium text-lg'>Help Me</h1>
+//     </div>
+//   )
+// }
+
+// export default App
