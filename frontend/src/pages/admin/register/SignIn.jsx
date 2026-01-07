@@ -1,9 +1,13 @@
 import React from 'react';
-import styles from './register.module.css';
+// import styles from './register.module.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { logInAdmin } from '../../../api/adminApi';
-import { setEmail, setPassword, setError } from '../../../redux/slices/authSlice';
+import {
+  setEmail,
+  setPassword,
+  setError,
+} from '../../../redux/slices/authSlice';
 
 const SignIn = () => {
   const dispatch = useDispatch();
@@ -24,43 +28,43 @@ const SignIn = () => {
     }
   };
   return (
-    <div className={styles.container}>
-      <header className={styles['login-header']}>
+    <div className="">
+      <header className="">
         <h1>Admin Use Only</h1>
       </header>
 
-      <main className={styles.main}>
+      <main className="">
         <h1>Sign In to Admin</h1>
-        <form className={styles.Register} onSubmit={handleSubmit}>
-          <div className={styles['form-group']}>
-            <label htmlFor="email" className={styles.label}>
+        <form className="" onSubmit={handleSubmit}>
+          <div className="">
+            <label htmlFor="email" className="">
               Email:
             </label>
             <input
               type="email"
-              className={styles.input}
+              className=""
               value={auth.email}
               onChange={(e) => dispatch(setEmail(e.target.value))}
               required
             />
           </div>
-          <div className={styles['form-group']}>
-            <label htmlFor="password" className={styles.label}>
+          <div className="">
+            <label htmlFor="password" className="">
               Password:
             </label>
             <input
               type="password"
-              className={styles.input}
+              className=""
               value={auth.password}
               onChange={(e) => dispatch(setPassword(e.target.value))}
               required
             />
           </div>
-          <button type="submit" className={styles['login-button']}>
+          <button type="submit" className="">
             Sign In
           </button>
         </form>
-        {auth.error && <p className={styles['error-message']}>{auth.error}</p>};
+        {auth.error && <p className="">{auth.error}</p>};
       </main>
     </div>
   );

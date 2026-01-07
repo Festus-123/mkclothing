@@ -3,7 +3,7 @@ import AboutHeroGradient from './AboutHeroGradient'
 
 const AboutHeroMain = () => {
   return (
-    <div>
+    <div className=''>
       <AboutHeroGradient/>
     </div>
   )

@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "./NavLinks.module.css";
+// import styles from "./NavLinks.module.css";
 import { NavLink } from "react-router-dom";
 
 const NavLinks = ({ to, label, icon: Icon, }) => {
@@ -8,11 +8,11 @@ const NavLinks = ({ to, label, icon: Icon, }) => {
       to={to}
       end
       className={({ isActive }) =>
-        isActive || to == '/dashboard/products/add' ? `${styles.navLink} ${styles.active}` : styles.navLink
+        isActive || to == '/dashboard/products/add' ?  "" : ""
       }
     >
-      <span className={styles.text}>{label}</span>
-      <span className={styles.icon}>{Icon}</span>
+      <span className="">{label}</span>
+      <span className="">{Icon}</span>"
     </NavLink>
   );
 };

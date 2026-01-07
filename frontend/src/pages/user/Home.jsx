@@ -8,7 +8,7 @@ import MiniCardMain from './MiniCards/MiniCardMain'
 
 const Home = () => {
   return (
-    <div>
+    <div className='flex flex-col justify-center items-center'>
       <NavbarMain/>
       <Heromain/>
       <MiniCardMain/>
