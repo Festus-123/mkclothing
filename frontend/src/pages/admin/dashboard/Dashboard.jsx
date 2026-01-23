@@ -27,10 +27,10 @@ const Dashboard = () => {
   }, [navigate]);
 
   return (
-    <div className="flex flex-row ">
+    <div className="flex flex-row">
       <NavBar />  
 
-      <div className=" w-full p-8">
+      <div className="w-full p-4">
         <header className="flex flex-col gap-5 p-2 md:p-3 lg:p-4 rounded-3xl bg-[#80808021] border-r-red-600 border-l-red-600 border-r-8 border-l-8">
           <h2 className='text-lg lg:text-xl font-medium text-amber-600'>Welcome to dashboard</h2>
           <p className="">{analytics.message}</p>

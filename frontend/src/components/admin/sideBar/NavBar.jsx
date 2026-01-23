@@ -13,15 +13,15 @@ const NavBar = () => {
   return (
     <>
       {!isCollapsed ? (
-        <aside className="">
-          <div className="">
-            <h1 className="">M&K Clothing</h1>
-            <div className="" onClick={() => dispatch(toggleCollapse())}>
-              <span className="">{<MdMenu />}</span>
+        <aside className="bg-[#80808043] lg:p-4 flex flex-col h-screen gap-10 w-[20%]">
+          <div className=" flex flex-row items-center justify-between">
+            <h1 className="font-medium text-lg lg:text-xl">M&K Clothing</h1>
+            <div className="hover:bg-[#80808030] rounded-full p-2 " onClick={() => dispatch(toggleCollapse())}>
+              <span className="text-xl ">{<MdMenu />}</span>
             </div>
           </div>
 
-          <nav className="">
+          <nav className="flex flex-col gap-5">
             <NavLinks label="Overview" to="/dashboard" icon={<MdDashboard />} />
             <NavLinks
               label="Analytics"
@@ -42,9 +42,9 @@ const NavBar = () => {
         </aside>
       ) : (
         /* collapsed view: simple toggle to reopen */
-        <aside className="" onClick={() => dispatch(toggleCollapse())}>
-          <div className="">
-            <span className="">{<MdMenu />}</span>
+        <aside className="px-2 pt-4" onClick={() => dispatch(toggleCollapse())}>
+          <div className="p-2 bg-[#80808042] rounded-md cursor-pointer hover:bg-[#80808027]">
+            <span className="text-xl ">{<MdMenu />}</span>
           </div>
         </aside>
       )}

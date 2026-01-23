@@ -84,45 +84,48 @@ const AddProduct = () => {
   };
 
   return (
-    <div className="">
-      <h2 className="">Add New Product</h2>
+    <div className="flex flex-col gap-5">
+      <h2 className="text-xl">Add New Product</h2>
 
       {success && <p className="">{success}</p>}
       {error && <p className="">Unable to add product</p>}
 
-      <form className="" onSubmit={handleSubmit}>
+      <form className="p-2 grid grid-cols-4 gap-3" onSubmit={handleSubmit}>
         {/* Image Preview */}
-        <div className="">
-          <div className="">
+        <div className="bg-[#8080801e] p-2 lg:p-4 w-full flex flex-col gap-5 rounded-xl col-span-4">
+          <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-6 items-center gap-2">
             {formData.images.map((img, index) => (
               <img
-                key={index}
+                key={index}cd mkclothing
+                
                 src={URL.createObjectURL(img)}
                 alt="preview"
-                className=""
+                className="rounded-xl"
               />
             ))}
           </div>
 
-          <div className="">
+          <div className="flex flex-row items-center gap-5">
             <FaImage className="" />
             <input
               type="file"
               multiple
               accept="image/*"
+              className='text-amber-700 text-md'
               onChange={handleImages}
             />
-            <p className="">{formData.images.length} / 5 images</p>
+            <p className="text-sm">{formData.images.length} / 5 images</p>
           </div>
         </div>
 
-        <div className="">
+        <div className="flex flex-row items-center  bg-[#80808020] ">
           <FaTag className="" />
           <input
             type="text"
             name="name"
             placeholder="Product Name"
             required
+            className='border-none outline-none'
             onChange={handleChange}
           />
         </div>

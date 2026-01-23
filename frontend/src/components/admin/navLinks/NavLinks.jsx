@@ -7,12 +7,10 @@ const NavLinks = ({ to, label, icon: Icon, }) => {
     <NavLink
       to={to}
       end
-      className={({ isActive }) =>
-        isActive || to == '/dashboard/products/add' ?  "" : ""
-      }
+      className="flex flex-row gap-2 items-center hover:bg-[#80808020] py-1"
     >
-      <span className="">{label}</span>
-      <span className="">{Icon}</span>"
+      <span className="text-xl">{Icon}</span>
+      <span className="text-lg">{label}</span>
     </NavLink>
   );
 };
