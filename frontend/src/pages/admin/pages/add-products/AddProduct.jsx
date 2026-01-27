@@ -1,182 +1,41 @@
-import React, { useState, useEffect } from 'react';
-// import styles from './AddProduct.module.css';
-import { useDispatch, useSelector } from 'react-redux';
-import {
-  createProduct,
-  clearProductState,
-} from '../../../../redux/slices/productsSlice';
-import { FaTag, FaListAlt, FaDollarSign, FaImage } from 'react-icons/fa';
-import { AiOutlineStock } from 'react-icons/ai';
+import React from 'react'
 
 const AddProduct = () => {
-  const dispatch = useDispatch();
-  const { loading, success, error } = useSelector((state) => state.products);
-
-  const [formData, setFormData] = useState({
-    name: '',
-    description: '',
-    category: '',
-    price: '',
-    oldPrice: '',
-    quantity: '',
-    sizes: '',
-    images: [],
-  });
-
-  useEffect(() => {
-    if (success) {
-      setFormData({
-        name: '',
-        description: '',
-        category: '',
-        price: '',
-        oldPrice: '',
-        quantity: '',
-        sizes: '',
-        images: [],
-      });
-
-      setTimeout(() => dispatch(clearProductState()), 1000);
-    }
-  }, [success, dispatch]);
-
-  useEffect(() => {
-    if (error) {
-      setTimeout(() => dispatch(clearProductState()), 2000);
-    }
-  }, [error, dispatch]);
-
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
-
-  // ✅ LIMIT TO 5 IMAGES
-  const handleImages = (e) => {
-    const files = Array.from(e.target.files);
-
-    if (files.length > 5) {
-      alert('You can upload a maximum of 5 images');
-      return;
-    }
-
-    setFormData({ ...formData, images: files });
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    if (formData.images.length === 0) {
-      alert('Please upload at least one image');
-      return;
-    }
-
-    const data = new FormData();
-
-    Object.keys(formData).forEach((key) => {
-      if (key === 'images') {
-        formData.images.forEach((img) => data.append('images', img));
-      } else {
-        data.append(key, formData[key]);
-      }
-    });
-
-    dispatch(createProduct(data));
-  };
-
   return (
-    <div className="">
-      <h2 className="">Add New Product</h2>
+    <div className=' grid grid-cols-1 md:grid-cols-2 gap-5 w-full mt-10'>
+      {/* title */}
+      <h1 className='text-xl md:text-2xl md:col-span-2'>Add Products</h1>
 
-      {success && <p className="">{success}</p>}
-      {error && <p className="">Unable to add product</p>}
+      {/* Product Namee */}
+      <div className='flex flex-col gap-3'>
+        <label htmlFor="">Product Name</label>
+        <input type="text"className=' bg-[#80808028] p-3 rounded-xl ' />
+      </div>
 
-      <form className="" onSubmit={handleSubmit}>
-        {/* Image Preview */}
-        <div className="">
-          <div className="">
-            {formData.images.map((img, index) => (
-              <img
-                key={index}
-                src={URL.createObjectURL(img)}
-                alt="preview"
-                className=""
-              />
-            ))}
-          </div>
+      <div className='flex flex-col gap-3 md:col-span-2'>
+        <label htmlFor="">Description</label>
+        <textarea type="text"className='bg-[#80808028] p-3 rounded-xl ' />
+      </div>
 
-          <div className="">
-            <FaImage className="" />
-            <input
-              type="file"
-              multiple
-              accept="image/*"
-              onChange={handleImages}
-            />
-            <p className="">{formData.images.length} / 5 images</p>
-          </div>
-        </div>
+      {/* Product Quantity */}
+      <div className='flex flex-col gap-3'>
+        <label htmlFor="">Price</label>
+        <input type="text"className=' bg-[#80808028] p-3 rounded-xl ' />
+      </div>
 
-        <div className="">
-          <FaTag className="" />
-          <input
-            type="text"
-            name="name"
-            placeholder="Product Name"
-            required
-            onChange={handleChange}
-          />
-        </div>
+      {/* Product Price */}
+      <div className='flex flex-col gap-3'>
+        <label htmlFor="">Quantity</label>
+        <input type="text"className=' bg-[#80808028] p-3 rounded-xl ' />
+      </div>
 
-        <div className="">
-          <FaListAlt className="" />
-          <textarea
-            name="description"
-            placeholder="Product Description"
-            required
-            onChange={handleChange}
-          />
-        </div>
-
-        <div className="">
-          <div className="">
-            <select name="category" onChange={handleChange}>
-              <option value="">Select Category</option>
-              <option value="men">Men</option>
-              <option value="women">Women</option>
-              <option value="kids">Kids</option>
-            </select>
-          </div>
-
-          <div className="">
-            <AiOutlineStock className="" />
-            <input
-              type="number"
-              name="quantity"
-              placeholder="Quantity"
-              onChange={handleChange}
-            />
-          </div>
-        </div>
-
-        <div className="">
-          <div className="">
-            <FaDollarSign className="" />
-            <input
-              type="number"
-              name="price"
-              placeholder="Price"
-              required
-              onChange={handleChange}
-            />
-          </div>
-        </div>
-
-        <button className="" disabled={loading}>
-          {loading ? 'Uploading...' : 'Add Product'}
-        </button>
-      </form>
+      {/* Submit */}
+      <button
+        className='bg-linear-to-b from-orange-300 to-orange-600 p-2 md:p-3 rounded-2xl mt-5 text-white'>
+        Submit
+      </button>
     </div>
-  );
-};
+  )
+}
 
-export default AddProduct;
+export default AddProduct
