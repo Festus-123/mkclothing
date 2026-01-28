@@ -31,7 +31,7 @@ const AddProduct = () => {
 
       {/* Submit */}
       <button
-        className='bg-linear-to-b from-orange-300 to-orange-600 p-2 md:p-3 rounded-2xl mt-5 text-white'>
+        className='bg-linear-to-b from-orange-300 to-orange-600 p-2 md:p-3 rounded-2xl mt-5 text-white cursor-pointer hover:opacity-80'>
         Submit
       </button>
     </div>
