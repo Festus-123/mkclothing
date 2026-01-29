@@ -4,7 +4,7 @@ const AddProduct = () => {
   return (
     <div className="flex flex-col gap-10 h-full p-4">
       <h1 className="text-lg md:text-2xl">Add Product</h1>
-      <div className="max-h-screen p-2 md:p-5  text-gray-600 bg-[#80808018] rounded-lg shadow-xl w-full place-self-center md:w-[80%]">
+      <div className="max-h-screen p-2 md:p-5  text-gray-600 border border-[#80808049] shadow-xs w-full place-self-center md:w-[80%]">
         <div className="flex flex-col gap-5">
           <fieldset className="border rounded-lg md:w-[30%]">
             <legend className="px-2 text-gray-600">Product Name*</legend>
