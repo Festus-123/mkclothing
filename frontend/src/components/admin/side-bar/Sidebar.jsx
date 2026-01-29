@@ -22,7 +22,7 @@ const Sidebar = ({ onclick }) => {
       {/* Nav links  */}
       <div className="relative p-4 h-full">
         <div className="flex flex-row items-center justify-between">
-          <h1 className="text-lg">Mk Clothing</h1>
+          <h1 className="text-xl md:text-lg">Mk Clothing</h1>
           <div className="cursor-pointer bg-[#80808054] hover:bg-[#8080808f] rounded-full p-2">
             <GiHamburgerMenu onClick={onclick} />
           </div>
