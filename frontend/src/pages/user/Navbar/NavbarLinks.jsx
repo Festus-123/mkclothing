@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 const links = [
-  { link: 'Home', section: 'home' },
+  { link: 'Home', section: '' },
   { link: 'Collection', section: 'collection' },
   { link: 'About', section: 'about' },
   { link: 'Contact', section: 'contact' },
