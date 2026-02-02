@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { supabase } from '../../../supabse/supabaseClient';
 
 const SignIn = () => {
-  // console.log(motion)
+  console.log(motion)
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -29,6 +29,7 @@ const SignIn = () => {
       setEmail('');
       setPassword('');
       setLoading(false);
+      navigate("/dashboard")
     }else {
       toast.error('Error logging in');
       setLoading(false);
