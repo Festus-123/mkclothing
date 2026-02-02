@@ -1,12 +1,12 @@
 import React from 'react';
-import { toast } from 'sonner';
 import { motion } from 'motion/react';
+import { toast } from 'sonner';
 import { supabase } from '../../../supabse/supabaseClient';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 
 const SignUp = () => {
-  console.log(motion);
+  // console.log(motion);
   const navigate = useNavigate();
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -54,7 +54,7 @@ const SignUp = () => {
           transition={{
             duration: 0.9,
             ease: 'easeOut',
-            repeatDelay: 6,
+            repeatDelay: 15,
             repeat: 10,
           }}
         >
