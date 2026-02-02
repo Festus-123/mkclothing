@@ -15,7 +15,8 @@ const SignIn = () => {
 
   const handleLogIn = async (e) => {
     e.preventDefault();
-    
+    if (loading) return;
+
     if (email.trim() && password.trim()) {
       setLoading(true);
       const { error } = await supabase.auth.signInWithPassword({
@@ -24,15 +25,15 @@ const SignIn = () => {
       });
       if (error) {
         console.error('Error signing in', error.message);
-        setLoading(false)
+        setLoading(false);
         return;
       }
       toast.success('User successfully logged in ✅');
       setEmail('');
       setPassword('');
       setLoading(false);
-      navigate("/dashboard")
-    }else {
+      navigate('/dashboard');
+    } else {
       toast.error('Error logging in');
       setLoading(false);
     }
@@ -78,7 +79,8 @@ const SignIn = () => {
             forgot password?
           </a>
           <button
-            onClick={!loading ? handleLogIn : null}
+            disabled={loading}
+            onClick={handleLogIn}
             className="text-white font-medium p-2 bg-amber-500 rounded-xl cursor-pointer hover:bg-amber-600"
           >
             {loading ? (
@@ -90,7 +92,7 @@ const SignIn = () => {
                   repeat: Infinity,
                   ease: 'linear',
                 }}
-                className="w-6 h-2 p-2 rounded-full border-t-2 border-r-2 border-[white] place-self-center"
+                className="w-6 h-2 p-3 rounded-full border-t-2 border-r-2 border-[white] place-self-center"
               />
             ) : (
               'Sign Up'

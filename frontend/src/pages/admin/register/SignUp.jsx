@@ -152,7 +152,7 @@ const SignUp = () => {
                   repeat: Infinity,
                   ease: 'linear',
                 }}
-                className="w-6 h-2 p-2 rounded-full border-t-2 border-r-2 border-[white] place-self-center"
+                className="w-6 h-2 p-3 rounded-full border-t-2 border-r-2 border-[white] place-self-center"
               />
             ) : (
               'Sign Up'
