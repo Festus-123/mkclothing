@@ -46,7 +46,7 @@ const Sidebar = ({ onclick }) => {
           </div>
           <div
             className="flex flex-row items-center gap-5 text-xl md:text-lg font-medium md:font-light hover:md:p-2 hover:p-3 hover:bg-[#80808054] hover:w-full cursor-pointer"
-            onClick={() => navigate('')}
+            onClick={() => navigate('records')}
           >
             <GiBookPile />
             <h1>Records</h1>

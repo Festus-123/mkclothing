@@ -3,9 +3,9 @@ import React from 'react';
 const AddProduct = () => {
   return (
     <div className="flex flex-col gap-10 h-full p-4">
-      <h1 className="text-lg md:text-2xl">Add Product</h1>
-      <div className=" w-[80%] flex flex-col items-end place-self-center">
-        <div className="max-h-full p-2 text-gray-600 border border-[#80808049] shadow-xs w-full">
+      <h1 className="text-lg md:text-2xl text-amber-800">Add Product</h1>
+      <div className=" md:w-[80%] w-full flex flex-col items-end place-self-center">
+        <div className="max-h-full p-2 md:p-4 text-gray-600 border border-[#80808049] shadow-xs w-full">
           <div className="flex flex-col gap-5">
             <fieldset className="border rounded-lg md:w-[30%]">
               <legend className="px-2 text-gray-600">Product Name*</legend>
@@ -29,7 +29,7 @@ const AddProduct = () => {
               />
             </fieldset>
 
-            <div className="grid drid-cols-1 md:grid-cols-3 gap-2 ">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-2 ">
               <fieldset className="border rounded-lg">
                 <legend className="px-2 text-gray-600">Quntity*</legend>
                 <input

@@ -7,7 +7,7 @@ const Dashboard = () => {
   const [mobileNav, setMobileNav] = useState(false);
 
   return (
-    <div className="reelative flex flex-col w-full h-screen md:p-0">
+    <div className="reelative flex flex-col w-full h-full md:p-0 gap-5">
       <div
         className={`flex flex-row gap-0 w-full border-b border-[#80808040] ${!mobileNav && 'sticky'}`}
       >
