@@ -1,4 +1,5 @@
 import React from 'react';
+// eslint-disable-next-line no-unused-vars
 import { motion } from 'motion/react';
 import { toast } from 'sonner';
 import { supabase } from '../../../supabse/supabaseClient';
@@ -6,12 +7,13 @@ import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 
 const SignUp = () => {
-  console.log(motion);
   const navigate = useNavigate();
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
+
+  // console.log(motion);
 
   const handleSignup = async (e) => {
     e.preventDefault();

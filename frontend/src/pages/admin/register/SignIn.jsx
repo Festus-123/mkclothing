@@ -1,19 +1,21 @@
 import React, { useState } from 'react';
+// eslint-disable-next-line no-unused-vars
 import { motion } from 'motion/react';
 import { toast } from 'sonner';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '../../../supabse/supabaseClient';
 
 const SignIn = () => {
-  console.log(motion)
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState('');
 
+  // console.log(motion)
+
   const handleLogIn = async (e) => {
     e.preventDefault();
-
+    
     if (email.trim() && password.trim()) {
       setLoading(true);
       const { error } = await supabase.auth.signInWithPassword({
