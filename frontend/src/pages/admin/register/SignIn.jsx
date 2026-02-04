@@ -106,7 +106,7 @@ const SignIn = () => {
                 onClick={() => navigate('/signup')}
                 className="underline hover:decoration-0 cursor-pointer"
               >
-                Sign Up
+                Sign In
               </a>
             </span>
           </p>

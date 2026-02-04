@@ -7,9 +7,21 @@ const Dashboard = () => {
   const [mobileNav, setMobileNav] = useState(false);
 
   return (
-    <div className="reelative flex flex-col w-full h-full md:p-0 gap-5">
+    <div className="relative flex flex-col w-full h-full md:p-0 text-white">
       <div
-        className={`flex flex-row gap-0 w-full border-b border-[#80808040] ${!mobileNav && 'sticky'}`}
+        style={{ backgroundImage: 'url(/auth-img.jpg)' }}
+        className="bg-fixed md:bg-cover opacity-50  absolute inset-0 w-full"
+      />
+
+      {/* <div className="bg-fixed bg-linear-to-b from-black/60 via-black/40 to-black absolute inset-0" /> */}
+
+      <div className="bg-fixed bg-linear-to-b w-full h-full from-black/60 via-black/60 to-black absolute inset-0 " />
+
+      <div 
+        className='bg-[#8080805f] w-full absolute inset-0 backdrop-blur-lg'/>
+
+      <div
+        className={`flex flex-row gap-0 w-full h-full fixed md:relative z-10 border-b border-[#fcfcfc40] ${!mobileNav && 'sticky'}`}
       >
         {mobileNav ? (
           <div
@@ -29,24 +41,30 @@ const Dashboard = () => {
           className={`m-2 inset-0 pb-2 flex flex-col md:gap-2 gap-1 ${mobileNav && 'md:ml-[21%]'}`}
         >
           <h1 className="font-medium text-xl md:text-2xl font-sans flex flex-row items-center gap-2">
-            <span className='bg-linear-to-l from-orange-400 to-red-500 text-white p-1 text-xs rounded-full'>M&K</span>
+            <span className="bg-linear-to-l from-orange-400 to-red-500 text-white p-1 text-xs rounded-full">
+              M&K
+            </span>
             M&K Clothing
           </h1>
           <p className="font-light text-xs md:font-sm ">
             Dashboard
-            <span className="bg-blue-100 rounded-full py-0.2 px-2 mr-5">
+            <span className="bg-blue-100 rounded-full py-0.2 px-2 ml-1 text-black">
               admin
             </span>
           </p>
         </div>
       </div>
 
-      <div className={`h-full ${mobileNav && 'md:ml-[21%]'}`}>
+      <div className={`relative h-full ${mobileNav && 'md:ml-[21%]'}`}>
         <Outlet />
       </div>
 
-      <div className={`w-full p-4 flex flex-col items-center justify-center bg-linear-to-b from-orange-400 to-red-600 text-white ${mobileNav && "md:ml-[20%] md:w-[80%]"}`}>
-        <p className='font-light text-xs md:text-lg'>Admin use only! ensure that admin privileges are kept secured</p>
+      <div
+        className={`relative w-full p-4 flex flex-col items-center justify-center bg-linear-to-b from-orange-400 to-red-600 text-white ${mobileNav && 'md:ml-[20%] md:w-[80%]'}`}
+      >
+        <p className="font-light text-xs md:text-lg">
+          Admin use only! ensure that admin privileges are kept secured
+        </p>
       </div>
     </div>
   );
