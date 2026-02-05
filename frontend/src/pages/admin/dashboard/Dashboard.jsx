@@ -7,10 +7,10 @@ const Dashboard = () => {
   const [mobileNav, setMobileNav] = useState(false);
 
   return (
-    <div className="relative flex flex-col w-full h-full md:p-0 text-white">
+    <div className="relative flex flex-col w-full h-full md:p-0">
       <div
         style={{ backgroundImage: 'url(/auth-img.jpg)' }}
-        className="bg-fixed md:bg-cover opacity-50  absolute inset-0 w-full"
+        className="bg-fixed bg-cover bg-center opacity-50  absolute inset-0 w-full"
       />
 
       {/* <div className="bg-fixed bg-linear-to-b from-black/60 via-black/40 to-black absolute inset-0" /> */}
@@ -21,11 +21,11 @@ const Dashboard = () => {
         className='bg-[#8080805f] w-full absolute inset-0 backdrop-blur-lg'/>
 
       <div
-        className={`flex flex-row gap-0 w-full h-full fixed md:relative z-10 border-b border-[#fcfcfc40] ${!mobileNav && 'sticky'}`}
+        className={`flex flex-row gap-0 w-full  fixed md:relative z-10 border-b md:bg-[#ffffff9b] border-[#fcfcfc40] ${!mobileNav && 'fixed top-0  bg-[#ffffff9b] backdrop-blur-lg'} ${mobileNav && "h-full"} `}
       >
         {mobileNav ? (
           <div
-            className={`h-full  ${mobileNav ? 'absolute md:fixed w-[90%] md:w-[20%]' : 'hidden'} `}
+            className={`h-full  ${mobileNav ? 'absolute md:fixed w-[80%] sm:w-[60%]  md:w-[30%] lg:fixed lg:w-[25%]' : 'hidden'} `} 
           >
             <Sidebar onclick={() => setMobileNav(false)} />
           </div>
@@ -38,7 +38,7 @@ const Dashboard = () => {
         )}
 
         <div
-          className={`m-2 inset-0 pb-2 flex flex-col md:gap-2 gap-1 ${mobileNav && 'md:ml-[21%]'}`}
+          className={`m-2 inset-0 pb-2 flex flex-col md:gap-2 gap-1 ${mobileNav && 'md:ml-[31%] lg:ml-[26%]'}`}
         >
           <h1 className="font-medium text-xl md:text-2xl font-sans flex flex-row items-center gap-2">
             <span className="bg-linear-to-l from-orange-400 to-red-500 text-white p-1 text-xs rounded-full">
@@ -55,7 +55,7 @@ const Dashboard = () => {
         </div>
       </div>
 
-      <div className={`relative h-full ${mobileNav && 'md:ml-[21%]'}`}>
+      <div className={`relative h-full ${mobileNav && 'md:ml-[31%] lg:ml-[26%]'} ${!mobileNav && "mt-20"}`}>
         <Outlet />
       </div>
 
