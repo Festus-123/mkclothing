@@ -15,6 +15,7 @@ import SignIn from './pages/admin/register/SignIn.jsx';
 import Dashboard from './pages/admin/dashboard/Dashboard.jsx';
 import AddProduct from './pages/admin/pages/add-products/AddProduct.jsx';
 import Record from './pages/admin/pages/records/Record.jsx';
+import DisplayProducts from './pages/admin/pages/display-products/DisplayProducts.jsx';
 
 function App() {
   return (
@@ -41,6 +42,7 @@ function App() {
 
         {/* Dashboard routes */}
         <Route path="/dashboard" element={<Dashboard />}>
+          <Route path="products" element={<DisplayProducts />} />
           <Route path="add-product" element={<AddProduct />} />
           <Route path="records" element={<Record />} />
         </Route>

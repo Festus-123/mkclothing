@@ -8,12 +8,8 @@ const Dashboard = () => {
 
   return (
     <div className="relative flex flex-col w-full h-full md:p-0">
-      <div
-        style={{ backgroundImage: 'url(/auth-img.jpg)' }}
-        className="bg-fixed bg-cover bg-center opacity-50  absolute inset-0 w-full"
-      />
 
-      {/* <div className="bg-fixed bg-linear-to-b from-black/60 via-black/40 to-black absolute inset-0" /> */}
+
 
       <div className="bg-fixed bg-linear-to-b w-full h-full from-black/60 via-black/60 to-black absolute inset-0 " />
 

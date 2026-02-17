@@ -38,7 +38,7 @@ const Sidebar = ({ onclick }) => {
         <div className='w-full h-[80%] md:h-[40%] flex flex-col items-center md:items-start justify-center md:justify-baseline gap-10 md:gap-5'>
           <div
             className="flex flex-row items-center gap-5 text-xl md:text-lg font-medium md:font-light hover:md:p-2 hover:p-3 hover:bg-[#80808054] hover:w-full cursor-pointer"
-            onClick={() => navigate('')}
+            onClick={() => navigate('products')}
           >
             <GiFlatPlatform />
             <h1>Products</h1>
@@ -61,15 +61,15 @@ const Sidebar = ({ onclick }) => {
         </div>
         <div className='flex flex-col gap-2'>
           <div
-            className="p-3 flex flex-row items-center gap-5 text-sm md:text-lg font-light md:font-light hover:md:p-2 hover:p-3 hover:bg-[#80808054] hover:w-full cursor-pointer "
-            onClick={() => navigate('records')}
+            className="p-3 flex flex-row items-center gap-5 text-sm md:text-lg font-light md:font-light hover:md:p-3 hover:p-3 hover:bg-[#80808054] hover:w-full cursor-pointer "
+            onClick={() => navigate('')}
           >
             <GiSettingsKnobs size={20}/>
             <h1>Settings</h1>
           </div>
           <div
-            className="px-3 flex flex-row items-center gap-5 text-sm md:text-lg font-light md:font-light hover:md:p-2 hover:w-full cursor-pointer "
-            onClick={() => navigate('records')}
+            className="px-3 flex flex-row items-center gap-5 text-sm md:text-lg font-light md:font-light hover:w-full cursor-pointer "
+            onClick={() => navigate('')}
           >
             <GiFloatingGhost size={20}/>
             <h1>Log Out</h1>

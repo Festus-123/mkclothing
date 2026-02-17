@@ -1,6 +1,36 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { supabase } from '../../../../supabse/supabaseClient';
+import { toast } from 'sonner';
 
 const AddProduct = () => {
+  const [newProduct, setNewProduct] = useState({
+    name: '',
+    description: '',
+    quantity: 0,
+    price: 0,
+    discount: 0,
+  });
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const { error } = await supabase.from('products').insert(newProduct).single();
+
+    if (error) {
+      console.error('error adding task', error.message);
+    }
+
+    toast.success("succesfully added task")
+
+    setNewProduct({
+      name: '',
+      description: '',
+      quantity: 0,
+      price: 0,
+      discount: 0,
+    });
+  };
+
   return (
     <div className="flex flex-col gap-10 h-full p-4">
       <h1 className="text-lg md:text-2xl text-amber-400">Add Product</h1>
@@ -12,19 +42,24 @@ const AddProduct = () => {
               <input
                 type="text"
                 name=""
-                id=""
+                onChange={(e) =>
+                  setNewProduct((prev) => ({ ...prev, name: e.target.value }))
+                }
                 className="w-full p-2 outline-none"
               />
             </fieldset>
 
             <fieldset className="border rounded-lg w-full">
-              <legend className="px-2 ">
-                Product Description*
-              </legend>
+              <legend className="px-2 ">Product Description*</legend>
               <textarea
                 type="text"
                 name=""
-                id=""
+                onChange={(e) =>
+                  setNewProduct((prev) => ({
+                    ...prev,
+                    description: e.target.value,
+                  }))
+                }
                 className="w-full p-2 outline-none min-h-15 max-h-30 font-mono"
               />
             </fieldset>
@@ -35,7 +70,12 @@ const AddProduct = () => {
                 <input
                   type="number"
                   name=""
-                  id=""
+                  onChange={(e) =>
+                    setNewProduct((prev) => ({
+                      ...prev,
+                      quantity: e.target.value,
+                    }))
+                  }
                   className="w-full p-2 outline-none "
                 />
               </fieldset>
@@ -44,18 +84,23 @@ const AddProduct = () => {
                 <input
                   type="number"
                   name=""
-                  id=""
+                  onChange={(e) =>
+                    setNewProduct((prev) => ({ ...prev, price: e.target.value }))
+                  }
                   className="w-full p-2 outline-none"
                 />
               </fieldset>
               <fieldset className="border rounded-lg">
-                <legend className="px-2 ">
-                  Discount (if any)*
-                </legend>
+                <legend className="px-2 ">Discount (if any)*</legend>
                 <input
                   type="number"
                   name=""
-                  id=""
+                  onChange={(e) =>
+                    setNewProduct((prev) => ({
+                      ...prev,
+                      discount: e.target.value,
+                    }))
+                  }
                   className="w-full p-2 outline-none"
                 />
               </fieldset>
@@ -72,7 +117,10 @@ const AddProduct = () => {
             </fieldset>
           </div>
         </div>
-        <button className="p-2 md:p-3 bg-linear-to-b from-orange-400 to-red-400 text-white w-20  md:w-40 cursor-pointer hover:opacity-60 my-1">
+        <button
+          onClick={handleSubmit}
+          className="p-2 md:p-3 bg-linear-to-b from-orange-400 to-red-400 text-white w-20  md:w-40 cursor-pointer hover:opacity-60 my-1"
+        >
           Submit
         </button>
       </div>
