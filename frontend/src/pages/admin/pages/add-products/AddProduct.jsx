@@ -20,8 +20,7 @@ const AddProduct = () => {
       console.error('error adding task', error.message);
     }
 
-    toast.success("succesfully added task")
-
+    
     setNewProduct({
       name: '',
       description: '',
@@ -29,6 +28,8 @@ const AddProduct = () => {
       price: 0,
       discount: 0,
     });
+    
+    toast.success("succesfully added task")
   };
 
   return (

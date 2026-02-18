@@ -55,13 +55,6 @@ const Dashboard = () => {
         <Outlet />
       </div>
 
-      <div
-        className={`relative w-full p-4 flex flex-col items-center justify-center bg-linear-to-b from-orange-400 to-red-600 text-white ${mobileNav && 'md:ml-[20%] md:w-[80%]'}`}
-      >
-        <p className="font-light text-xs md:text-lg">
-          Admin use only! ensure that admin privileges are kept secured
-        </p>
-      </div>
     </div>
   );
 };
