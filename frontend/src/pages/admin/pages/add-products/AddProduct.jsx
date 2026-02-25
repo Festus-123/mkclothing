@@ -2,8 +2,10 @@ import React, { useState } from 'react';
 import { supabase } from '../../../../supabse/supabaseClient';
 import { toast } from 'sonner';
 import { FaTimes } from 'react-icons/fa';
+import { useNavigate } from 'react-router-dom';
 
 const AddProduct = () => {
+  const navigate = useNavigate();
   const [imageFile, setImageFile] = useState([]);
   const [preview, setPreview] = useState([]);
   const [newProduct, setNewProduct] = useState({
@@ -97,10 +99,11 @@ const AddProduct = () => {
   // }, [preview]);
 
   return (
-    <div className="flex flex-col gap-10 h-full p-4">
-      <h1 className="text-lg md:text-2xl text-amber-800">Add Product</h1>
-      <div className=" md:w-[80%] w-full flex flex-col items-end place-self-center">
-        <div className="max-h-full p-4 md:p-6 bg-[#8080800a] rounded-lg shadow-md w-full">
+    <div className="fixed inset-0 z-50 bg-black/40 flex items-center justify-center p-2  backdrop-blur-md overflow-y-hidden">
+      <div className='flex flex-col bg-white/90 rounded-xl p-4 w-full md:w-[80%]'>
+      <h1 className="text-lg md:text-2xl text-amber-600">Add Product</h1>
+      <div className="w-full flex flex-col">
+        <div className="p-4 md:p-6  w-full">
           <div className="flex flex-col gap-5">
             <fieldset className="border rounded-lg md:w-[30%]">
               <legend className="px-2 ">Product Name*</legend>
@@ -203,12 +206,21 @@ const AddProduct = () => {
             </fieldset>
           </div>
         </div>
+        <div className='flex flex-row items-center w-full gap-2 py-1 border-t border-gray-400 pt-4'>
+        <button
+          onClick={() => navigate(-1)}
+          className="rounded-xl p-3 bg-red-400 w-full"
+          >
+          Go Back
+        </button>
         <button
           onClick={handleSubmit}
-          className="p-2 md:p-3 bg-amber-400 w-20  md:w-40 cursor-pointer hover:opacity-60 my-1"
-        >
+          className="cursor-pointer rounded-xl p-3 bg-amber-400 w-full"
+          >
           Submit
         </button>
+          </div>
+      </div>
       </div>
     </div>
   );

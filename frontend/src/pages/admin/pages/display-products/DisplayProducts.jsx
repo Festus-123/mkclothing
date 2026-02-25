@@ -82,11 +82,11 @@ const DisplayProducts = () => {
         />
       )}
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-5 p-2 rounded-xl items-center justify-center">
+      <div className="grid grid-cols-1 md:grid-cols-1  gap-5 p-2 rounded-xl items-center justify-center">
         {products.map((item, key) => (
           <div
             key={key}
-            className="relative rounded-xl border-2 border-gray-500  h-120"
+            className="relative rounded-xl border-2 border-gray-500  h-100"
           >
             {item.image_urls?.length > 0 && (
               <div className="rounded-xl w-full h-full">
@@ -99,13 +99,21 @@ const DisplayProducts = () => {
             )}
             <div className='absolute bottom-0 w-full h-60 bg-black/60 text-white/80 rounded-xl p-4 flex flex-col gap-2'>
             <h1 className='text-xl '>{item.name}</h1>
-            <p>{item.description}</p>
-            <p>{item.quantity}</p>
-            <p>{ `#~ ${item.price.toLocaleString()}`}</p>
-            <p>{`${item.discount} %`}</p>
-            <div className='flex flex-row items-center gap-5 place-self-end'>
+            <p className='text-xs md:text-sm'>{item.description}</p>
+            <p
+              style={{ width: `${item.quantity + 10}%`}} 
+              className='bg-white/10 '>{`${item.quantity}~`}</p>
+            <p
+              style={{ width: `${item.price >= 100_000 ? "100%" : (item.price / 100_000) * 100}%`}} 
+              className='flex gap-5 bg-white/10'> <span className='line-through text-gray-300 '>{ `₦~ ${item.price.toLocaleString()}`} </span> <span className=''>{`₦ ${(item.price - (item.price * item.discount / 100)).toLocaleString()}`}</span> </p>
+            <p 
+              style={{ width: `${item.discount}%`}}
+              className={`bg-white/10 `}>{`${item.discount} %`}</p>
+
+            <div className='flex flex-row items-center gap-3 absolute bottom-5 right-5'>
             <p
               onClick={() => {
+                console.log(item.discount)
                 setClose(true);
                 setProduct(item);
               }}

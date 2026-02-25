@@ -74,16 +74,16 @@ const EditProducts = () => {
   };
 
   return (
-    <div className="fixed inset-0 z-50 bg-black/40 flex items-center justify-center p-2  backdrop-blur-md">
+    <div className="fixed inset-0 z-50 bg-black/40 flex items-center justify-center p-2  backdrop-blur-md overflow-y-hidden">
       {/* Modal content */}
-      <div className="bg-white rounded-xl shadow-md p-6 w-full md:w-[80%] max-h-[90%] md:max-h-max flex flex-col gap-5">
+      <div className="bg-white/90 rounded-xl shadow-md p-6 w-full md:w-[80%] max-h-[90%] md:max-h-max flex flex-col gap-5">
         <div className="w-full">
           <h1 className="font-medium text-xl md:text-2xl text-amber-600">
             Edit Products
           </h1>
         </div>
 
-        <div className='overflow-y-scroll flex flex-col gap-2'>
+        {/* <div className='overflow-y-scroll flex flex-col gap-2'> */}
         <div className="flex flex-col gap-5"></div>
         <fieldset className="border rounded-lg md:w-[30%]">
           <legend className="px-2 ">Product Name*</legend>
@@ -109,7 +109,7 @@ const EditProducts = () => {
           />
         </fieldset>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-2 ">
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-2 ">
           <fieldset className="border rounded-lg">
             <legend className="px-2 ">Quntity*</legend>
             <input
@@ -121,7 +121,7 @@ const EditProducts = () => {
                   quantity: Number(e.target.value),
                 }))
               }
-              className="w-full p-2 outline-none "
+              className="w-full p-2 md:p-1 outline-none "
             />
           </fieldset>
           <fieldset className="border rounded-lg">
@@ -135,7 +135,7 @@ const EditProducts = () => {
                   price: Number(e.target.value),
                 }))
               }
-              className="w-full p-2 outline-none"
+              className="w-full p-2 md:p-1 outline-none"
             />
           </fieldset>
           <fieldset className="border rounded-lg">
@@ -149,12 +149,12 @@ const EditProducts = () => {
                   discount: Number(e.target.value),
                 }))
               }
-              className="w-full p-2 outline-none"
+              className="w-full p-2 md:p-2 outline-none"
             />
           </fieldset>
         </div>
         {/* Image preview */}
-        <div className="overflow-x-scroll  p-2 rounded-xl shadow-2xs flex flex-row items-center gap-5">
+        <div className="overflow-x-scroll p-2 rounded-xl shadow-2xs flex flex-row items-center gap-5">
           {previewImages?.length > 0 && previewImages.map((fileName, index) => (
             <img
               key={index}
@@ -163,19 +163,18 @@ const EditProducts = () => {
               `${fileName}` :
               `${import.meta.env.VITE_SUPABASE_URL}/storage/v1/object/public/product-images/${fileName}`}
               alt="preview"
-              className="w-50 h-50 object-cover rounded-xl"
+              className="w-30 h-30 md:w-50 md:h-50 object-cover rounded-xl"
             />
           ))}
-          <div className="bg-white cursor-pointer flex items-center justify-center shadow-md text-amber-800 text-center w-50 h-50">
+          <div className="bg-white cursor-pointer flex items-center justify-center shadow-md text-amber-800 text-center w-30 h-30 md:w-50 md:h-50">
             <input
               type="file"
               onChange={handleImage}
               multiple
-              className="rounded-xl w-full"
+              className="rounded-xl w-full "
             />
-            {/* <p>Edit-images</p> */}
           </div>
-        </div>
+        {/* </div> */}
         </div>
 
 

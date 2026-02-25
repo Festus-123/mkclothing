@@ -2,9 +2,11 @@ import React, { useState } from 'react';
 // import { FaMenu } from "react-icons/fa"
 import { GiHamburgerMenu, GiBookPile, GiFlatPlatform, GiFloatingGhost, GiSettingsKnobs } from 'react-icons/gi';
 
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 
 const Sidebar = ({ onclick }) => {
+  const location = useLocation();
   const navigate = useNavigate();
   const [move, setMove] = useState("right")
 
@@ -43,13 +45,14 @@ const Sidebar = ({ onclick }) => {
             <GiFlatPlatform />
             <h1>Products</h1>
           </div>
-          <div
+          <Link
             className="flex flex-row items-center gap-5 text-xl md:text-lg font-medium md:font-light hover:md:p-2 hover:p-3 hover:bg-[#80808054] hover:w-full cursor-pointer"
-            onClick={() => navigate('add-product')}
+            to={'/dashboard/add-product'}
+            state={{ backgroundLocation: location }}
           >
             <GiFlatPlatform />
             <h1>Add Products</h1>
-          </div>
+          </Link>
           <div
             className="flex flex-row items-center gap-5 text-xl md:text-lg font-medium md:font-light hover:md:p-2 hover:p-3 hover:bg-[#80808054] hover:w-full cursor-pointer"
             onClick={() => navigate('records')}

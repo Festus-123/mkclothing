@@ -50,7 +50,8 @@ function App() {
         </Route>
 
         {/* Full page edit fallback */}
-        <Route path="/product/:id/edit" element={<EditProducts />} />
+        <Route path="dashboard/product/:id/edit" element={<EditProducts />} />
+        <Route path="/dashboard/add-product" element={<AddProduct />} />
 
         <Route path="/signup" element={<SignUp />} />
         <Route path="/signin" element={<SignIn />} />
@@ -60,6 +61,7 @@ function App() {
       {state?.backgroundLocation && (
         <Routes>
           <Route path="/dashboard/products/:id/edit" element={<EditProducts />} />
+          <Route path="/dashboard/add-product" element={<AddProduct />} />
         </Routes>
       )}
     </>
