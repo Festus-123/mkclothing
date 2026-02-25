@@ -98,9 +98,9 @@ const AddProduct = () => {
 
   return (
     <div className="flex flex-col gap-10 h-full p-4">
-      <h1 className="text-lg md:text-2xl text-amber-400">Add Product</h1>
+      <h1 className="text-lg md:text-2xl text-amber-800">Add Product</h1>
       <div className=" md:w-[80%] w-full flex flex-col items-end place-self-center">
-        <div className="max-h-full p-4 md:p-6 text-[#ffffffb5] border border-[#ffffff5e] shadow-xs w-full">
+        <div className="max-h-full p-4 md:p-6 bg-[#8080800a] rounded-lg shadow-md w-full">
           <div className="flex flex-col gap-5">
             <fieldset className="border rounded-lg md:w-[30%]">
               <legend className="px-2 ">Product Name*</legend>
@@ -205,7 +205,7 @@ const AddProduct = () => {
         </div>
         <button
           onClick={handleSubmit}
-          className="p-2 md:p-3 bg-linear-to-b from-orange-400 to-red-400 text-white w-20  md:w-40 cursor-pointer hover:opacity-60 my-1"
+          className="p-2 md:p-3 bg-amber-400 w-20  md:w-40 cursor-pointer hover:opacity-60 my-1"
         >
           Submit
         </button>

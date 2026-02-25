@@ -9,15 +9,13 @@ const Dashboard = () => {
   return (
     <div className="relative flex flex-col w-full h-full md:p-0">
 
+      {/* <div className="bg-fixed bg-linear-to-b w-full h-full from-black/60 via-black/60 to-black absolute inset-0 " /> */}
 
-
-      <div className="bg-fixed bg-linear-to-b w-full h-full from-black/60 via-black/60 to-black absolute inset-0 " />
-
-      <div 
-        className='bg-[#8080805f] w-full absolute inset-0 backdrop-blur-lg'/>
+      {/* <div 
+        className='bg-[#8080805f] w-full absolute inset-0 backdrop-blur-lg'/> */}
 
       <div
-        className={`flex flex-row gap-0 w-full  fixed md:relative z-10 border-b md:bg-[#ffffff9b] border-[#fcfcfc40] ${!mobileNav && 'fixed top-0  bg-[#ffffff9b] backdrop-blur-lg'} ${mobileNav && "h-full"} `}
+        className={`flex flex-row gap-0 w-full  fixed md:relative z-10 border-b border-gray-400 md:bg-[#ffffff9b] border-[#fcfcfc40] ${!mobileNav && 'fixed top-0  bg-[#ffffff9b] backdrop-blur-lg'} ${mobileNav && "h-full"} `}
       >
         {mobileNav ? (
           <div
@@ -51,7 +49,7 @@ const Dashboard = () => {
         </div>
       </div>
 
-      <div className={`relative h-full ${mobileNav && 'md:ml-[31%] lg:ml-[26%]'} ${!mobileNav && "mt-20"}`}>
+      <div className={`relative h-full mt-15 ${mobileNav && 'md:ml-[31%] lg:ml-[26%]'} ${!mobileNav && ""}`}>
         <Outlet />
       </div>
 

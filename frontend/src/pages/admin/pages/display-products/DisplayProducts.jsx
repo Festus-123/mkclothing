@@ -73,7 +73,7 @@ const DisplayProducts = () => {
   return (
     // container
     <div className="w-full p-4 flex flex-col gap-10">
-      <h1 className="text-lg md:text-4xl text-white">Products</h1>
+      <h1 className="text-lg md:text-4xl ">Products</h1>
 
       {close && (
         <Confirm
@@ -82,26 +82,28 @@ const DisplayProducts = () => {
         />
       )}
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-5 p-2 border rounded-xl border-white items-center justify-center">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-5 p-2 rounded-xl items-center justify-center">
         {products.map((item, key) => (
           <div
             key={key}
-            className="flex flex-col items-center gap-3 border border-white p-2 rounded-xl"
+            className="relative rounded-xl border-2 border-gray-500  h-120"
           >
             {item.image_urls?.length > 0 && (
-              <div className="rounded-2xl w-[90%] h-70">
+              <div className="rounded-xl w-full h-full">
                 <img
                   src={`${import.meta.env.VITE_SUPABASE_URL}/storage/v1/object/public/product-images/${item.image_urls[0]}`}
                   alt={item.name}
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-cover rounded-xl"
                 />
               </div>
             )}
-            <h1>{item.name}</h1>
+            <div className='absolute bottom-0 w-full h-60 bg-black/60 text-white/80 rounded-xl p-4 flex flex-col gap-2'>
+            <h1 className='text-xl '>{item.name}</h1>
             <p>{item.description}</p>
             <p>{item.quantity}</p>
-            <p>{item.price}</p>
-            <p>{item.discount}</p>
+            <p>{ `#~ ${item.price.toLocaleString()}`}</p>
+            <p>{`${item.discount} %`}</p>
+            <div className='flex flex-row items-center gap-5 place-self-end'>
             <p
               onClick={() => {
                 setClose(true);
@@ -111,7 +113,11 @@ const DisplayProducts = () => {
             >
               DELETE
             </p>
+            <div className='bg-white py-1 px-4 text-black rounded-xl '>
             <ProductItem product={item} />
+            </div>
+            </div>
+            </div>
           </div>
         ))}
       </div>
