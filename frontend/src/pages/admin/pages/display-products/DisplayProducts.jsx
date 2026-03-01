@@ -101,7 +101,7 @@ const DisplayProducts = () => {
             <h1 className='text-xl '>{item.name}</h1>
             <p className='text-xs md:text-sm'>{item.description}</p>
             <p
-              style={{ width: `${item.quantity + 10}%`}} 
+              style={{ width: `${item.quantity > 100 ? "100%" : (item.quantity / 100) * 100}%`}} 
               className='bg-white/10 '>{`${item.quantity}~`}</p>
             <p
               style={{ width: `${item.price >= 100_000 ? "100%" : (item.price / 100_000) * 100}%`}} 

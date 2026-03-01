@@ -27,10 +27,10 @@ const AdminRoutes = () => {
 
       {/* MODAL ROUTE */}
       {state?.backgroundLocation && (
-        <Routes>
+        <Route>
           <Route path="/dashboard/products/:id/edit" element={<EditProducts />} />
           <Route path="/dashboard/add-product" element={<AddProduct />} />
-        </Routes>
+        </Route>
       )}
     </Routes>
   );

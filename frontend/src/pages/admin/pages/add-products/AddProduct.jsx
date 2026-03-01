@@ -31,6 +31,13 @@ const AddProduct = () => {
     setPreview(previewUrl);
   };
 
+  const fethcProducts = async () => {
+    await supabase
+      .from('products')
+      .select('*')
+      .order('created_at', { ascending: true });
+  }
+
   const handleRemoveImagePreview = (indexToRemove) => {
     setImageFile((prev) => prev.filter((_, index) => index !== indexToRemove));
 
@@ -82,6 +89,7 @@ const AddProduct = () => {
     }
 
     toast.success('succesfully added task');
+    fethcProducts();
 
     setNewProduct({
       name: '',
