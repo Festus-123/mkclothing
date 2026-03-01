@@ -17,12 +17,20 @@ function App() {
   const fetchSession = async () => {
     const currentSession = await supabase.auth.getSession()
     console.log("The sessions",currentSession.data)
-    setSession(currentSession.data);
+    setSession(currentSession.data.session);
   }
   
 
   useEffect(() => {
     fetchSession();
+
+    const { data: authListener } = supabase.auth.onAuthStateChange((_event, session) => {
+      setSession(session);
+    })
+
+    return () => {
+      authListener.subscription.unsubscribe();
+    };
   }, [])
 
   return (

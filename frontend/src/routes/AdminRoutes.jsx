@@ -15,7 +15,7 @@ const AdminRoutes = () => {
     <Routes>
       {/* Dashbaord */}
       <Route path="/dashboard" element={<Dashboard />}>
-        <Route path="products" element={<DisplayProducts />} />
+        <Route index element={<DisplayProducts />} />
         <Route path="products/:id/edit" element={<EditProducts />} />
         <Route path="add-product" element={<AddProduct />} />
         <Route path="records" element={<Record />} />

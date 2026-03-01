@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 // import { FaMenu } from "react-icons/fa"
 import { GiHamburgerMenu, GiBookPile, GiFlatPlatform, GiFloatingGhost, GiSettingsKnobs } from 'react-icons/gi';
-
+import { supabase } from '../../../supabse/supabaseClient';
 import { Link, useNavigate } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
+import { toast } from 'sonner';
 
 const Sidebar = ({ onclick }) => {
   const location = useLocation();
@@ -13,6 +14,14 @@ const Sidebar = ({ onclick }) => {
   const handleMovement = () => {
     if(move === "right") setMove("left")
     if(move === "left") setMove("right")
+  }
+
+  const handleLogout = async () => {
+    toast.success("Logged out successfully")
+    // function to logout the user
+    console.log("logging out")
+    await supabase.auth.signOut();
+    navigate('/signin');
   }
 
   return (
@@ -72,7 +81,7 @@ const Sidebar = ({ onclick }) => {
           </div>
           <div
             className="px-3 flex flex-row items-center gap-5 text-sm md:text-lg font-light md:font-light hover:w-full cursor-pointer "
-            onClick={() => navigate('')}
+            onClick={handleLogout}
           >
             <GiFloatingGhost size={20}/>
             <h1>Log Out</h1>
