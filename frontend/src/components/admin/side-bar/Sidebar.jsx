@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-// import { FaMenu } from "react-icons/fa"
-import { GiHamburgerMenu, GiBookPile, GiFlatPlatform, GiFloatingGhost, GiSettingsKnobs } from 'react-icons/gi';
+import React from 'react';
+import { FiPackage, FiBell, FiPlusCircle, FiSettings, FiMenu, FiFileText  } from 'react-icons/fi';
+import { FaSignOutAlt } from "react-icons/fa";
 import { supabase } from '../../../supabse/supabaseClient';
 import { Link, useNavigate } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
@@ -9,94 +9,76 @@ import { toast } from 'sonner';
 const Sidebar = ({ onclick }) => {
   const location = useLocation();
   const navigate = useNavigate();
-  const [move, setMove] = useState("right")
 
-  const handleMovement = () => {
-    if(move === "right") setMove("left")
-    if(move === "left") setMove("right")
-  }
+
 
   const handleLogout = async () => {
-    toast.success("Logged out successfully")
+    toast.success('Logged out successfully');
     // function to logout the user
-    console.log("logging out")
+    console.log('logging out');
     await supabase.auth.signOut();
     navigate('/signin');
-  }
+  };
+
+  const Links = [
+    {
+      name: 'Products', icon: <FiPackage />, link: '/dashboard',
+    },
+    {
+      name: 'Add Products', icon: <FiPlusCircle />, link: 'add-product',
+    },
+    {
+      name: 'Logs', icon: <FiFileText />, link: '/dashboard/records',
+    },
+    {
+      name: "Annoucemnets", icon: <FiBell />, link: '/dashboard/annoucemnets',
+    },
+    {
+      name: 'Settings', icon: <FiSettings />, link: '/dashboard/settings',
+    },
+  ];
 
   return (
-    <div className="relative h-full text-white">
-      <div
-        className="absolute inset-0 bg-cover bg-center"
-        style={{
-          backgroundImage: 'url(/sidebar-img.jpg)',
-          opacity: 0.5,
-        }}
-      />
-
-      <div className="absolute inset-0 bg-linear-to-b from-[darkred]/40 via-[darkred]/40 to-[darkred]/60 backdrop-blur-md" />
+    <div className="relative h-full bg-white">
+      <div className="absolute inset-0 bg-linear-to-b from-[darkred]/10 via-[white]/10 to-[white]/10 backdrop-blur-sm" />
 
       {/* Nav links  */}
-      <div className="relative p-4 h-full">
+      <div className="relative p-4 h-full flex flex-col gap-10">
         <div className="flex flex-row items-center justify-between">
           <h1 className="text-xl md:text-lg">Mk Clothing</h1>
-          <div className="cursor-pointer bg-[#80808054] hover:bg-[#8080808f] rounded-full p-2">
-            <GiHamburgerMenu onClick={onclick} />
+          <div className="cursor-pointer bg-[#a5888811] hover:bg-[#917e7e15] rounded-full p-2">
+            <FiMenu onClick={onclick} />
           </div>
         </div>
 
         {/* Nav Links  */}
-        <div className='w-full h-[80%] md:h-[40%] flex flex-col items-center md:items-start justify-center md:justify-baseline gap-10 md:gap-5'>
-          <div
-            className="flex flex-row items-center gap-5 text-xl md:text-lg font-medium md:font-light hover:md:p-2 hover:p-3 hover:bg-[#80808054] hover:w-full cursor-pointer"
-            onClick={() => navigate('products')}
-          >
-            <GiFlatPlatform />
-            <h1>Products</h1>
-          </div>
-          <Link
-            className="flex flex-row items-center gap-5 text-xl md:text-lg font-medium md:font-light hover:md:p-2 hover:p-3 hover:bg-[#80808054] hover:w-full cursor-pointer"
-            to={'/dashboard/add-product'}
-            state={{ backgroundLocation: location }}
-          >
-            <GiFlatPlatform />
-            <h1>Add Products</h1>
-          </Link>
-          <div
-            className="flex flex-row items-center gap-5 text-xl md:text-lg font-medium md:font-light hover:md:p-2 hover:p-3 hover:bg-[#80808054] hover:w-full cursor-pointer"
-            onClick={() => navigate('records')}
-          >
-            <GiBookPile />
-            <h1>Records</h1>
-          </div>
-
+        <div className="flex flex-col justify-between h-[88%]">
+        <div className="flex flex-col gap-3">
+          {Links.map((item, key) => (
+            <Link
+              to={item.link}
+              key={key}
+              className={`flex flex-row items-center gap-2 text-lg font-light cursor-pointer ${
+                location.pathname === item.link && 'bg-[#986b6b11] hover:bg-[#986b6b1e] text-amber-900'
+              }`}
+            >
+              {item.icon}
+              <h1>{item.name}</h1>
+            </Link>
+          ))}
         </div>
-        <div className='flex flex-col gap-2'>
+
+        {/* Logout  */}
           <div
-            className="p-3 flex flex-row items-center gap-5 text-sm md:text-lg font-light md:font-light hover:md:p-3 hover:p-3 hover:bg-[#80808054] hover:w-full cursor-pointer "
-            onClick={() => navigate('')}
-          >
-            <GiSettingsKnobs size={20}/>
-            <h1>Settings</h1>
-          </div>
-          <div
-            className="px-3 flex flex-row items-center gap-5 text-sm md:text-lg font-light md:font-light hover:w-full cursor-pointer "
+            className="px-3 flex flex-row items-center gap-5 text-sm md:text-lg font-light hover:bg-[#986b6b11] cursor-pointer "
             onClick={handleLogout}
           >
-            <GiFloatingGhost size={20}/>
+            <FaSignOutAlt size={20} />
             <h1>Log Out</h1>
           </div>
-          <div className='flex flex-row items-center gap-10 md:gap-0 md:justify-between font-light text-sm md:text-lg md:w-full p-3 cursor-pointer'>
-            <p>Enable Sign uo</p>
-            {/* Knob container */}
-            <div 
-              onClick={handleMovement}
-              className='w-12 h-5 p-2 shadow-sm flex flex-col items-center justify-center bg-[#ffffff4d] backdrop-blur-xs rounded-full'>
-              {/* Knob */}
-              <div className={`absolute rounded-full bg-[#ffffff57] w-6 p-3 backdrop-blur-md shadow-md ${move === "right" ? "left-0" : "right-0 bg-amber-600 transition-discrete ease-out"}`}/>
-            </div>
-          </div>
         </div>
+        
+
       </div>
     </div>
   );

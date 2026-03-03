@@ -4,3 +4,7 @@
 * {
   box-sizing: border-box;
 }
+
+.slick-slide > div {
+  margin: 0 5px;
+}

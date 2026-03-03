@@ -2,38 +2,38 @@ import React, { useState } from 'react';
 import Sidebar from '../../../components/admin/side-bar/Sidebar';
 import { Outlet } from 'react-router-dom';
 import { GiHamburgerMenu } from 'react-icons/gi';
+// eslint-disable-next-line no-unused-vars
+import { motion } from 'framer-motion';
 
 const Dashboard = () => {
   const [mobileNav, setMobileNav] = useState(false);
 
   return (
     <div className="relative flex flex-col w-full h-full md:p-0">
-
-      {/* <div className="bg-fixed bg-linear-to-b w-full h-full from-black/60 via-black/60 to-black absolute inset-0 " /> */}
-
-      {/* <div 
-        className='bg-[#8080805f] w-full absolute inset-0 backdrop-blur-lg'/> */}
-
       <div
-        className={`flex flex-row gap-0 w-full  fixed md:relative z-10 border-b border-gray-400 md:bg-[#ffffff9b] border-[#fcfcfc40] ${!mobileNav && 'fixed top-0  bg-[#ffffff9b] backdrop-blur-lg'} ${mobileNav && "h-full"} `}
+        className={`w-full h-auto flex border-b border-gray-500 z-10 bg-white/10 p-2 gap-2`}
       >
         {mobileNav ? (
-          <div
-            className={`h-full  ${mobileNav ? 'absolute md:fixed w-[80%] sm:w-[60%]  md:w-[30%] lg:fixed lg:w-[25%]' : 'hidden'} `} 
+          <motion.div
+            className="fixed inset-0 z-50 w-[80%] md:w-[20%] "
+            initial={{ x: '-100%' }}
+            animate={{ x: 0 }}
+            transition={{ duration: 0.3, ease: 'easeInOut' }}
+            onMouseLeave={() => setMobileNav(false)}
           >
-            <Sidebar onclick={() => setMobileNav(false)} />
-          </div>
+            <Sidebar onclick={() => setMobileNav(false)}/>
+          </motion.div>
         ) : (
-          <div className="m-3 absolute right-0 md:relative">
-            <div className=" h-auto p-2 flex text-lg md:text-xl cursor-pointer hover:bg-[#80808031] rounded-full">
-              <GiHamburgerMenu onClick={() => setMobileNav(true)} />
-            </div>
+          <div
+            className="p-2 cursor-pointer"
+            onClick={() => setMobileNav(true)}
+            onMouseOver={() => setMobileNav(true)}
+          >
+            <GiHamburgerMenu size={20} />
           </div>
         )}
 
-        <div
-          className={`m-2 inset-0 pb-2 flex flex-col md:gap-2 gap-1 ${mobileNav && 'md:ml-[31%] lg:ml-[26%]'}`}
-        >
+        <div className={`inset-0 pb-2 flex flex-col md:gap-2 gap-1`}>
           <h1 className="font-medium text-xl md:text-2xl font-sans flex flex-row items-center gap-2">
             <span className="bg-linear-to-l from-orange-400 to-red-500 text-white p-1 text-xs rounded-full">
               M&K
@@ -49,10 +49,9 @@ const Dashboard = () => {
         </div>
       </div>
 
-      <div className={`relative h-full mt-15 ${mobileNav && 'md:ml-[31%] lg:ml-[26%]'} ${!mobileNav && ""}`}>
+      <div className={`relative h-full p-2`}>
         <Outlet />
       </div>
-
     </div>
   );
 };

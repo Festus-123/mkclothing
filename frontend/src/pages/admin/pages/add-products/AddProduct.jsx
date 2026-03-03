@@ -66,10 +66,6 @@ const AddProduct = () => {
           return;
         }
 
-        // const { data } = supabase.storage
-        //   .from('product-images')
-        //   .getPublicUrl(fileName);
-
         imageUrls.push(fileName);
       }
     }else {
@@ -102,12 +98,8 @@ const AddProduct = () => {
     setPreview([]);
   };
 
-  // useEffect(() => {
-  //   preview.length > 3 ? toast.error("maximum of 3 images") : null;
-  // }, [preview]);
-
   return (
-    <div className="fixed inset-0 z-50 bg-black/40 flex items-center justify-center p-2  backdrop-blur-md overflow-y-hidden">
+    <div className="fixed inset-0 z-10 bg-black/40 flex items-center justify-center p-2  backdrop-blur-md overflow-y-hidden">
       <div className='flex flex-col bg-white/90 rounded-xl p-4 w-full md:w-[80%]'>
       <h1 className="text-lg md:text-2xl text-amber-600">Add Product</h1>
       <div className="w-full flex flex-col">

@@ -74,7 +74,7 @@ const EditProducts = () => {
   };
 
   return (
-    <div className="fixed inset-0 z-50 bg-black/40 flex items-center justify-center p-2  backdrop-blur-md overflow-y-hidden">
+    <div className="fixed inset-0 z-40 bg-black/40 flex items-center justify-center p-2  backdrop-blur-md overflow-y-hidden">
       {/* Modal content */}
       <div className="bg-white/90 rounded-xl shadow-md p-6 w-full md:w-[80%] max-h-[90%] md:max-h-max flex flex-col gap-5">
         <div className="w-full">
