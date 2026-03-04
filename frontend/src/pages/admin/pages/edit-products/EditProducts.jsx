@@ -14,7 +14,7 @@ const EditProducts = () => {
 
   // console.log("Product data", product.id)
 
-  const handleEdit = async (id) => {
+   const handleEdit = async (id) => {
 
     let updatedImagePaths = product.image_urls;
 

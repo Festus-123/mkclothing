@@ -2,7 +2,7 @@ import React from 'react'
 import { Routes, Route } from "react-router-dom"
 
 import SignUp from '../pages/admin/register/SignUp.jsx';
-import SignIn from '../pages/admin/register/SignIn.jsx';
+            import SignIn from '../pages/admin/register/SignIn.jsx';
 const ProtectedRoute = () => {
   return (
     <Routes>

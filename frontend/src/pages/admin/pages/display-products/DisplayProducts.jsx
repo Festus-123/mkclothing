@@ -3,7 +3,7 @@ import { supabase } from '../../../../supabse/supabaseClient';
 import { toast } from 'sonner';
 import { Link, useLocation } from 'react-router-dom';
 import Confirm from '../../../../components/confirm/Confirm';
-import { FiSearch } from 'react-icons/fi';
+import { FiSearch, FiX } from 'react-icons/fi';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
@@ -29,10 +29,11 @@ const DisplayProducts = () => {
   const [recent, setRecent] = useState([]);
   const [older, setOlder] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [searching, setSearching] = useState(false);
+  const [searchResult, setSearchResult] = useState([]);
+  const [selectedId, setSelectedId] = useState(null);
 
   const fetchProducts = async () => {
-    setLoading(true);
-
     const { error, data } = await supabase
       .from('products')
       .select('*')
@@ -75,6 +76,8 @@ const DisplayProducts = () => {
   };
 
   const handleDelete = async (product) => {
+    setSearching(true);
+
     if (product.image_urls?.length > 0) {
       await supabase.storage.from('product-images').remove(product.image_urls);
     }
@@ -102,8 +105,8 @@ const DisplayProducts = () => {
     console.log('component mounted  successfully');
   }, []);
 
-  if(loading) {
-    return <Placeholder />
+  if (loading) {
+    return <Placeholder />;
   }
 
   const handleSearch = (e) => {
@@ -113,26 +116,30 @@ const DisplayProducts = () => {
       return product.name.toLowerCase().includes(query);
     });
 
-    if(query.trim() === "") {
-      fetchProducts();
-      return;
-    }
+    setSearchResult(filteredProducts);
+    console.log('Search results', searchResult);
+    console.log(searchResult.length);
+  };
 
-    setRecent(filteredProducts);
-    setOlder([]);
-  }
+  const handleCloseSearch = () => {
+    setSearching(false);
+    setSearchResult([]);
+  };
 
   const settings = {
     dots: true,
     infinite: true,
     speed: 500,
-    slidesToShow: 3,
-    slidesToScroll: 1,
+    slidesToShow: 2,
+    slidesToScroll: 2,
+    autoplay: true,
+    autoplaySpeed: 2000,
     responsive: [
       {
         breakpoint: 768,
         settings: {
           slidesToShow: 1,
+          slidesToScroll: 1,
         },
       },
     ],
@@ -142,21 +149,66 @@ const DisplayProducts = () => {
 
   return (
     // container
-    <div className="w-full flex flex-col gap-10 overflow-x-hidden">
-      <div className="w-full flex flex-row items-center justify-between p-2">
-      <h1 className="text-lg md:text-4xl ">Products</h1>
-      {/* Search bar */}
-      <div className="w-[60%] md:w-[20%] rounded-full relative">
-        <input
-          type="text"
-          onChange={handleSearch}
-          placeholder="Search products..."
-          className="outline-none bg-[#9e646421] w-full rounded-full py-1 md:py-2 px-4 text-sm md:text-base"
-        />  
-        <div className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500">
-          <FiSearch />
+    <div className="relative w-full flex flex-col gap-10 px-2">
+      <div 
+        className={`w-full flex items-center justify-between  ${searching ? "flex-col sticky top-18 z-10" : "flex-row px-2 py-4"}`} >
+        <h1 className={`text-lg md:text-4xl ${searching && 'hidden'}`}>
+          Products
+        </h1>
+        {/* Search bar */}
+        <div
+          className={`w-[40%] relative ${searching ? 'w-full h-15 bg-white border-b border-gray-300 rounded-none' : 'md:w-[20%]'} rounded-full`}
+        >
+          <input
+            type="text"
+            onClick={() => setSearching(true)}
+            onChange={handleSearch}
+            placeholder="Search products..."
+            className="outline-none bg-[#d9b1b10c] w-full h-full rounded-full py-1 md:py-2 px-4 text-sm md:text-base"
+          />
+          <div className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500">
+            {searching ? (
+              <FiX
+                onClick={handleCloseSearch}
+                className="cursor-pointer"
+              />
+            ) : (
+              <FiSearch />
+            )}
+          </div>
         </div>
-      </div>
+          {searchResult.length > 0 && searching && (
+              <div className="w-full flex flex-col bg-white rounded-lg shadow-xs max-h-100 md:max-h-80 overflow-scroll hide-scrollbar absolute top-15">
+              {searchResult.map((item, index) => (
+                <div
+                  key={index}
+                  onClick={() => setSelectedId(item.id)}
+                  className=" flex flex-row items-center justify-between px-2 md:px-4 py-1 md:py-2 hover:bg-gray-100 border-gray-200 p-2"
+                >
+                  <div className='flex flex-row items-center gap-3'>
+                    <img src={`${import.meta.env.VITE_SUPABASE_URL}/storage/v1/object/public/product-images/${item.image_urls[0]}`} alt={item.name} 
+                    className="w-10 h-10 object-cover rounded-lg" />
+                    <div className='flex flex-col gap-1'>
+                      <p>{item.name}</p>
+                      <p className='font-light text-xs md:text-sm'>{item.description} <span> <i className='text-xs'>{`₦${item.price}`}</i> </span> </p>
+                      { selectedId === item.id  && (
+                        <div className='flex flex-row items-center gap-10 p-1'>
+                        <p className='text-red-500 text-sm cursor-pointer' onClick={() => {
+                          setClose(true);
+                          setProduct(item); 
+                        }}> Delete </p>
+                        <div className='text-sm'>
+                        <ProductItem product={item} />
+                        </div>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                  <FiX />
+                </div>
+              ))}
+            </div>
+          )}
       </div>
 
       {close && (
@@ -166,36 +218,37 @@ const DisplayProducts = () => {
         />
       )}
 
-      <h1 className="text-lg md:text-2xl p-2">Recent</h1>
+      <div className='flex flex-col gap-10 px-2 overflow-x-hidden'>
+      <h1 className={`text-sm md:text-xl p-2`}>Recent</h1>
       <div className="">
+        {recent.length === 0 &&  <Placeholder /> }
         <Slider {...settings} className="">
-          {recent.length === 0 && ( <Placeholder /> )}
           {recent?.map((item, key) => (
             <div
               key={key}
-              className="relative rounded-xl border-gray-500 h-80 md:h-100 w-full "
+              className="relative flex flex-col rounded-xl bg-white border border-gray-500 h-130 md:h-130 md:max-h-130 p-2"
             >
               {item.image_urls?.length > 0 && (
-                  <img
-                    src={`${import.meta.env.VITE_SUPABASE_URL}/storage/v1/object/public/product-images/${item.image_urls[0]}`}
-                    alt={item.name}
-                    className="w-full h-full object-cover rounded-xl"
-                  />
+                <img
+                  src={`${import.meta.env.VITE_SUPABASE_URL}/storage/v1/object/public/product-images/${item.image_urls[0]}`}
+                  alt={item.name}
+                  className="w-full h-[60%] object-cover rounded-xl"
+                />
               )}
-              {/* <div className="absolute bottom-0 w-full h-60 bg-black/60 text-white/80 rounded-xl p-4 flex flex-col gap-2">
+              <div className="flex flex-col gap-2 p-2">
                 <h1 className="text-xl ">{item.name}</h1>
                 <p className="text-xs md:text-sm">{item.description}</p>
                 <p
                   style={{
                     width: `${item.quantity > 100 ? '100%' : item.quantity < 10 ? '20%' : (item.quantity / 100) * 100}%`,
                   }}
-                  className="bg-white/10 "
+                  className="bg-black/10 "
                 >{`${item.quantity}~`}</p>
                 <p
                   style={{
                     width: `${item.price >= 100_000 ? '100%' : item.price <= 30_000 ? "50%" : (item.price / 100_000) * 100}%`,
                   }}
-                  className="flex gap-5 bg-white/10"
+                  className="flex gap-5 bg-black/10"
                 >
                   {' '}
                   <span className="line-through text-gray-300 ">
@@ -205,7 +258,7 @@ const DisplayProducts = () => {
                 </p>
                 <p
                   style={{ width: `${item.discount >= 10 ? item.discount : "20" }%` }}
-                  className={`bg-white/10 `}
+                  className={`bg-black/10 `}
                 >{`${item.discount} %`}</p>
 
                 <div className="flex flex-row items-center gap-3 absolute bottom-5 right-5">
@@ -217,71 +270,7 @@ const DisplayProducts = () => {
                     }}
                     className="text-red-600 text-xs cursor-pointer bg-white p-1 rounded-lg"
                   >
-                    DELETE
-                  </p>
-                  <div className="bg-white py-1 px-4 text-xs text-black rounded-lg">
-                    <ProductItem product={item} />
-                  </div>
-                </div>
-              </div> */}
-            </div>
-          ))}
-        </Slider>
-      </div>
-
-      <h1 className="text-lg md:text-2xl p-2">3 days ago</h1>
-      <div className="grid grid-cols-1 md:grid-cols-3  gap-5 p-2 rounded-xl items-center justify-center">
-        {older.length === 0 && ( <div className='md:col-span-3'> <Placeholder /> </div> )}
-          {older.map((item, key) => (
-            <div
-              key={key}
-              className="relative rounded-xl border-gray-500  h-100 "
-            >
-              {item.image_urls?.length > 0 && (
-                <div className="rounded-xl w-full h-full">
-                  <img
-                    src={`${import.meta.env.VITE_SUPABASE_URL}/storage/v1/object/public/product-images/${item.image_urls[0]}`}
-                    alt={item.name}
-                    className="w-full h-full object-cover rounded-xl"
-                  />
-                </div>
-              )}
-              <div className="absolute bottom-0 w-full h-60 bg-black/60 text-white/80 rounded-xl p-4 flex flex-col gap-2">
-                <h1 className="text-xl ">{item.name}</h1>
-                <p className="text-xs md:text-sm">{item.description}</p>
-                <p
-                  style={{
-                    width: `${item.quantity > 100 ? '100%' : item.quantity < 10 ? '20%' : (item.quantity / 100) * 100}%`,
-                  }}
-                  className="bg-white/10 "
-                >{`${item.quantity}~`}</p>
-                <p
-                  style={{
-                    width: `${item.price >= 100_000 ? '100%' : item.price <= 30_000 ? "40%" : (item.price / 100_000) * 100}%`,
-                  }}
-                  className="flex gap-5 bg-white/10"
-                >
-                  {' '}
-                  <span className="line-through text-gray-300 ">
-                    {`₦~ ${item.price.toLocaleString()}`}{' '}
-                  </span>{' '}
-                  <span className="">{`₦ ${(item.price - (item.price * item.discount) / 100).toLocaleString()}`}</span>{' '}
-                </p>
-                <p
-                  style={{ width: `${item.discount >= 10 ? item.discount : "20" }%` }}
-                  className={`bg-white/10 `}
-                >{`${item.discount} %`}</p>
-
-                <div className="flex flex-row items-center gap-3 absolute bottom-5 right-5">
-                  <p
-                    onClick={() => {
-                      console.log(item.discount);
-                      setClose(true);
-                      setProduct(item);
-                    }}
-                    className="text-red-600 text-xs cursor-pointer bg-white p-1 rounded-lg"
-                  >
-                    DELETE
+                    delete
                   </p>
                   <div className="bg-white py-1 px-4 text-xs text-black rounded-lg">
                     <ProductItem product={item} />
@@ -290,6 +279,73 @@ const DisplayProducts = () => {
               </div>
             </div>
           ))}
+        </Slider>
+      </div>
+
+      <h1 className="text-lg md:text-2xl p-2">3 days ago</h1>
+      <div className="grid grid-cols-1 md:grid-cols-3  gap-5 p-2 rounded-xl items-center justify-center">
+        {older.length === 0 && (
+          <div className="md:col-span-3">
+            {' '}
+            <Placeholder />{' '}
+          </div>
+        )}
+        {older.map((item, key) => (
+            <div
+              key={key}
+              className="relative flex flex-col rounded-xl bg-white border border-gray-500 h-120 md:h-130 md:max-w-130 p-2"
+            >
+              {item.image_urls?.length > 0 && (
+                <img
+                  src={`${import.meta.env.VITE_SUPABASE_URL}/storage/v1/object/public/product-images/${item.image_urls[0]}`}
+                  alt={item.name}
+                  className="w-full h-[50%] object-cover rounded-xl"
+                />
+              )}
+              <div className="flex flex-col gap-2 p-2">
+                <h1 className="text-xl ">{item.name}</h1>
+                <p className="text-xs md:text-sm">{item.description}</p>
+                <p
+                  style={{
+                    width: `${item.quantity > 100 ? '100%' : item.quantity < 10 ? '20%' : (item.quantity / 100) * 100}%`,
+                  }}
+                  className="bg-black/10 "
+                >{`${item.quantity}~`}</p>
+                <p
+                  style={{
+                    width: `${item.price >= 100_000 ? '100%' : item.price <= 30_000 ? "50%" : (item.price / 100_000) * 100}%`,
+                  }}
+                  className="flex gap-5 bg-black/10"
+                >
+                  {' '}
+                  <span className="line-through text-gray-300 ">
+                    {`₦~ ${item.price.toLocaleString()}`}{' '}
+                  </span>{' '}
+                  <span className="">{`₦ ${(item.price - (item.price * item.discount) / 100).toLocaleString()}`}</span>{' '}
+                </p>
+                <p
+                  style={{ width: `${item.discount >= 10 ? item.discount : "20" }%` }}
+                  className={`bg-black/10 `}
+                >{`${item.discount} %`}</p>
+
+                <div className="flex flex-row items-center gap-3 absolute bottom-5 right-5">
+                  <p
+                    onClick={() => {
+                      setClose(true);
+                      setProduct(item);
+                    }}
+                    className="text-red-600 text-xs cursor-pointer bg-white p-1 rounded-lg"
+                  >
+                    delete
+                  </p>
+                  <div className="bg-white py-1 px-4 text-xs text-black rounded-lg">
+                    <ProductItem product={item} />
+                  </div>
+                </div>
+              </div>
+            </div>
+        ))}
+      </div>
       </div>
     </div>
   );

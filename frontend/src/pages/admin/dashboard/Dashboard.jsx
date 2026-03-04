@@ -11,7 +11,7 @@ const Dashboard = () => {
   return (
     <div className="relative flex flex-col w-full h-full md:p-0">
       <div
-        className={`w-full h-auto flex border-b border-gray-500 z-10 bg-white/10 p-2 gap-2`}
+        className={`sticky top-0 z-40 bg-white w-full h-auto flex border-b border-gray-500 b p-2 gap-2`}
       >
         {mobileNav ? (
           <motion.div
@@ -49,7 +49,7 @@ const Dashboard = () => {
         </div>
       </div>
 
-      <div className={`relative h-full p-2`}>
+      <div className={`relative h-full`}>
         <Outlet />
       </div>
     </div>

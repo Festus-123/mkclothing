@@ -8,3 +8,12 @@
 .slick-slide > div {
   margin: 0 5px;
 }
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
