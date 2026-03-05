@@ -3,6 +3,7 @@ import { supabase } from '../../../../supabse/supabaseClient';
 import { toast } from 'sonner';
 import { FaTimes } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
+import Slider from "react-slick";
 
 const AddProduct = () => {
   const navigate = useNavigate();
@@ -98,12 +99,21 @@ const AddProduct = () => {
     setPreview([]);
   };
 
+  const settings = {
+    dots: true,
+    infinite: false,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+  };
+
   return (
     <div className="fixed inset-0 z-10 bg-black/40 flex items-center justify-center p-2  backdrop-blur-md overflow-y-hidden">
-      <div className='flex flex-col bg-white/90 rounded-xl p-4 w-full md:w-[80%]'>
+      <div className='flex flex-col bg-white/90 rounded-xl p-4 w-full md:w-[60%] gap-2'>
       <h1 className="text-lg md:text-2xl text-amber-600">Add Product</h1>
       <div className="w-full flex flex-col">
-        <div className="p-4 md:p-6  w-full">
+        <div className="px-2 py-6  w-full">
+          <Slider {...settings}>
           <div className="flex flex-col gap-5">
             <fieldset className="border rounded-lg md:w-[30%]">
               <legend className="px-2 ">Product Name*</legend>
@@ -176,6 +186,7 @@ const AddProduct = () => {
                 />
               </fieldset>
             </div>
+          </div>
 
             <fieldset className="border rounded-lg">
               <legend className="">Products Images*</legend>
@@ -184,9 +195,9 @@ const AddProduct = () => {
                 accept="image/*"
                 multiple
                 onChange={handleImage}
-                className="w-full p-2 h-30 outline-none"
+                className="w-full p-2 h-10 outline-none"
               />
-              <div className="grid grid-cols-2 md:grid-cols-6 p-2 gap-5 overflow-y-auto">
+              <div className="grid grid-cols-2 md:grid-cols-6 p-2 gap-3 overflow-y-auto hide-scrollbar">
                 {preview.map((src, index) => (
                   <div key={index} className="relative">
                     <div
@@ -204,7 +215,7 @@ const AddProduct = () => {
                 ))}
               </div>
             </fieldset>
-          </div>
+          </Slider>
         </div>
         <div className='flex flex-row items-center w-full gap-2 py-1 border-t border-gray-400 pt-4'>
         <button

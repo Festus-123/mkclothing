@@ -6,6 +6,7 @@ import AddProduct from '../pages/admin/pages/add-products/AddProduct.jsx';
 import Record from '../pages/admin/pages/records/Record.jsx';
 import DisplayProducts from '../pages/admin/pages/display-products/DisplayProducts.jsx';
 import EditProducts from '../pages/admin/pages/edit-products/EditProducts.jsx';
+import Annoucement from '../pages/admin/pages/announcement/Annoucement.jsx';
 
 const AdminRoutes = () => {
   const location = useLocation();
@@ -19,6 +20,7 @@ const AdminRoutes = () => {
         <Route path="products/:id/edit" element={<EditProducts />} />
         <Route path="add-product" element={<AddProduct />} />
         <Route path="records" element={<Record />} />
+        <Route path="annoucemnets" element={<Annoucement />} />
       </Route>
 
       {/* Full page edit fallback */}

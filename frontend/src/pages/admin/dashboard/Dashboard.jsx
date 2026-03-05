@@ -25,7 +25,7 @@ const Dashboard = () => {
           </motion.div>
         ) : (
           <div
-            className="p-2 cursor-pointer"
+            className={`p-2 cursor-pointer text-gray-500`}
             onClick={() => setMobileNav(true)}
             onMouseOver={() => setMobileNav(true)}
           >
