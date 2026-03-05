@@ -182,7 +182,11 @@ const DisplayProducts = () => {
           />
           <div className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500">
             {searching ? (
-              <FiX size={16} onClick={handleCloseSearch} className="cursor-pointer" />
+              <FiX
+                size={16}
+                onClick={handleCloseSearch}
+                className="cursor-pointer"
+              />
             ) : (
               <FiSearch />
             )}
@@ -230,7 +234,7 @@ const DisplayProducts = () => {
                     )}
                   </div>
                 </div>
-                <FiX className='cursor-pointer' size={10}/>
+                <FiX className="cursor-pointer" size={10} />
               </div>
             ))}
           </div>
@@ -266,13 +270,15 @@ const DisplayProducts = () => {
                   <p className="text-xs md:text-sm">{item.description}</p>
                   <p
                     style={{
+                      minWidth: '10%',
                       width: `${Math.min((item.quantity / 100) * 100, 100)}%`,
                     }}
                     className="bg-black/10 "
                   >{`${item.quantity}~`}</p>
                   <p
                     style={{
-                      width: `${Math.min((item.price / 100_000 ) * 100 , 100)}%`,
+                      minWidth: '50%',
+                      width: `${Math.min((item.price / 100_000) * 100, 100)}%`,
                     }}
                     className="flex gap-5 bg-black/10"
                   >
@@ -284,6 +290,7 @@ const DisplayProducts = () => {
                   </p>
                   <p
                     style={{
+                      minWidth: '10%',
                       width: `${Math.min((item.discount / 100) * 100, 100)}%`,
                     }}
                     className={`bg-black/10 `}
@@ -335,15 +342,15 @@ const DisplayProducts = () => {
                 <p className="text-xs md:text-sm">{item.description}</p>
                 <p
                   style={{
-                      minWidth: "10%",
-                      width: `${Math.min((item.quantity / 100) * 100, 100)}%`,
+                    minWidth: '10%',
+                    width: `${Math.min((item.quantity / 100) * 100, 100)}%`,
                   }}
                   className="bg-black/10 "
                 >{`${item.quantity}~`}</p>
                 <p
                   style={{
-                    minWidth: "50%",
-                    width: `${Math.min((item.price / 100_000 ) * 100 , 100)}%`,
+                    minWidth: '50%',
+                    width: `${Math.min((item.price / 100_000) * 100, 100)}%`,
                   }}
                   className="flex gap-5 bg-black/10"
                 >
@@ -355,7 +362,7 @@ const DisplayProducts = () => {
                 </p>
                 <p
                   style={{
-                    minWidth: "10%",
+                    minWidth: '10%',
                     width: `${Math.min((item.discount / 100) * 100, 100)}%`,
                   }}
                   className={`bg-black/10 `}

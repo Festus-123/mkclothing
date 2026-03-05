@@ -108,13 +108,13 @@ const AddProduct = () => {
   };
 
   return (
-    <div className="fixed inset-0 z-10 bg-black/40 flex items-center justify-center p-2  backdrop-blur-md overflow-y-hidden">
+    <div className="fixed inset-0 z-10 bg-black/40 flex items-center justify-center p-2  backdrop-blur-md overflow-hidden">
       <div className='flex flex-col bg-white/90 rounded-xl p-4 w-full md:w-[60%] gap-2'>
       <h1 className="text-lg md:text-2xl text-amber-600">Add Product</h1>
       <div className="w-full flex flex-col">
-        <div className="px-2 py-6  w-full">
+        <div className="px-2 py-6 w-full">
           <Slider {...settings}>
-          <div className="flex flex-col gap-5">
+          <div className="flex flex-col gap-10 w-full">
             <fieldset className="border rounded-lg md:w-[30%]">
               <legend className="px-2 ">Product Name*</legend>
               <input

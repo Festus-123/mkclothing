@@ -4,21 +4,22 @@ import { BrowserRouter } from 'react-router-dom';
 import { Toaster } from 'sonner';
 import { supabase } from './supabse/supabaseClient.js';
 
-import ProtectedRoute from './routes/ProtectedRoute.jsx';
 import MainRoutes from './routes/MainRoutes.jsx';
-import AdminRoutes from './routes/AdminRoutes.jsx';
+// import Placeholder from './components/admin/Placeholder.jsx';
 
 
 function App() {
   const [session, setSession] = useState(null)
-  // const location = useLocation();
-  // const state = location.state;
+  const [loading, setLoading] = useState(true);
+
 
   const fetchSession = async () => {
     const currentSession = await supabase.auth.getSession()
     console.log("The sessions",currentSession.data)
     setSession(currentSession.data.session);
+    setLoading(false);
   }
+
   
 
   useEffect(() => {
@@ -32,6 +33,9 @@ function App() {
       authListener.subscription.unsubscribe();
     };
   }, [])
+
+  if (loading) return null;
+
 
   return (
     <>
@@ -47,8 +51,7 @@ function App() {
         }}
       />
       <BrowserRouter>
-        { session ? ( <AdminRoutes />) : ( <ProtectedRoute />)}
-        <MainRoutes />
+        <MainRoutes session={session}/>
       </BrowserRouter>
     </>
   );
