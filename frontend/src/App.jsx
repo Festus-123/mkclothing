@@ -5,8 +5,6 @@ import { Toaster } from 'sonner';
 import { supabase } from './supabse/supabaseClient.js';
 
 import MainRoutes from './routes/MainRoutes.jsx';
-// import Placeholder from './components/admin/Placeholder.jsx';
-
 
 function App() {
   const [session, setSession] = useState(null)

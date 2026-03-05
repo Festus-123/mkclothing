@@ -40,14 +40,22 @@ const SignIn = () => {
   };
 
   return (
-    <div className="w-full h-screen">
+    <div className="relative w-full h-screen">
       {/* Sign In form  */}
-      <div className="bg-[#ede0e022] w-full h-full flex flex-col items-center justify-center">
-        <div className="w-100 md:w-120 border border-black/0 p-4 md:p-6 rounded-2xl flex flex-col gap-5">
+
+      <div
+        style={{ backgroundImage: "url('auth-img.jpg')" }}
+        className="absolute inset-0 w-full h-full"
+      />
+
+      <div className="absolute inset-0 bg-black/60 w-full h-full backdrop-blur-md" />
+
+      <div className="relative bg-[#ede0e022] w-full h-full flex flex-col items-center justify-center">
+        <div className="w-[90%] md:w-120 text-white border border-white/40 p-4 md:p-6 rounded-2xl flex flex-col gap-5">
           <h1 className="text-center font-medium text-xl md:text-2xl">
             SIgn In
           </h1>
-          <fieldset className="border border-[#08080876] rounded-xl text-sm">
+          <fieldset className="border border-[#f8f2f276] rounded-xl text-sm">
             <legend>Email *</legend>
             <input
               type="email"
@@ -56,7 +64,7 @@ const SignIn = () => {
               className="p-2 w-full outline-none"
             />
           </fieldset>
-          <fieldset className="border border-[#05050576] rounded-xl text-sm">
+          <fieldset className="border border-[#f8f3f376] rounded-xl text-sm">
             <legend>Password *</legend>
             <input
               type="password"

@@ -162,7 +162,7 @@ const DisplayProducts = () => {
 
   return (
     // container
-    <div className="relative w-full flex flex-col gap-10 px-2">
+    <div className="relative w-full flex flex-col gap-10 px-2 bg-black/3">
       <div
         className={`w-full flex items-center justify-between  ${searching ? 'flex-col sticky top-18 z-10' : 'flex-row px-2 py-4'}`}
       >

@@ -21,6 +21,7 @@ const MainRoutes = ({ session }) => {
   const state = location.state;
 
   return (
+    <>
     <Routes location={state?.backgroundLocation || location}>
       <Route path="/" element={<Home />} />
       <Route path="/about" element={<About />} />
@@ -50,20 +51,21 @@ const MainRoutes = ({ session }) => {
       </Route>
 
       {/* Full page edit fallback */}
-      <Route path="dashboard/product/:id/edit" element={<EditProducts />} />
-      <Route path="/dashboard/add-product" element={<AddProduct />} />
+      <Route path="dashboard/products/:id/edit" element={<EditProducts />} />
+      <Route path="dashboard/add-product" element={<AddProduct />} />
 
+    </Routes>
       {/* MODAL ROUTE */}
       {state?.backgroundLocation && (
-        <Route>
+        <Routes>
           <Route
-            path="/dashboard/products/:id/edit"
+            path="dashboard/products/:id/edit"
             element={<EditProducts />}
           />
-          <Route path="/dashboard/add-product" element={<AddProduct />} />
-        </Route>
+          <Route path="dashboard/add-product" element={<AddProduct />} />
+        </Routes>
       )}
-    </Routes>
+    </>
   );
 };
 

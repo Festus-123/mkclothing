@@ -39,14 +39,21 @@ const SignUp = () => {
   };
 
   return (
-    <div className="w-full h-screen">
+    <div className="relative w-full h-screen">
       {/* Sign Up form  */}
-      <div className="bg-[#e8dada11] w-full h-full flex flex-col items-center justify-center">
-        <div className="relative  w-110 md:w-120  border border-black/0 p-4 md:p-6 rounded-2xl flex flex-col gap-5">
+
+      <div 
+        style={{ backgroundImage: "url('auth-img.jpg')"}}
+        className='absolute inset-0 w-full h-full'/>
+
+        <div className="absolute inset-0 bg-black/60 w-full h-full backdrop-blur-md" />
+
+      <div className="relative bg-[#e8dada11] w-full h-full flex flex-col items-center justify-center">
+        <div className="relative text-white  w-[90%] md:w-120  border border-white/40 p-4 md:p-6 rounded-2xl flex flex-col gap-5">
           <h1 className="text-center font-medium text-xl md:text-2xl">
             SIgn Up
           </h1>
-          <fieldset className="border border-[#09090976] rounded-xl text-sm">
+          <fieldset className="border border-[#f8f2f276] rounded-xl text-sm">
             <legend>Name *</legend>
             <input
               type="text"
@@ -55,7 +62,7 @@ const SignUp = () => {
               onChange={(e) => setName(e.target.value)}
             />
           </fieldset>
-          <fieldset className="border border-[#0c0c0c76] rounded-xl text-sm">
+          <fieldset className="border border-[#fdf3f376] rounded-xl text-sm">
             <legend>Email *</legend>
             <input
               type="email"
@@ -64,7 +71,7 @@ const SignUp = () => {
               onChange={(e) => setEmail(e.target.value)}
             />
           </fieldset>
-          <fieldset className="border border-[#02010176] rounded-xl text-sm">
+          <fieldset className="border border-[#f8f3f376] rounded-xl text-sm">
             <legend>Password *</legend>
             <input
               type="password"

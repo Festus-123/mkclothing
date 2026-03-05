@@ -58,6 +58,7 @@ const Sidebar = ({ onclick }) => {
             <Link
               to={item.link}
               key={key}
+              state={{ backgroundLocation: location}}
               className={`flex flex-row items-center gap-2 text-lg font-light cursor-pointer ${
                 location.pathname === item.link && 'bg-[#986b6b11] hover:bg-[#986b6b1e] text-amber-900'
               }`}

@@ -9,6 +9,10 @@
   margin: 0 5px;
 }
 
+.slick-slide .add-slider {
+  margin: 10px 0 ;
+}
+
 .hide-scrollbar::-webkit-scrollbar {
   display: none;
 }
