@@ -144,27 +144,16 @@ const DisplayProducts = () => {
     speed: 500,
     slidesToShow: screenWidth >= 768 ? 2 : 1,
     slidesToScroll: screenWidth >= 768 ? 2 : 1,
-    autoplay: true,
-    autoplaySpeed: 2000,
     adaptiveHeight: true,
-    responsive: [
-      {
-        breakpoint: 768,
-        settings: {
-          slidesToShow: 1,
-          slidesToScroll: 1,
-        },
-      },
-    ],
   };
 
   console.log(screenWidth);
 
   return (
     // container
-    <div className="relative w-full flex flex-col gap-10 px-2 bg-black/3">
+    <div className="relative w-full flex flex-col gap-10 bg-black/3 ">
       <div
-        className={`w-full flex items-center justify-between  ${searching ? 'flex-col sticky top-18 z-10' : 'flex-row px-2 py-4'}`}
+        className={`w-full flex items-center justify-between  ${searching ? 'flex-col sticky top-18 z-10' : 'flex-row px-4 py-4'}`}
       >
         <h1 className={`text-lg md:text-4xl ${searching && 'hidden'}`}>
           Products
@@ -248,7 +237,7 @@ const DisplayProducts = () => {
         />
       )}
 
-      <div className="flex flex-col gap-10 px-2 overflow-x-hidden">
+      <div className="flex flex-col gap-10 overflow-x-hidden px-2 md:px-8">
         <h1 className={`text-sm md:text-xl p-2`}>Recent</h1>
         <div className="">
           {recent.length === 0 && <Placeholder />}
@@ -262,39 +251,27 @@ const DisplayProducts = () => {
                   <img
                     src={`${import.meta.env.VITE_SUPABASE_URL}/storage/v1/object/public/product-images/${item.image_urls[0]}`}
                     alt={item.name}
-                    className="w-full h-[60%] object-cover rounded-xl"
+                    className="w-full h-[60%] md:h-[70%] object-cover rounded-xl"
                   />
                 )}
-                <div className="flex flex-col gap-2 p-2">
-                  <h1 className="text-xl ">{item.name}</h1>
+                <div className="flex flex-row flex-wrap gap-1 p-2 items-center">
+                  <h1 className="text-sm font-bold  text-amber-900">{item.name}</h1>
                   <p className="text-xs md:text-sm">{item.description}</p>
                   <p
-                    style={{
-                      minWidth: '10%',
-                      width: `${Math.min((item.quantity / 100) * 100, 100)}%`,
-                    }}
-                    className="bg-black/10 "
+                    className="text-sm font-medium"
                   >{`${item.quantity}~`}</p>
                   <p
-                    style={{
-                      minWidth: '50%',
-                      width: `${Math.min((item.price / 100_000) * 100, 100)}%`,
-                    }}
-                    className="flex gap-5 bg-black/10"
+                    className="flex gap-5 text-sm font-bold text-amber-900"
                   >
                     {' '}
-                    <span className="line-through text-gray-300 ">
+                    <span className="line-through text-gray-300 text-sm">
                       {`₦~ ${item.price.toLocaleString()}`}{' '}
                     </span>{' '}
                     <span className="">{`₦ ${(item.price - (item.price * item.discount) / 100).toLocaleString()}`}</span>{' '}
                   </p>
                   <p
-                    style={{
-                      minWidth: '10%',
-                      width: `${Math.min((item.discount / 100) * 100, 100)}%`,
-                    }}
-                    className={`bg-black/10 `}
-                  >{`${item.discount} %`}</p>
+                    className={`text-sm font-medium bg-black/4 ml-3`}
+                  >{`${item.discount} % discount`}</p>
 
                   <div className="flex flex-row items-center gap-3 absolute bottom-5 right-5">
                     <p
@@ -317,8 +294,10 @@ const DisplayProducts = () => {
           </Slider>
         </div>
 
+
+        <div className='px-2 md:px-5 flex flex-col gap-10'>
         <h1 className="text-sm md:text-xl p-2">3 days ago</h1>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3  gap-5 p-2 rounded-xl items-center justify-center">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 rounded-xl items-center justify-center">
           {older.length === 0 && (
             <div className="md:col-span-3">
               {' '}
@@ -337,22 +316,14 @@ const DisplayProducts = () => {
                   className="w-full h-[60%] object-cover rounded-xl"
                 />
               )}
-              <div className="flex flex-col gap-2 p-2">
-                <h1 className="text-xl ">{item.name}</h1>
+              <div className="flex flex-row flex-wrap gap-2 p-2 items-center">
+                <h1 className="text-sm font-bold text-amber-900">{item.name}</h1>
                 <p className="text-xs md:text-sm">{item.description}</p>
                 <p
-                  style={{
-                    minWidth: '10%',
-                    width: `${Math.min((item.quantity / 100) * 100, 100)}%`,
-                  }}
-                  className="bg-black/10 "
+                  className="text-sm font-medium"
                 >{`${item.quantity}~`}</p>
                 <p
-                  style={{
-                    minWidth: '50%',
-                    width: `${Math.min((item.price / 100_000) * 100, 100)}%`,
-                  }}
-                  className="flex gap-5 bg-black/10"
+                  className="flex gap-5 text-sm font-medium"
                 >
                   {' '}
                   <span className="line-through text-gray-300 ">
@@ -361,12 +332,8 @@ const DisplayProducts = () => {
                   <span className="">{`₦ ${(item.price - (item.price * item.discount) / 100).toLocaleString()}`}</span>{' '}
                 </p>
                 <p
-                  style={{
-                    minWidth: '10%',
-                    width: `${Math.min((item.discount / 100) * 100, 100)}%`,
-                  }}
-                  className={`bg-black/10 `}
-                >{`${item.discount} %`}</p>
+                  className={`text-sm font-medium bg-black/4 ml-3`}
+                >{`${item.discount} % discount`}</p>
 
                 <div className="flex flex-row items-center gap-3 absolute bottom-5 right-5">
                   <p
@@ -385,6 +352,7 @@ const DisplayProducts = () => {
               </div>
             </div>
           ))}
+        </div>
         </div>
       </div>
     </div>
