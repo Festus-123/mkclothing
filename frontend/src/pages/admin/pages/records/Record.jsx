@@ -1,13 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { supabase } from "../../../../supabse/supabaseClient";
+import { toast } from "sonner";
+import Confirm from "../../../../components/confirm/Confirm";
 
 const Record = () => {
   const [records, setRecords] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [close, setClose] = useState(false);
+  const [logIdToDelete, setLogIdToDelete] = useState(null);
 
   const fetchRecords = async () => {
     setLoading(true);
+    const toastId = toast.loading('Fetching records...');
 
     const { data, error } = await supabase
       .from("products_logs")
@@ -16,21 +21,41 @@ const Record = () => {
 
     if (error) {
       console.error("Error fetching records:", error.message);
+      toast.error('Failed to fetch records', { id: toastId });
       setError(error.message);
       setLoading(false);
       return;
     }
 
+    toast.success('Records updated successfully', { id: toastId });
     setRecords(data || []);
     setLoading(false);
   };
 
+  const handleDeleteLog = async (id) => {
+    const toastId = toast.loading('Deleting log...');
+
+    const { error } = await supabase
+      .from("products_logs")
+      .delete()
+      .eq("id", id);
+
+    if (error) {
+      console.error("Error deleting log:", error.message);
+      toast.error('Failed to delete log', { id: toastId });
+      return;
+    }
+
+    toast.success('Log deleted successfully', { id: toastId });
+    setRecords((prev) => prev.filter((record) => record.id !== id));
+  }
+
   useEffect(() => {
     fetchRecords();
-  }, []);
+  }, [records.length]);
 
   const formatJSON = (value) => {
-    if (!value) return "-";
+    if (!value) return "--";
     try {
       return JSON.stringify(value);
     } catch {
@@ -44,12 +69,19 @@ const Record = () => {
         Activity Logs
       </h1>
 
-      {loading && <p className="text-gray-500">Loading records...</p>}
+      {loading && <p className="text-gray-500"> Loading records...</p>}
 
       {error && (
         <p className="text-red-500">
-          Something went wrong while fetching logs.
+          Couldn't fetch records: {error}
         </p>
+      )}
+
+      {close && (
+        <Confirm
+          close={() => setClose(false)}
+          onClick={() => handleDeleteLog(logIdToDelete)}
+        />
       )}
 
       {!loading && records.length === 0 && (
@@ -67,6 +99,7 @@ const Record = () => {
                 <th className="p-3 border-b">Current</th>
                 <th className="p-3 border-b">Action</th>
                 <th className="p-3 border-b">Created At</th>
+                <th className="p-3 border-b">Remove log</th>
               </tr>
             </thead>
 
@@ -79,7 +112,7 @@ const Record = () => {
                   <td className="p-3">{index + 1}</td>
 
                   <td className="p-3 font-medium">
-                    {record.product_id}
+                    {record.product_id || "--"}
                   </td>
 
                   <td className="p-3 text-gray-600 wrap-break-words max-w-xs">
@@ -95,7 +128,7 @@ const Record = () => {
                       className={`px-2 py-1 text-xs rounded ${
                         record.action === "created"
                           ? "bg-green-100 text-green-700"
-                          : record.action === "edited"
+                          : record.action === "updated"
                           ? "bg-blue-100 text-blue-700"
                           : "bg-red-100 text-red-700"
                       }`}
@@ -106,6 +139,14 @@ const Record = () => {
 
                   <td className="p-3 text-gray-500">
                     {new Date(record.created_at).toLocaleString()}
+                  </td>
+                  <td 
+                    onClick={() => {
+                      setClose(true);
+                      setLogIdToDelete(record.id);
+                    }}
+                    className="p-3 text-red-500 cursor-pointer">
+                    <span>delete</span>
                   </td>
                 </tr>
               ))}

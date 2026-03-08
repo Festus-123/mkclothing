@@ -23,6 +23,7 @@ function ProductItem({ product }) {
 }
 
 const DisplayProducts = () => {
+  const location = useLocation();
   const [products, setProducts] = useState([]);
   const [close, setClose] = useState(false);
   const [product, setProduct] = useState();
@@ -67,9 +68,6 @@ const DisplayProducts = () => {
       (a, b) => new Date(b.created_at) - new Date(a.created_at)
     );
 
-    // console.log('sorted recent', sortedRecent);
-    // console.log('sorted older', sortedOlder);
-
     setLoading(false);
     setRecent(sortedRecent);
     setOlder(sortedOlder);
@@ -77,7 +75,7 @@ const DisplayProducts = () => {
   };
 
   const handleDelete = async (product) => {
-    setSearching(true);
+    const toastId = toast.loading('Deleting product...');
 
     if (product.image_urls?.length > 0) {
       await supabase.storage.from('product-images').remove(product.image_urls);
@@ -88,35 +86,48 @@ const DisplayProducts = () => {
       .delete()
       .eq('id', product.id);
 
-    setClose(false);
-
     if (error) {
+      toast.error('Failed to delete product', { id: toastId });
       console.error('error deleting proucts', error.message);
       return;
     }
 
-    const { error: deletedError } = await supabase
+    const { error: deletedErrorLog } = await supabase
       .from('products_logs')
       .insert({
         action: 'deleted',
         previous: product.name,
-        currentt: '',
+        current: '',
+        product_id: product.id,
       })
-      .order('created_at', { ascending: true });
+      .order('created_at', { ascending: true })
+      .eq();
 
-    if (deletedError) {
-      console.error('error message in display', deletedError.message);
+    if (deletedErrorLog) {
+      console.error('error message in display', deletedErrorLog.message);
       return;
     }
 
-    console.log('i worked the way you wanted');
-    toast.error('product deleted successfully');
-
+    setClose(false);
     fetchProducts();
+    toast.success('product deleted successfully', { id: toastId });
+
   };
 
   useEffect(() => {
     fetchProducts();
+  }, [location.state?.refresh]);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setScreenWidth(window.innerWidth);
+    };
+
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
   }, []);
 
   if (loading) {
@@ -140,18 +151,6 @@ const DisplayProducts = () => {
     setSearching(false);
     setSearchResult([]);
   };
-
-  useEffect(() => {
-    const handleResize = () => {
-      setScreenWidth(window.innerWidth);
-    };
-
-    window.addEventListener('resize', handleResize);
-
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
-  }, []);
 
   const settings = {
     dots: true,

@@ -9,66 +9,59 @@ const EditProducts = () => {
   const location = useLocation();
   const { productData } = location.state || {};
   const [product, setProduct] = useState(productData);
+  const [originalProduct] = useState(productData);
   const [previewImages, setPreviewImages] = useState(product.image_urls || []);
   const [newImages, setNewImages] = useState([]);
 
-  const fetchProducts = async () => {
-    await supabase
-      .from('products')
-      .select('*')
-      .order('created_at', { ascending: true });
-  };
-
   const handleEdit = async (id) => {
+    const toastId = toast.loading('Editing product...');
+
     let updatedImagePaths = product.image_urls;
 
-    if (newImages.length > 0) {
-      await supabase.storage.from('product-images').remove(product.image_urls);
-      updatedImagePaths = [];
-
-      for (const file of newImages) {
-        const fileName = `${Date.now()}-${file.name}`;
-
-        const { error } = await supabase.storage
+    try {
+      if (newImages.length > 0) {
+        await supabase.storage
           .from('product-images')
-          .upload(fileName, file);
+          .remove(product.image_urls);
 
-        if (error) {
-          toast.error('Failed', error.message);
-          return;
+        updatedImagePaths = [];
+
+        for (const file of newImages) {
+          const fileName = `${Date.now()}-${file.name}`;
+
+          const { error } = await supabase.storage
+            .from('product-images')
+            .upload(fileName, file);
+
+          if (error) throw error;
+
+          updatedImagePaths.push(fileName);
         }
-
-        updatedImagePaths.push(fileName);
       }
-    }
 
-    const { error } = await supabase
-      .from('products')
-      .update({ ...product, image_urls: updatedImagePaths })
-      .eq('id', id);
+      const { error } = await supabase
+        .from('products')
+        .update({ ...product, image_urls: updatedImagePaths })
+        .eq('id', id);
 
-    const { error: updatedError } = await supabase
-      .from('products_logs')
-      .insert({
+      if (error) throw error;
+
+      const { error: logError } = await supabase.from('products_logs').insert({
         action: 'updated',
-        previous: product.name,
-        currentt: product.name,
-      })
-      .order('created_at', { ascending: true });
+        previous: originalProduct.name,
+        current: product.name,
+        product_id: product.id,
+      });
 
-    if (updatedError) {
-      console.error('error message in display', updatedError.message);
-      return;
+      if (logError) throw logError;
+
+      toast.success('Product edited successfully', { id: toastId });
+
+      navigate(-1, {state: { refresh: true }});
+    } catch (err) {
+      console.error(err.message);
+      toast.error('Failed to edit product', { id: toastId });
     }
-
-    if (error) {
-      console.error('error updating task', error.message);
-      return;
-    }
-
-    toast.success('product edited succesfully');
-    fetchProducts();
-    navigate(-1);
   };
 
   const handleImage = (e) => {

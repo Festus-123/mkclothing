@@ -48,6 +48,7 @@ const AddProduct = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const toastId = toast.loading('Adding product...');
 
     let imageUrls = [];
 
@@ -62,7 +63,7 @@ const AddProduct = () => {
           .upload(fileName, file);
 
         if (uploadError) {
-          toast.error(uploadError.message);
+          toast.error(uploadError.message,);
           console.log('error message', uploadError.message);
           return;
         }
@@ -81,21 +82,21 @@ const AddProduct = () => {
 
     if (error) {
       console.error('error adding task', error.message);
-      toast.error('failed to add product');
+      toast.error('failed to add product', { id: toastId });
       return;
     }
 
-    const { error: createdError } = await supabase
+    const { error: createdErrorLog } = await supabase
       .from('products_logs')
-      .insert({action: "created", previous: "", current: newProduct.name })
+      .insert({action: "created", previous: "", current: newProduct.name, product_id: error?.id})
       .order('created_at', { ascending: true });
 
-    if (createdError) {
-      console.error('error message in display', createdError.message);
+    if (createdErrorLog) {
+      console.error('Create Log error', createdErrorLog.message);
       return;
     }
 
-    toast.success('succesfully added task');
+    toast.success('succesfully added task', { id: toastId });
     fethcProducts();
 
     setNewProduct({

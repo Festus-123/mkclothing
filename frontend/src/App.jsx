@@ -39,12 +39,11 @@ function App() {
     <>
       <Toaster
         position="top-right"
-        richColors
         closeButton
         toastOptions={{
           style: {
             borderRadius: '10px',
-            padding: '14px',
+            padding: '10px',
           },
         }}
       />
