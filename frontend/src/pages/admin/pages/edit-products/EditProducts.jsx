@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { supabase } from '../../../../supabse/supabaseClient';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
-import { FaPlus } from 'react-icons/fa';
 import Slider from 'react-slick';
 
 const EditProducts = () => {
@@ -13,7 +12,12 @@ const EditProducts = () => {
   const [previewImages, setPreviewImages] = useState(product.image_urls || []);
   const [newImages, setNewImages] = useState([]);
 
-  // console.log("Product data", product.id)
+  const fetchProducts = async () => {
+    await supabase
+      .from('products')
+      .select('*')
+      .order('created_at', { ascending: true });
+  };
 
   const handleEdit = async (id) => {
     let updatedImagePaths = product.image_urls;
@@ -43,8 +47,19 @@ const EditProducts = () => {
       .update({ ...product, image_urls: updatedImagePaths })
       .eq('id', id);
 
-    console.log(product.image_urls[0]);
-    // console.log(product.description);
+    const { error: updatedError } = await supabase
+      .from('products_logs')
+      .insert({
+        action: 'updated',
+        previous: product.name,
+        currentt: product.name,
+      })
+      .order('created_at', { ascending: true });
+
+    if (updatedError) {
+      console.error('error message in display', updatedError.message);
+      return;
+    }
 
     if (error) {
       console.error('error updating task', error.message);
@@ -52,7 +67,7 @@ const EditProducts = () => {
     }
 
     toast.success('product edited succesfully');
-    // console.log('i am actually working');
+    fetchProducts();
     navigate(-1);
   };
 
@@ -84,13 +99,13 @@ const EditProducts = () => {
     <div className="fixed inset-0 z-40 bg-black/40 flex items-center justify-center p-2  backdrop-blur-md overflow-y-hidden">
       {/* Modal content */}
       <div className="bg-white/90 rounded-xl shadow-md p-6 w-full md:w-[60%] flex flex-col gap-5">
-            <div className="w-full">
-              <h1 className="font-medium text-xl md:text-2xl text-amber-600">
-                Edit Products
-              </h1>
-            </div>
-          <Slider {...settings}>
-          <div className='flex flex-col gap-5 text-black/90'>
+        <div className="w-full">
+          <h1 className="font-medium text-xl md:text-2xl text-amber-600">
+            Edit Products
+          </h1>
+        </div>
+        <Slider {...settings}>
+          <div className="flex flex-col gap-5 text-black/90">
             <fieldset className="border rounded-lg border-black/60">
               <legend className="px-2 ">Product Name*</legend>
               <input
@@ -166,12 +181,12 @@ const EditProducts = () => {
 
           {/* Image preview */}
           <div className="p-2 rounded-xl flex flex-row items-center gap-5">
-              <input
-                type="file"
-                onChange={handleImage}
-                multiple
-                className="rounded-xl w-full border border-gray-300 p-2 cursor-pointer m-2 text-gray-500"
-              />
+            <input
+              type="file"
+              onChange={handleImage}
+              multiple
+              className="rounded-xl w-full border border-gray-300 p-2 cursor-pointer m-2 text-gray-500"
+            />
             {previewImages?.length > 0 &&
               previewImages.map((fileName, index) => (
                 <img

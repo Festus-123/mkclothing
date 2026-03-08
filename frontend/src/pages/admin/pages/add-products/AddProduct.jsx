@@ -85,6 +85,16 @@ const AddProduct = () => {
       return;
     }
 
+    const { error: createdError } = await supabase
+      .from('products_logs')
+      .insert({action: "created", previous: "", current: newProduct.name })
+      .order('created_at', { ascending: true });
+
+    if (createdError) {
+      console.error('error message in display', createdError.message);
+      return;
+    }
+
     toast.success('succesfully added task');
     fethcProducts();
 

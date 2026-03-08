@@ -11,11 +11,11 @@ const Dashboard = () => {
   return (
     <div className="relative flex flex-col w-full h-full md:p-0">
       <div
-        className={`sticky top-0 z-40 bg-white w-full h-auto flex border-b border-gray-500 b p-2 gap-2`}
+        className={`sticky top-0 z-40 bg-white w-full h-auto flex border-b border-gray-200 b p-2 gap-2`}
       >
         {mobileNav ? (
           <motion.div
-            className="fixed inset-0 z-50 w-[80%] md:w-[20%] "
+            className="fixed inset-0 z-50 w-[80%] sm:w-[60%] md:w-[40%] lg:w-[20%]"
             initial={{ x: '-100%' }}
             animate={{ x: 0 }}
             transition={{ duration: 0.3, ease: 'easeInOut' }}

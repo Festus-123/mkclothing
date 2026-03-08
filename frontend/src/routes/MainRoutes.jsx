@@ -8,7 +8,7 @@ import Contact from '../pages/user/Contact.jsx';
 
 import Dashboard from '../pages/admin/dashboard/Dashboard.jsx';
 import AddProduct from '../pages/admin/pages/add-products/AddProduct.jsx';
-import Record from '../pages/admin/pages/records/Record.jsx';
+import Record from "../pages/admin/pages/records/Record.jsx";
 import DisplayProducts from '../pages/admin/pages/display-products/DisplayProducts.jsx';
 import EditProducts from '../pages/admin/pages/edit-products/EditProducts.jsx';
 import Annoucement from '../pages/admin/pages/announcement/Annoucement.jsx';

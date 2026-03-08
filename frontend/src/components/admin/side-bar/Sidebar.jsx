@@ -22,19 +22,19 @@ const Sidebar = ({ onclick }) => {
 
   const Links = [
     {
-      name: 'Products', icon: <FiPackage />, link: '/dashboard',
+      name: 'Products', icon: <FiPackage />, link: '/dashboard', state: ""
     },
     {
-      name: 'Add Products', icon: <FiPlusCircle />, link: 'add-product',
+      name: 'Add Products', icon: <FiPlusCircle />, link: 'add-product', state: { backgroundLocation: location }
     },
     {
-      name: 'Logs', icon: <FiFileText />, link: '/dashboard/records',
+      name: 'Logs', icon: <FiFileText />, link: '/dashboard/records', state: ""
     },
     {
-      name: "Annoucemnets", icon: <FiBell />, link: '/dashboard/annoucemnets',
+      name: "Annoucemnets", icon: <FiBell />, link: '/dashboard/annoucemnets', state: ""
     },
     {
-      name: 'Settings', icon: <FiSettings />, link: '/dashboard/settings',
+      name: 'Settings', icon: <FiSettings />, link: '/dashboard/settings', state: ""
     },
   ];
 
@@ -58,7 +58,7 @@ const Sidebar = ({ onclick }) => {
             <Link
               to={item.link}
               key={key}
-              state={{ backgroundLocation: location}}
+              state={item.state}
               className={`flex flex-row items-center gap-2 text-lg font-light cursor-pointer ${
                 location.pathname === item.link && 'bg-[#986b6b11] hover:bg-[#986b6b1e] text-amber-900'
               }`}

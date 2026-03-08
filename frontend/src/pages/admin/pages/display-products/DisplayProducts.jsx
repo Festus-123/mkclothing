@@ -40,7 +40,7 @@ const DisplayProducts = () => {
       .select('*')
       .order('created_at', { ascending: true });
 
-    console.log('working successfuly');
+    // console.log('working successfuly');
 
     if (error) {
       console.error('error message in display', error.message);
@@ -67,8 +67,8 @@ const DisplayProducts = () => {
       (a, b) => new Date(b.created_at) - new Date(a.created_at)
     );
 
-    console.log('sorted recent', sortedRecent);
-    console.log('sorted older', sortedOlder);
+    // console.log('sorted recent', sortedRecent);
+    // console.log('sorted older', sortedOlder);
 
     setLoading(false);
     setRecent(sortedRecent);
@@ -95,6 +95,20 @@ const DisplayProducts = () => {
       return;
     }
 
+    const { error: deletedError } = await supabase
+      .from('products_logs')
+      .insert({
+        action: 'deleted',
+        previous: product.name,
+        currentt: '',
+      })
+      .order('created_at', { ascending: true });
+
+    if (deletedError) {
+      console.error('error message in display', deletedError.message);
+      return;
+    }
+
     console.log('i worked the way you wanted');
     toast.error('product deleted successfully');
 
@@ -115,6 +129,7 @@ const DisplayProducts = () => {
     const filteredProducts = products.filter((product) => {
       return product.name.toLowerCase().includes(query);
     });
+
 
     setSearchResult(filteredProducts);
     console.log('Search results', searchResult);
@@ -147,7 +162,6 @@ const DisplayProducts = () => {
     adaptiveHeight: true,
   };
 
-  console.log(screenWidth);
 
   return (
     // container
@@ -159,17 +173,16 @@ const DisplayProducts = () => {
           Products
         </h1>
         {/* Search bar */}
-        <div
-          className={`w-[40%] relative ${searching ? 'w-full h-15 bg-white border-b border-gray-300 rounded-none' : 'md:w-[20%]'} rounded-full`}
-        >
-          <input
-            type="text"
-            onClick={() => setSearching(true)}
-            onChange={handleSearch}
-            placeholder="Search products..."
-            className="outline-none bg-[#d9b1b10c] w-full h-full rounded-full py-1 md:py-2 px-4 text-sm md:text-base"
-          />
-          <div className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500">
+        <div className={`relative ${searching ? 'w-full h-15 bg-white border-b border-gray-300 rounded-none' : ''} rounded-full`}>
+              <input
+              type="text"
+              onClick={() => setSearching(true)}
+              onChange={handleSearch}
+              placeholder="Search products..."
+              className={`outline-none bg-[#d9b1b10c] w-full h-full ${!searching && "hidden"} rounded-full py-1 md:py-2 px-4 text-sm md:text-base`}
+              />
+          <div 
+            className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500">
             {searching ? (
               <FiX
                 size={16}
@@ -177,10 +190,11 @@ const DisplayProducts = () => {
                 className="cursor-pointer"
               />
             ) : (
-              <FiSearch />
+              <FiSearch className='' onClick={() => setSearching(true)}/>
             )}
           </div>
         </div>
+        {/* Search Results */}
         {searchResult.length > 0 && searching && (
           <div className="w-full flex flex-col bg-white rounded-lg shadow-xs max-h-100 md:max-h-80 overflow-scroll hide-scrollbar absolute top-15">
             {searchResult.map((item, index) => (
@@ -228,6 +242,9 @@ const DisplayProducts = () => {
             ))}
           </div>
         )}
+        <div className={`flex items-center justify-end text-gray-300 text-sm p-2 z-10 absolute top-1/2 right-5 ${!searching && 'hidden'}`}>
+          <p>{ searchResult.length === 0 ? "No \"items\" found" : `Found ${searchResult.length} items`}</p>
+        </div>
       </div>
 
       {close && (
