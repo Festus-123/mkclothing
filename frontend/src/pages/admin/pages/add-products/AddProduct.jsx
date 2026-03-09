@@ -7,6 +7,7 @@ import Slider from 'react-slick';
 
 const AddProduct = () => {
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
   const [imageFile, setImageFile] = useState([]);
   const [preview, setPreview] = useState([]);
   const [newProduct, setNewProduct] = useState({
@@ -20,7 +21,7 @@ const AddProduct = () => {
   const handleImage = async (e) => {
     const files = Array.from(e.target.files);
 
-    if (!files && files.length > 3) return;
+    if (!files || files.length > 3) return;
 
     setImageFile(files);
 
@@ -34,12 +35,11 @@ const AddProduct = () => {
 
     setPreview((prev) => prev.filter((_, index) => index !== indexToRemove));
   };
-  // console.log(preview.length)
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
     const toastId = toast.loading('Adding product...');
-
     let imageUrls = [];
 
     try {
@@ -66,9 +66,16 @@ const AddProduct = () => {
       return;
     }
 
+    if(!newProduct.name.trim() || !newProduct.description.trim() || newProduct.quantity <= 0 || newProduct.price <= 0) {
+      toast.error('Please fill in all required fields with valid values', { id: toastId });
+      setLoading(false);
+      return;
+    }
+
     const { error, data } = await supabase
       .from('products')
       .insert({ ...newProduct, image_urls: imageUrls })
+      .select()
       .single();
 
     if (error) {
@@ -81,7 +88,7 @@ const AddProduct = () => {
       .from('products_logs')
       .insert({
         action: 'created',
-        product_id: data?.id,
+        product_id: data.id,
         details: `created ${newProduct.name} with quantity ${newProduct.quantity}, and price at ${newProduct.price.toLocaleString()} and discount ${newProduct.discount} at ${new Date().toLocaleString()}`,
       })
       .order('created_at', { ascending: true });
@@ -92,7 +99,7 @@ const AddProduct = () => {
     }
 
     toast.success('succesfully added task', { id: toastId });
-
+    setLoading(false);
     setNewProduct({
       name: '',
       description: '',
@@ -243,6 +250,7 @@ const AddProduct = () => {
             </button>
             <button
               onClick={handleSubmit}
+              disabled={loading}
               className="cursor-pointer rounded-xl p-3 bg-amber-400 w-full"
             >
               Submit

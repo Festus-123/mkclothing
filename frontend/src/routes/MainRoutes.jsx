@@ -15,6 +15,8 @@ import Annoucement from '../pages/admin/pages/announcement/Annoucement.jsx';
 
 import SignUp from '../pages/admin/register/SignUp.jsx';
 import SignIn from '../pages/admin/register/SignIn.jsx';
+import PageError from '../components/admin/404page/404page.jsx';
+import Settings from '../pages/admin/pages/settings/Settings.jsx';
 
 const MainRoutes = ({ session }) => {
   const location = useLocation();
@@ -48,12 +50,15 @@ const MainRoutes = ({ session }) => {
         <Route path="add-product" element={<AddProduct />} />
         <Route path="records" element={<Record />} />
         <Route path="annoucemnets" element={<Annoucement />} />
+        <Route path="settings" element={<Settings />} />
       </Route>
+
 
       {/* Full page edit fallback */}
       <Route path="dashboard/products/:id/edit" element={<EditProducts />} />
       <Route path="dashboard/add-product" element={<AddProduct />} />
 
+      <Route path="*" element={<PageError />} />
     </Routes>
       {/* MODAL ROUTE */}
       {state?.backgroundLocation && (

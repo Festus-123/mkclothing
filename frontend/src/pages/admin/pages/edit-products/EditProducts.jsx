@@ -12,8 +12,10 @@ const EditProducts = () => {
   const [originalProduct] = useState(productData);
   const [previewImages, setPreviewImages] = useState(product.image_urls || []);
   const [newImages, setNewImages] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   const handleEdit = async (id) => {
+    setLoading(true); 
     const toastId = toast.loading('Editing product...');
 
     let updatedImagePaths = product.image_urls;
@@ -49,13 +51,13 @@ const EditProducts = () => {
       const { error: logError } = await supabase.from('products_logs').insert({
         action: 'updated',
         product_id: product.id,
-        details: `updated ${originalProduct.name} to ${product.name} with quantity ${product.quantity} to ${originalProduct.quantity}, price at ${product.price.toLocaleString()} to ${originalProduct.price.toLocaleString()}, and discount ${product.discount} to ${originalProduct.discount} at ${new Date().toLocaleString()}`,
+        details: `updated ${originalProduct.name} to ${product.name} with quantity ${originalProduct.quantity} to ${product.quantity}, price at ${originalProduct.price.toLocaleString()} to ${product.price.toLocaleString()}, and discount ${originalProduct.discount} to ${product.discount} at ${new Date().toLocaleString()}`,
       });
 
       if (logError) throw logError;
 
+      setLoading(false);
       toast.success('Product edited successfully', { id: toastId });
-
       navigate('/dashboard', { state: { refresh: true } });
     } catch (err) {
       console.error(err.message);
@@ -206,6 +208,7 @@ const EditProducts = () => {
           </button>
           <button
             onClick={() => handleEdit(product.id)}
+            disabled={loading}
             className="cursor-pointer rounded-xl p-3 bg-amber-400 w-full"
           >
             Edit
