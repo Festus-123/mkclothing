@@ -8,6 +8,7 @@ import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import Placeholder from '../../../../components/admin/Placeholder';
+import { RIgthArrow, LeftArrow } from '../../../../components/admin/arrows/Arrow';
 
 function ProductItem({ product }) {
   const location = useLocation();
@@ -40,8 +41,6 @@ const DisplayProducts = () => {
       .from('products')
       .select('*')
       .order('created_at', { ascending: true });
-
-    // console.log('working successfuly');
 
     if (error) {
       console.error('error message in display', error.message);
@@ -77,6 +76,7 @@ const DisplayProducts = () => {
   const handleDelete = async (product) => {
     const toastId = toast.loading('Deleting product...');
 
+    try {
     if (product.image_urls?.length > 0) {
       await supabase.storage.from('product-images').remove(product.image_urls);
     }
@@ -96,9 +96,8 @@ const DisplayProducts = () => {
       .from('products_logs')
       .insert({
         action: 'deleted',
-        previous: product.name,
-        current: '',
         product_id: product.id,
+        details: `deleted ${product.name} with quantity ${product.quantity}, price at ${product.price.toLocaleString()}, and discount ${product.discount} at ${new Date().toLocaleString()}`,
       })
       .order('created_at', { ascending: true })
       .eq();
@@ -111,8 +110,11 @@ const DisplayProducts = () => {
     setClose(false);
     fetchProducts();
     toast.success('product deleted successfully', { id: toastId });
-
-  };
+    
+  } catch (err) {
+    console.error('error deleting product', err.message);
+    toast.error('failed to delete product', { id: toastId });
+  }};
 
   useEffect(() => {
     fetchProducts();
@@ -159,6 +161,8 @@ const DisplayProducts = () => {
     slidesToShow: screenWidth >= 768 ? 2 : 1,
     slidesToScroll: screenWidth >= 768 ? 2 : 1,
     adaptiveHeight: true,
+    nextArrow: screenWidth > 768 && <RIgthArrow />,
+    prevArrow: screenWidth > 768 && <LeftArrow />,
   };
 
 

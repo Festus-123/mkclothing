@@ -48,16 +48,15 @@ const EditProducts = () => {
 
       const { error: logError } = await supabase.from('products_logs').insert({
         action: 'updated',
-        previous: originalProduct.name,
-        current: product.name,
         product_id: product.id,
+        details: `updated ${originalProduct.name} to ${product.name} with quantity ${product.quantity} to ${originalProduct.quantity}, price at ${product.price.toLocaleString()} to ${originalProduct.price.toLocaleString()}, and discount ${product.discount} to ${originalProduct.discount} at ${new Date().toLocaleString()}`,
       });
 
       if (logError) throw logError;
 
       toast.success('Product edited successfully', { id: toastId });
 
-      navigate(-1, {state: { refresh: true }});
+      navigate('/dashboard', { state: { refresh: true } });
     } catch (err) {
       console.error(err.message);
       toast.error('Failed to edit product', { id: toastId });
@@ -173,13 +172,14 @@ const EditProducts = () => {
           </div>
 
           {/* Image preview */}
-          <div className="p-2 rounded-xl flex flex-row items-center gap-5">
+          <div className="">
             <input
               type="file"
               onChange={handleImage}
               multiple
               className="rounded-xl w-full border border-gray-300 p-2 cursor-pointer m-2 text-gray-500"
             />
+            <div className=' hide-scrollbar flex flex-row p-2 gap-2 mt-4 overflow-x-auto'>
             {previewImages?.length > 0 &&
               previewImages.map((fileName, index) => (
                 <img
@@ -193,6 +193,7 @@ const EditProducts = () => {
                   className="w-40 h-40 md:w-60 md:h-60 object-cover rounded-xl m-2"
                 />
               ))}
+            </div>
           </div>
         </Slider>
 

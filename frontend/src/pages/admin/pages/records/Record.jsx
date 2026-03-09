@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { supabase } from "../../../../supabse/supabaseClient";
 import { toast } from "sonner";
+import { FiTrash } from "react-icons/fi";
 import Confirm from "../../../../components/confirm/Confirm";
 
 const Record = () => {
@@ -8,6 +9,7 @@ const Record = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [close, setClose] = useState(false);
+  const [showDetails, setShowDetails] = useState(null);
   const [logIdToDelete, setLogIdToDelete] = useState(null);
 
   const fetchRecords = async () => {
@@ -46,6 +48,7 @@ const Record = () => {
       return;
     }
 
+    setClose(false);
     toast.success('Log deleted successfully', { id: toastId });
     setRecords((prev) => prev.filter((record) => record.id !== id));
   }
@@ -54,14 +57,14 @@ const Record = () => {
     fetchRecords();
   }, [records.length]);
 
-  const formatJSON = (value) => {
-    if (!value) return "--";
-    try {
-      return JSON.stringify(value);
-    } catch {
-      return value;
-    }
-  };
+  // const formatJSON = (value) => {
+  //   if (!value) return "--";
+  //   try {
+  //     return JSON.stringify(value);
+  //   } catch {
+  //     return value;
+  //   }
+  // };
 
   return (
     <div className="flex flex-col gap-6 p-3 md:p-6">
@@ -95,11 +98,10 @@ const Record = () => {
               <tr>
                 <th className="p-3 border-b">S/N</th>
                 <th className="p-3 border-b">Product ID</th>
-                <th className="p-3 border-b">Previous</th>
-                <th className="p-3 border-b">Current</th>
                 <th className="p-3 border-b">Action</th>
                 <th className="p-3 border-b">Created At</th>
-                <th className="p-3 border-b">Remove log</th>
+                <th className="p-3 border-b">Details</th>
+                <th className="p-3 border-b"></th>
               </tr>
             </thead>
 
@@ -109,18 +111,10 @@ const Record = () => {
                   key={record.id || index}
                   className="border-b hover:bg-gray-50"
                 >
-                  <td className="p-3">{index + 1}</td>
+                  <td className="p-3">{records.length - (index + 1)}</td>
 
                   <td className="p-3 font-medium">
                     {record.product_id || "--"}
-                  </td>
-
-                  <td className="p-3 text-gray-600 wrap-break-words max-w-xs">
-                    {formatJSON(record.previous)}
-                  </td>
-
-                  <td className="p-3 text-gray-600 wrap-break-words max-w-xs">
-                    {formatJSON(record.current)}
                   </td>
 
                   <td className="p-3">
@@ -140,13 +134,26 @@ const Record = () => {
                   <td className="p-3 text-gray-500">
                     {new Date(record.created_at).toLocaleString()}
                   </td>
+                  <td
+                    className="p-3 cursor-pointer lg:w-[30%]"
+                    onClick={() => {
+                      showDetails === record.id ? setShowDetails(null) : setShowDetails(record.id);
+                    }}>
+                      {showDetails === record.id ? (
+                        <span className="text-sm p-2 bg-gray-100 rounded-lg block whitespace-pre-wrap">
+                          {record.details || "\"empty\""}
+                        </span>
+                      ) : "Open details"}
+                    </td>
                   <td 
                     onClick={() => {
                       setClose(true);
                       setLogIdToDelete(record.id);
                     }}
                     className="p-3 text-red-500 cursor-pointer">
-                    <span>delete</span>
+                      { showDetails === record.id && (
+                        <FiTrash className="text-red-500" size={18} />
+                      )}
                   </td>
                 </tr>
               ))}
