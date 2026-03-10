@@ -19,7 +19,6 @@ const Record = () => {
 
   const fetchRecords = async () => {
     setLoading(true);
-    const toastId = toast.loading('Fetching records...');
 
     const { data, error } = await supabase
       .from('products_logs')
@@ -28,13 +27,11 @@ const Record = () => {
 
     if (error) {
       console.error('Error fetching records:', error.message);
-      toast.error('Failed to fetch records', { id: toastId });
       setError(error.message);
       setLoading(false);
       return;
     }
 
-    toast.success('Records updated successfully', { id: toastId });
     setRecords(data || []);
     setLoading(false);
   };
@@ -126,7 +123,7 @@ const Record = () => {
       </div>
 
       {searching && (
-        <div className="sticky top-15 bg-white flex flexrow items-center justify-between gap-4">
+        <div className="sticky top-18 bg-white z-20 p-2 flex flexrow items-center justify-between gap-4">
           <input
             type="text"
             placeholder="Search Logs..."
@@ -135,6 +132,9 @@ const Record = () => {
           />
 
           <FiX onClick={handleCloseSearch} />
+          <span className='absolute top-1/2 text-gray-400 right-15 text-xs'>
+            { searchResults.length === 0 ? 'No "item" found' : `found ${searchResults.length} items`}
+          </span>
         </div>
       )}
 

@@ -8,7 +8,7 @@ const Knob = ({ onclick, enabled}) => {
         {/* Knob container */}
       <div 
         onClick={onclick}
-        className={`relative w-12 h-6 rounded-2xl ${enabled ? "bg-amber-800" : "bg-gray-300"}`}>
+        className={`relative w-12 h-6 rounded-2xl cursor-pointer ${enabled ? "bg-amber-800" : "bg-gray-300"}`}>
         {/* Knob */}
         <motion.div 
             initial={{ opacity: 0.5, x: enabled ? "-90%" : "90%"}}

@@ -31,7 +31,7 @@ const Sidebar = ({ onclick }) => {
       name: 'Logs', icon: <FiFileText />, link: '/dashboard/records', state: ""
     },
     {
-      name: "Annoucemnets", icon: <FiBell />, link: '/dashboard/annoucemnets', state: ""
+      name: "Annoucemnets", icon: <FiBell />, link: '/dashboard/announcements', state: ""
     },
     {
       name: 'Settings', icon: <FiSettings />, link: '/dashboard/settings', state: ""
