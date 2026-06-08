@@ -21,13 +21,13 @@ function App() {
   
 
   useEffect(() => {
-    fetchSession();
-
+    
     const { data: authListener } = supabase.auth.onAuthStateChange((_event, session) => {
       setSession(session);
     })
-
+    
     return () => {
+      fetchSession();
       authListener.subscription.unsubscribe();
     };
   }, [])

@@ -282,7 +282,7 @@ const DisplayProducts = () => {
                   <img
                     src={`${import.meta.env.VITE_SUPABASE_URL}/storage/v1/object/public/product-images/${item.image_urls[imgIndex[item.id] ?? 0]}`}
                     alt={item.name}
-                    className="w-full h-[60%] md:h-[70%] object-cover rounded-xl"
+                    className="w-full h-[60%] md:h-[70%] rounded-xl"
                   />
                 )}
                 <div className="flex flex-row flex-wrap gap-1 p-2 items-center">
@@ -338,7 +338,7 @@ const DisplayProducts = () => {
           </Slider>
         </div>
 
-        <div className="px-2 md:px-5 flex flex-col gap-10">
+        <div className="px-4 md:px-5 flex flex-col gap-10">
           <h1 className="text-sm md:text-xl p-2">3 days ago</h1>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 rounded-xl items-center justify-center">
             {older.length === 0 && (
@@ -350,13 +350,13 @@ const DisplayProducts = () => {
             {older.map((item, key) => (
               <div
                 key={key}
-                className="relative flex flex-col rounded-xl bg-white border border-gray-500 h-120 md:h-130 md:max-w-130 p-2"
+                className="relative flex flex-col rounded-xl bg-white border border-gray-500 h-120 md:h-130 md:max-w-130 p-4"
               >
                 {item.image_urls?.length > 0 && (
                   <img
                     src={`${import.meta.env.VITE_SUPABASE_URL}/storage/v1/object/public/product-images/${item.image_urls[imgIndex[item.id] ?? 0]}`}
                     alt={item.name}
-                    className="w-full h-[60%] object-cover rounded-xl"
+                    className="w-full h-[60%]  rounded-xl"
                   />
                 )}
                 <div className="flex flex-row flex-wrap gap-2 p-2 items-center">
