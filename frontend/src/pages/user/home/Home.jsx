@@ -1,6 +1,7 @@
 import React from 'react';
 import Navbar from '../../../components/user/Navbar/Navbar';
-import Hero from '../../../components/user/Hero/Hero.jsx';
+// import Hero from '../../../components/user/Hero/Hero.jsx';
+import Hero from '../../../components/user/hero/Hero';
 import Details from '../../../components/user/details/Details';
 
 const Home = () => {
