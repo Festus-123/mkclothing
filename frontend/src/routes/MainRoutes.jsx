@@ -3,10 +3,6 @@ import { Routes, Route, useLocation, Navigate } from 'react-router-dom';
 import { useContext } from 'react';
 import { SettingsContext } from '../context/context.js';
 
-import Home from '../pages/user/home/Home.jsx';
-import About from '../pages/user/about/About.jsx';
-import Collection from '../pages/user/collection/Collection.jsx';
-import Contact from '../pages/user/contact/Contact.jsx';
 
 import Dashboard from '../pages/admin/dashboard/Dashboard.jsx';
 import AddProduct from '../pages/admin/pages/add-products/AddProduct.jsx';
@@ -31,10 +27,6 @@ const MainRoutes = ({ session }) => {
   return (
     <>
       <Routes location={state?.backgroundLocation || location}>
-        <Route index element={<Home />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/collection" element={<Collection />} />
-        <Route path="/contact" element={<Contact />} />
 
         {/* Auth */}
           <Route
