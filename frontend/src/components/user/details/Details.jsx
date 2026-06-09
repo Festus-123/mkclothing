@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { IMAGES } from '../../../assets/images';
 import { useState } from 'react';
 import MiniCard from '../../../components/user/MiniCards/MiniCard';
@@ -10,8 +10,11 @@ import { Link } from 'react-router-dom';
 import OurvisionMain from '../Our vision/OurvisionMain';
 import FooterMain from '../Footer/FooterMain';
 
+import { supabase } from '../../../supabse/supabaseClient';
+
 const Details = () => {
   const [showCategory, setShowCategory] = useState(true);
+  const [products, setProducts] = useState([]);
 
   const cards = [
     {
@@ -52,6 +55,28 @@ const Details = () => {
     1100: 3,
     700: 2,
   };
+
+  const fetchProducts = async () => {
+    const { error, data } = await supabase
+      .from('products')
+      .select('*')
+      .order('created_at', { ascending: true });
+
+    if (data) {
+      console.log(data);
+      setProducts(data);
+    }
+
+    if (error) {
+      console.error('error message in display', error.message);
+      return;
+    }
+  };
+
+  useEffect(() => {
+    const made = () => fetchProducts();
+    made();
+  });
 
   return (
     <div className="overflow-hidden">
@@ -116,16 +141,21 @@ const Details = () => {
           className="flex gap-4 "
           columnClassName="flex flex-col gap-6 mt-4"
         >
-          {CATEGORIES.map((item, index) => (
+          {products.map((item, index) => (
             <div key={index} className="relative flex flex-col gap-2 group  ">
               <img
-                src={item.img}
+                src={`${import.meta.env.VITE_SUPABASE_URL}/storage/v1/object/public/product-images/${item.image_urls[0]}`}
                 alt={item.name}
                 loading="lazy"
                 className="w-full h-auto object-cover rounded-lg shadow-md group-hover:-translate-y-2 transition-all duration-300"
               />
-              <h2 className="text-lg font-semibold mt-2 group-hover:-translate-y-3 transition-all duration-300">
+              <h2 className="text-lg font-semibold mt-2 group-hover:-translate-y-3 transition-all duration-300 flex justify-between ">
+                <span>
                 {item.name}
+                </span>
+                <span className='text-xs italic text-gray-700'>
+                  {item.quantity}
+                </span>
               </h2>
               <p className="text-gray-500 text-xs md:text-sm group-hover:-translate-y-5 transition-all duration-300">
                 {item.description}
@@ -162,8 +192,7 @@ const Details = () => {
 
       {/* A different Section */}
       {/* A little taste of fashion */}
-      <section
-        className='flex flex-col gap-10 mt-10'>
+      <section className="flex flex-col gap-10 mt-10">
         {/* What fashion says  */}
         <div className="flex flex-col md:flex-row items-left md:items-end justify-between gap-4">
           <img
@@ -173,33 +202,44 @@ const Details = () => {
           />
           <div className="w-auto md:w-[50%] flex flex-col gap-10 p-4 md:p-8">
             <h1 className="text-3xl sm:text-5xl md:text-7xl italic text-[#8b4a1f]">
-              <span>A little </span> <mark>History</mark> <span>of Fashion</span>
+              <span>A little </span> <mark>History</mark>{' '}
+              <span>of Fashion</span>
             </h1>
             <p className="text-xl md:text-2xl tracking-wide">
-              Fashion Originally dataed back to the begining of time, it is a part of man as man is a part of it.
-              Clothes started out as a means to cover nackedness and prevent diseases but it evolved into 
-              something better, use for {' '} <mark> stories, sales, business, symbol, tradition and culture identifiers</mark>              the styles of clothes birthed what we call fashion today. <br /> <br />
-              now a combo of different material, a flash or different color, a capture of differnet
-              moments now make up the attire for a suitable pleasing appearnce all commaded by FASHION
-              an iteration that can never leave man. <br /> <br /> 
-              from nice coursettes to beautiful cargo pants and traditional dresses we shape your styes
-              to meet every moments and every occasion bringing elegance and beauty to the...
+              Fashion Originally dataed back to the begining of time, it is a
+              part of man as man is a part of it. Clothes started out as a means
+              to cover nackedness and prevent diseases but it evolved into
+              something better, use for{' '}
+              <mark>
+                {' '}
+                stories, sales, business, symbol, tradition and culture
+                identifiers
+              </mark>{' '}
+              the styles of clothes birthed what we call fashion today. <br />{' '}
+              <br />
+              now a combo of different material, a flash or different color, a
+              capture of differnet moments now make up the attire for a suitable
+              pleasing appearnce all commaded by FASHION an iteration that can
+              never leave man. <br /> <br />
+              from nice coursettes to beautiful cargo pants and traditional
+              dresses we shape your styes to meet every moments and every
+              occasion bringing elegance and beauty to the...
             </p>
           </div>
         </div>
 
         {/* Why choose M and K */}
-        <div
-            className='p-4 md:p-16 flex flex-col mt-10'>
-            <h2 className='flex items-center justify-center gap-2 '>
-                <span className='w-16 h-0.5 bg-black'></span>
-                <span className='text-xl italic tracking-tight text-[#8b4a1f]'>Why choose us</span>
-            </h2>
+        <div className="p-4 md:p-16 flex flex-col mt-10">
+          <h2 className="flex items-center justify-center gap-2 ">
+            <span className="w-16 h-0.5 bg-black"></span>
+            <span className="text-xl italic tracking-tight text-[#8b4a1f]">
+              Why choose us
+            </span>
+          </h2>
 
-            <div>
-                <OurvisionMain />
-            </div>
-
+          <div>
+            <OurvisionMain />
+          </div>
         </div>
       </section>
       <FooterMain />

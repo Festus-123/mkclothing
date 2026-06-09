@@ -5,11 +5,10 @@ import { Toaster } from 'sonner';
 import { supabase } from './supabse/supabaseClient.js';
 
 import MainRoutes from './routes/MainRoutes.jsx';
-
-import Home from './pages/user/home/Home.jsx';
-import About from './pages/user/about/About.jsx';
-import Collection from './pages/user/collection/Collection.jsx';
-import Contact from './pages/user/contact/Contact.jsx';
+// import Home from './pages/user/home/Home.jsx';
+// import About from './pages/user/about/About.jsx';
+// import Collection from './pages/user/collection/Collection.jsx';
+// import Contact from './pages/user/contact/Contact.jsx';
 
 function App() {
   const [session, setSession] = useState(null);
@@ -50,12 +49,12 @@ function App() {
         }}
       />
       <BrowserRouter>
-        <Routes>
+        {/* <Routes>
           <Route index element={<Home />} />
           <Route path="/about" element={<About />} />
           <Route path="/collection" element={<Collection />} />
           <Route path="/contact" element={<Contact />} />
-        </Routes>
+        </Routes> */}
         <MainRoutes session={session} />
       </BrowserRouter>
     </>
