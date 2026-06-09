@@ -19,10 +19,10 @@ const Hero = () => {
       className="relative bg-cover bg-no-repeat bg-center w-full h-screen "
     >
       <div className="relative bg-linear-to-t from-black/80 via-black/70 to-black/10 w-full h-full flex flex-col items-center justify-center p-4 md:p-16">
-        <h1 className="text-[2em] sm:text-[3em] md:text-[5em]  uppercase text-center text-white font-bold mt-10 md:mt-20">
+        <h1 className="text-[2em] sm:text-[3em] md:text-[4em] lg:text-[5em]  uppercase text-center text-white font-bold mt-10 md:mt-20">
           Welcome to M&K Clothing
         </h1>
-        <p className="text-lg md:text-xl text-white mt-4">
+        <p className="text-lg md:text-xl text-center text-white mt-4">
           Discover the latest trends in fashion and elevate your style with our
           exclusive collection.
         </p>

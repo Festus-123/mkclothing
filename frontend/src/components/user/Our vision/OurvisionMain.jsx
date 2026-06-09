@@ -20,7 +20,7 @@ const OurvisionMain = () => {
               <span className="text-3xl text-red-600">🌐</span>
             </div>
             <h3 className="font-semibold text-[#8b4a1f] mb-2">Excellence</h3>
-            <p className="text-xs text-[#8b4a1f]/70 max-w-[220px]">
+            <p className="text-xs text-[#8b4a1f]/70 max-w-55">
               We strive for perfection in every stitch, every sale and every
               customer interaction.
             </p>
@@ -32,7 +32,7 @@ const OurvisionMain = () => {
               <span className="text-3xl text-red-600">❤</span>
             </div>
             <h3 className="font-semibold text-[#8b4a1f] mb-2">Passion</h3>
-            <p className="text-xs text-[#8b4a1f]/70 max-w-[220px]">
+            <p className="text-xs text-[#8b4a1f]/70 max-w-55">
               We strive for perfection in every stitch, every sale and every
               customer interaction.
             </p>
@@ -44,7 +44,7 @@ const OurvisionMain = () => {
               <span className="text-3xl text-red-600">👥</span>
             </div>
             <h3 className="font-semibold text-[#8b4a1f] mb-2">Community</h3>
-            <p className="text-xs text-[#8b4a1f]/70 max-w-[220px]">
+            <p className="text-xs text-[#8b4a1f]/70 max-w-55">
               We strive for perfection in every stitch, every sale and every
               customer interaction.
             </p>
@@ -53,7 +53,7 @@ const OurvisionMain = () => {
       </div>
 
       {/* Quote Banner */}
-      <div className="w-full flex flex-col items-center gap-5 bg-linear-to-r from-orange-600 via-orange-500 to-red-500 py-20 text-center text-white">
+      <div className="w-full flex flex-col items-center gap-5 bg-linear-to-r from-orange-600 via-orange-500 to-red-500 rounded-xl py-20 text-center text-white">
         <div className="max-w-4xl mx-auto px-6">
           <span className="block text-4xl mb-6">❝</span>
           <h3 className="text-2xl md:text-3xl font-medium leading-relaxed mb-4">
@@ -64,7 +64,7 @@ const OurvisionMain = () => {
       </div>
 
       {/* Connect Section */}
-      <div className="px-6 md:px-20 py-24 w-full border">
+      <div className="px-6 md:px-20 py-24 w-full group tansition-all duration-300">
         <div className="max-w-8xl mx-auto rounded-3xl border bg-[#faf7f5] p-10 md:p-14 flex flex-col items-center gap-5">
           <h3 className="text-2xl md:text-3xl font-semibold text-[#8b4a1f] mb-2">
             Let’s Connect
@@ -73,11 +73,11 @@ const OurvisionMain = () => {
             Want to know more about our brand or make sales contact us
           </p>
 
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <button className="px-8 py-3 rounded-full bg-red-600 text-white text-sm font-medium hover:bg-red-700 transition">
+          <div className="flex flex-col sm:flex-row gap-4 justify-center ">
+            <button className="px-8 py-3 rounded-full bg-red-600 text-white text-sm font-medium hover:bg-red-700 cursor-pointer transition-all duration-300">
               Send an Email
             </button>
-            <button className="px-8 py-3 rounded-full border border-red-600 text-red-600 text-sm font-medium hover:bg-red-50 transition">
+            <button className="px-8 py-3 rounded-full border border-red-600 text-red-600 text-sm font-medium hover:bg-white/50 cursor-pointer transition-all duration-300">
               Schedule a meeting
             </button>
           </div>

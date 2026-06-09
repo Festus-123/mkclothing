@@ -2,6 +2,7 @@ import React from 'react';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { GiHamburgerMenu } from 'react-icons/gi';
+import { FaRemoveFormat } from 'react-icons/fa';
 // import { pathname } from "react-router-dom";
 
 const Navbar = () => {
@@ -41,7 +42,7 @@ const Navbar = () => {
 
       {/* Links for mobile */}
       {menuOpen && (
-        <div className="absolute md:hidden top-full w-full  flex flex-col gap-10">
+        <div className="absolute bg-white md:hidden border-t border-gray-300 top-full left-0 w-full p-4 flex flex-col items-end gap-10">
           {links.map((item, index) => (
             <Link
               key={index}
@@ -65,9 +66,9 @@ const Navbar = () => {
         </div>
         <button
           onClick={toggleMenu}
-          className="md:hidden text-2xl text-[gray]-700 cursor-pointer"
+          className="md:hidden text-2xl text-gray-700 cursor-pointer"
         >
-          <GiHamburgerMenu />
+          { menuOpen ? <FaRemoveFormat /> : <GiHamburgerMenu /> }
         </button>
       </div>
     </nav>
