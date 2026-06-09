@@ -4,7 +4,6 @@ import Hero from '../../../components/user/Hero/Hero';
 import Details from '../../../components/user/details/Details';
 
 const Home = () => {
-
   function convertTolowrase() {
     const leeter = 'HARRYPOTTER THE magician in the north';
 
@@ -28,19 +27,18 @@ const Home = () => {
         }
       });
 
-
       // 4. Print out the final verdict for this letter
       if (isLowercase) {
         let upperCaseEqu = uppercaseBank.split('')[matchwordIndex];
         new_word.push(upperCaseEqu);
         // console.log(`'${item}' is UPPERCASE`);
-      } else  {
+      } else {
         new_word.push(item);
         // console.log(`'${item}' is lowercase`);
-      } 
+      }
     });
 
-      console.log("Final result",new_word.join(''));
+    console.log('Final result', new_word.join(''));
   }
 
   convertTolowrase();
