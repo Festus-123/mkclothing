@@ -1,6 +1,5 @@
 import React from 'react';
 import Navbar from '../../../components/user/Navbar/Navbar';
-import { IMAGES } from '../../../assets/images';
 import Hero from '../../../components/user/Hero/Hero';
 import Details from '../../../components/user/details/Details';
 
