@@ -1,16 +1,21 @@
 import React from 'react';
-import { IMAGES } from '../../../assets/images';
-import { FaFacebookF, FaInstagram, FaTwitter, FaLinkedinIn, FaWhatsapp } from 'react-icons/fa';
-
+import { IMAGES } from '../../../assets/images-list';
+import {
+  FaFacebookF,
+  FaInstagram,
+  FaTwitter,
+  FaLinkedinIn,
+  FaWhatsapp,
+} from 'react-icons/fa';
 
 const Hero = () => {
-    const links = [
-        { link: "https://www.facebook.com/mkclothing", icon: FaFacebookF },
-        { link: "https://www.instagram.com/mkclothing", icon: FaInstagram },
-        { link: "https://www.twitter.com/mkclothing", icon: FaTwitter },
-        { link: "https://www.linkedin.com/company/mkclothing", icon: FaLinkedinIn },
-        { link: "wa.me/mkclothing", icon: FaWhatsapp },
-    ]
+  const links = [
+    { link: 'https://www.facebook.com/mkclothing', icon: FaFacebookF },
+    { link: 'https://www.instagram.com/mkclothing', icon: FaInstagram },
+    { link: 'https://www.twitter.com/mkclothing', icon: FaTwitter },
+    { link: 'https://www.linkedin.com/company/mkclothing', icon: FaLinkedinIn },
+    { link: 'wa.me/mkclothing', icon: FaWhatsapp },
+  ];
   return (
     <div
       style={{
@@ -32,14 +37,14 @@ const Hero = () => {
       </div>
 
       {/* social medias */}
-      <div className='absolute right-5 md:right-0 bottom-5 bg-[#331818] flex items-center gap-2'>
-        { links.map((item, index) => {
-            let Icon = item.icon
-            return (
-                <a key={index} href={item.link} className="text-white text-lg mx-2"> 
-                    <Icon />
-                </a>
-            )
+      <div className="absolute right-5 md:right-0 bottom-5 bg-[#331818] flex items-center gap-2">
+        {links.map((item, index) => {
+          let Icon = item.icon;
+          return (
+            <a key={index} href={item.link} className="text-white text-lg mx-2">
+              <Icon />
+            </a>
+          );
         })}
       </div>
     </div>

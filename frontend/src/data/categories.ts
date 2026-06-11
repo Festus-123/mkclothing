@@ -1,4 +1,4 @@
-import { IMAGES } from "../assets/images.js";
+import { IMAGES } from "../assets/images-list.js";
 
 export const CATEGORIES = [
     {

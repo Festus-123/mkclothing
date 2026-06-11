@@ -20,6 +20,8 @@ import cargo_pants2 from "./images/cargo-pants2.jpg";
 
 import stylish  from "./images/stylish.jpg";
 
+import mission_img from "./images/mission.png"
+
 export const IMAGES = {
     hero_img: hero_img,
     hero_img2: hero_img2,
@@ -41,4 +43,6 @@ export const IMAGES = {
     cargo_pants2: cargo_pants2,
 
     stylish: stylish,
+
+    mission: mission_img
 }
