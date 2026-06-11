@@ -10,6 +10,7 @@ import { Link } from 'react-router-dom';
 import FooterMain from '../Footer/FooterMain';
 
 import { supabase } from '../../../supabse/supabaseClient';
+import { FaBullseye } from 'react-icons/fa6';
 
 const Details = () => {
   const [showCategory, setShowCategory] = useState(true);
@@ -57,29 +58,31 @@ const Details = () => {
   };
 
   const fetchProducts = async () => {
-    const { error, data } = await supabase
-      .from('products')
-      .select('*')
-      .order('created_at', { ascending: true });
-
-    if (data) {
-      console.log(data);
-      setLoading(false);
-      setProducts(data);
-    }
-
-    if (error) {
-      console.error('error message in display', error.message);
-      toast.error("Can't seem to connect to server", { id: 1 });
+    try {
       setLoading(true);
-      return;
+
+      const { error, data } = await supabase
+        .from('products')
+        .select('*')
+        .order('created_at', { ascending: true });
+
+      if (error) throw error;
+
+      if (data) {
+        // console.log(data);
+        setProducts(data);
+      }
+    } catch (error) {
+      console.error('error message in display', error.message);
+      toast.error("Can't seem to connect to server", { id: 'fetch error' });
+    } finally {
+      setLoading(FaBullseye);
     }
   };
 
   useEffect(() => {
-    const made = () => fetchProducts();
-    made();
-  });
+    fetchProducts();
+  }, []);
 
   return (
     <div className="overflow-hidden">
@@ -152,7 +155,7 @@ const Details = () => {
             className="flex gap-4 "
             columnClassName="flex flex-col gap-6 mt-4"
           >
-            {products.map((item, index) => (
+            {products.slice(0, 6).map((item, index) => (
               <div key={index} className="relative flex flex-col gap-2 group  ">
                 <img
                   src={`${import.meta.env.VITE_SUPABASE_URL}/storage/v1/object/public/product-images/${item.image_urls[0]}`}
