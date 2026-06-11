@@ -14,14 +14,22 @@ function App() {
   const [session, setSession] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  const fetchSession = async () => {
-    const currentSession = await supabase.auth.getSession();
-    console.log('The sessions', currentSession.data);
-    setSession(currentSession.data.session);
-    setLoading(false);
-  };
+  // const fetchSession = async () => {
+  //   const currentSession = await supabase.auth.getSession();
+  //   console.log('The sessions', currentSession.data);
+  //   setSession(currentSession.data.session);
+  //   setLoading(false);
+  // };
 
   useEffect(() => {
+    const initialize = async () => {
+      const { data } = await supabase.auth.getSession();
+      setSession(data.session);
+      setLoading(false);
+    };
+
+    initialize();
+
     const { data: authListener } = supabase.auth.onAuthStateChange(
       (_event, session) => {
         setSession(session);
@@ -29,12 +37,15 @@ function App() {
     );
 
     return () => {
-      fetchSession();
       authListener.subscription.unsubscribe();
     };
   }, []);
 
-  if (loading) return null;
+  if (loading) return (
+    <div className='w-full h-screen bg-black/40 text-white flex items-center justify-center'>
+      Loading...
+    </div>
+  );
 
   return (
     <>
