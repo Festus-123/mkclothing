@@ -1,21 +1,12 @@
-import React, { useEffect } from 'react';
 import { IMAGES } from '../../../assets/images-list';
-import { useState } from 'react';
 import MiniCard from '../../../components/user/MiniCards/MiniCard';
-import Masonry from 'react-masonry-css';
-import { toast } from 'sonner';
-import { FaTshirt, FaShoePrints, FaArrowRight } from 'react-icons/fa';
-import { GiClothes, GiArmorVest } from 'react-icons/gi';
+import { FaArrowRight, } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import FooterMain from '../Footer/FooterMain';
-
-import { supabase } from '../../../supabse/supabaseClient';
-import { FaBullseye } from 'react-icons/fa6';
+import CollectionItems from '../../collection-items/CollectionItems';
 
 const Details = () => {
-  const [showCategory, setShowCategory] = useState(true);
-  const [products, setProducts] = useState([]);
-  const [loading, setLoading] = useState(true);
+
 
   const cards = [
     {
@@ -44,57 +35,13 @@ const Details = () => {
     },
   ];
 
-  const categories = [
-    { name: 'Jackets', icon: GiClothes },
-    { name: 'cargo pants', icon: GiArmorVest },
-    { name: 'Tops', icon: FaTshirt },
-    { name: 'sport wears', icon: FaShoePrints },
-  ];
-
-  const breakpointColumnObj = {
-    default: 5,
-    1100: 3,
-    700: 2,
-  };
-
-  const fetchProducts = async () => {
-    try {
-      setLoading(true);
-
-      const { error, data } = await supabase
-        .from('products')
-        .select('*')
-        .order('created_at', { ascending: true });
-
-      if (error) throw error;
-
-      if (data) {
-        // console.log(data);
-        setProducts(data);
-      }
-    } catch (error) {
-      console.error('error message in display', error.message);
-      toast.error("Can't seem to connect to server", { id: 'fetch error' });
-    } finally {
-      setLoading(FaBullseye);
-    }
-  };
-
-  useEffect(() => {
-    fetchProducts();
-  }, []);
 
   return (
     <div className="overflow-hidden">
       {/* Category and featuring stocks sections */}
-      <section className="flex flex-col items-center p-4 md:p-16 gap-10">
-        {/* title */}
-        <h1 className="text-[#8b4a1f] italic text-3xl tracking-tight border-b-2 border-orange-700">
-          Premium stocks
-        </h1>
-
+      <section className="flex flex-col items-center gap-10">
         {/* cards */}
-        <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 items-center justify-center place-items-center gap-4">
+        <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 items-center justify-center place-items-center gap-4 mt-20">
           {cards.map((card, index) => (
             <MiniCard
               key={index}
@@ -106,97 +53,17 @@ const Details = () => {
           ))}
         </div>
 
+
         {/* Categories */}
-        {/* title */}
-        <h1 className="text-[#8b4a1f] italic text-3xl tracking-tight border-b-2 border-orange-700 mt-20">
-          Collections
-        </h1>
-
-        {/* nav */}
-        <div className="relative w-full flex items-center justify-between gap-10 group text-[#8b4a1f]">
-          {/* button to hde and show categories filter */}
-          <button
-            onClick={() => setShowCategory(!showCategory)}
-            className="text-xs border border-[#8b4a1f] p-3 rounded-lg hover:scale-105 cursor-pointer"
-          >
-            {showCategory ? 'Hide' : 'Show'} Categories
-          </button>
-
-          {/* categories navigation*/}
-          {showCategory && (
-            <div className="flex flex-col absolute top-full z-10 rounded-lg bg-white/80 backdrop-blur-xs md:bg-transparent p-4 md:p-0 md:flex-row md:relative items-left md:items-center justify-between gap-4 mt-4 group-hover:-trnalate-y-5 transition-all duration-300">
-              {categories.map((category, index) => {
-                let Icon = category.icon;
-                return (
-                  <div
-                    key={index}
-                    className="border p-3 rounded-lg hover:scale-105 cursor-pointer text-xs flex items-center gap-1 grow group-hover:translate-y-1 transition-all duration-300"
-                  >
-                    <Icon />
-                    {category.name}
-                  </div>
-                );
-              })}
-            </div>
-          )}
+        <div>
+          <CollectionItems 
+            mapLenght={5}/>
         </div>
 
-        {/* category items */}
-        {loading ? (
-          <div className="w-full h-145 bg-gray-200/40 rounded-lg animate-pulse flex items-center justify-center">
-            <h1 className="flex items-center gap-4">
-              <span>Loading collections</span>
-              <span className="border border-t-blue-300 border-b-gray-500 animate-spin p-2 rounded-full"></span>
-            </h1>
-          </div>
-        ) : (
-          <Masonry
-            breakpointCols={breakpointColumnObj}
-            className="flex gap-4 "
-            columnClassName="flex flex-col gap-6 mt-4"
-          >
-            {products.slice(0, 6).map((item, index) => (
-              <div key={index} className="relative flex flex-col gap-2 group  ">
-                <img
-                  src={`${import.meta.env.VITE_SUPABASE_URL}/storage/v1/object/public/product-images/${item.image_urls[0]}`}
-                  alt={item.name}
-                  loading="lazy"
-                  className="w-full h-auto object-cover rounded-lg shadow-md group-hover:-translate-y-2 transition-all duration-300"
-                />
-                <h2 className="text-lg font-semibold mt-2 group-hover:-translate-y-3 transition-all duration-300 flex justify-between ">
-                  <span>{item.name}</span>
-                  <span className="text-xs italic text-gray-700">
-                    {item.quantity}
-                  </span>
-                </h2>
-                <p className="text-gray-500 text-xs md:text-sm group-hover:-translate-y-5 transition-all duration-300">
-                  {item.description}
-                </p>
-                <p className="w-full flex items-center justify-between group-hover:-translate-y-5 transition-all duration-300">
-                  <span className=" italic text-xs">
-                    {/* Main price */}
-                    <span className="font-bold">
-                      ${item.price.toFixed(2)}USD
-                    </span>
-                    {/* Discounted price */}
-                    {item.discount > 0 && (
-                      <span className="line-through text-gray-400 ml-2">
-                        ${(item.price * (1 + item.discount)).toFixed(2)}USD
-                      </span>
-                    )}
-                  </span>
-                  {/* <span className="italic text-xs">{item.rate}⭐</span> */}
-                </p>
-                <button className="absolute top-2 right-2 bg-white/80 group-hover:bg-white text-sm py-2 px-4 rounded-md group-hover:-translate-y-2 transition-all duration-300">
-                  Order
-                </button>
-              </div>
-            ))}
-          </Masonry>
-        )}
-
-        <div className="w-full flex justify-end">
-          <Link className="border p-3 rounded-lg uppercase text-sm flex items-center gap-2">
+        <div className="w-full flex justify-end px-4 md:px-16">
+          <Link 
+            to={"/collections"}
+            className="border p-3 rounded-lg uppercase text-sm flex items-center gap-2">
             <span>Go to Collections</span>
             <span>
               <FaArrowRight />
@@ -207,9 +74,9 @@ const Details = () => {
 
       {/* A different Section */}
       {/* A little taste of fashion */}
-      <section className="flex flex-col gap-10 mt-10">
+      <section className="flex flex-col gap-10 mt-20 md:mt-40">
         {/* What fashion says  */}
-        <div className="flex flex-col md:flex-row items-left md:items-start justify-between gap-4">
+        <div className="flex flex-col md:flex-row items-left md:items-end justify-between gap-4">
           <img
             src={IMAGES.hero2}
             alt="display image"
@@ -220,7 +87,7 @@ const Details = () => {
               <span>A little </span> <mark>History</mark>{' '}
               <span>of Our Fashion</span>
             </h1>
-            <p className="text-base sm:text-lg md:text-xl tracking-wide leading-relaxed text-amber-950/80 max-w-4xl">
+            <p className="text-base sm:text-lg md:text-xl tracking-wide leading-relaxed text-amber-950/80 line-clamp-14 max-w-4xl">
               Clothing originally dated back to the beginning of time—it is as
               much a part of man as man is a part of it. What started as a
               primal necessity to shield against elements and disease gradually
@@ -250,6 +117,14 @@ const Details = () => {
               we made on day one: to bring absolute elegance, premium beauty,
               and undeniable confidence to your wardrobe.
             </p>
+            <div className="w-full flex justify-end p-4">
+              <Link className="border p-3 rounded-lg uppercase text-sm flex items-center gap-2">
+                <span>Read More</span>
+                <span>
+                  <FaArrowRight />
+                </span>
+              </Link>
+            </div>
           </div>
         </div>
 

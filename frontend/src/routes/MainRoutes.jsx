@@ -1,7 +1,11 @@
 import React from 'react';
 import { Routes, Route, useLocation, Navigate } from 'react-router-dom';
 import { useContext } from 'react';
+import { useState, useEffect } from 'react';
 import { SettingsContext } from '../context/context.js';
+
+import { supabase } from '../supabse/supabaseClient.js';
+import ProtectedRoute from './ProtectedRoute.jsx';
 
 import Home from '../pages/user/home/Home.jsx';
 import About from '../pages/user/about/About.jsx';
@@ -23,25 +27,61 @@ import Announcement from '../pages/admin/pages/announcement/Annoucement.jsx';
 import AddAnnouncement from '../pages/admin/pages/announcement/AddAnnouncement.jsx';
 import EditAnnouncement from '../pages/admin/pages/announcement/EditAnnouncement.jsx';
 
-const MainRoutes = ({ session }) => {
+const MainRoutes = () => {
+  const [session, setSession] = useState(null);
+  const [loading, setLoading] = useState(true);
   const { settings } = useContext(SettingsContext);
   const location = useLocation();
   const state = location.state;
 
+  useEffect(() => {
+    const initialize = async () => {
+      const { data } = await supabase.auth.getSession();
+      setSession(data.session);
+      setLoading(false);
+    };
+
+    initialize();
+
+    const { data: authListener } = supabase.auth.onAuthStateChange(
+      (_event, session) => {
+        setSession(session);
+      }
+    );
+
+    return () => {
+      authListener.subscription.unsubscribe();
+    };
+  }, []);
+
+  if (loading)
+    return (
+      <div className="w-full h-screen bg-black/40 text-white flex items-center justify-center">
+        Loading...
+      </div>
+    );
+
   return (
     <>
       <Routes location={state?.backgroundLocation || location}>
-
-          <Route index element={<Home />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/collection" element={<Collection />} />
-          <Route path="/contact" element={<Contact />} />
+        <Route index element={<Home />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/collections" element={<Collection />} />
+        <Route path="/contact" element={<Contact />} />
 
         {/* Auth */}
-          <Route
+        <Route
           path="/signup"
-          element={session ? <Navigate to="/dashboard" /> : settings.signup ? <SignUp /> : <PageError /> }
-          />
+          element={
+            session ? (
+              <Navigate to="/dashboard" />
+            ) : settings.signup ? (
+              <SignUp />
+            ) : (
+              <PageError />
+            )
+          }
+        />
 
         <Route
           path="/signin"
@@ -51,21 +91,17 @@ const MainRoutes = ({ session }) => {
         {/* Dashbaord */}
         <Route
           path="/dashboard"
-          element={session ? <Dashboard /> : <Navigate to="/signin" />}
+          element={ <ProtectedRoute session={session}>
+            <Dashboard />
+          </ProtectedRoute> }
         >
           <Route index element={<DisplayProducts />} />
           <Route path="products/:id/edit" element={<EditProducts />} />
           <Route path="add-product" element={<AddProduct />} />
           <Route path="records" element={<Record />} />
           <Route path="announcements" element={<Announcement />} />
-          <Route
-            path="add-announcement"
-            element={<AddAnnouncement />}
-          />
-          <Route
-            path="edit-announcement/:id"
-            element={<EditAnnouncement />}
-          />
+          <Route path="add-announcement" element={<AddAnnouncement />} />
+          <Route path="edit-announcement/:id" element={<EditAnnouncement />} />
           <Route path="settings" element={<Settings />} />
         </Route>
 

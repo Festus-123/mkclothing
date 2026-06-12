@@ -1,51 +1,10 @@
-import React, { useEffect, useState } from 'react';
-// import './styles/variable.css';
+import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Toaster } from 'sonner';
-import { supabase } from './supabse/supabaseClient.js';
 
 import MainRoutes from './routes/MainRoutes.jsx';
-// import Home from './pages/user/home/Home.jsx';
-// import About from './pages/user/about/About.jsx';
-// import Collection from './pages/user/collection/Collection.jsx';
-// import Contact from './pages/user/contact/Contact.jsx';
 
 function App() {
-  const [session, setSession] = useState(null);
-  const [loading, setLoading] = useState(true);
-
-  // const fetchSession = async () => {
-  //   const currentSession = await supabase.auth.getSession();
-  //   console.log('The sessions', currentSession.data);
-  //   setSession(currentSession.data.session);
-  //   setLoading(false);
-  // };
-
-  useEffect(() => {
-    const initialize = async () => {
-      const { data } = await supabase.auth.getSession();
-      setSession(data.session);
-      setLoading(false);
-    };
-
-    initialize();
-
-    const { data: authListener } = supabase.auth.onAuthStateChange(
-      (_event, session) => {
-        setSession(session);
-      }
-    );
-
-    return () => {
-      authListener.subscription.unsubscribe();
-    };
-  }, []);
-
-  if (loading) return (
-    <div className='w-full h-screen bg-black/40 text-white flex items-center justify-center'>
-      Loading...
-    </div>
-  );
 
   return (
     <>
@@ -60,13 +19,7 @@ function App() {
         }}
       />
       <BrowserRouter>
-        {/* <Routes>
-          <Route index element={<Home />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/collection" element={<Collection />} />
-          <Route path="/contact" element={<Contact />} />
-        </Routes> */}
-        <MainRoutes session={session} />
+        <MainRoutes />
       </BrowserRouter>
     </>
   );

@@ -1,14 +1,13 @@
-import React from 'react'
-import { Routes, Route } from "react-router-dom"
 
-const ProtectedRoute = () => {
-  return (
-    <Routes>
-      {/* Auth */}
-        <Route path="/signup" element={<SignUp />} />
-        <Route path="/signin" element={<SignIn />} />
-    </Routes>
-  )
-}
 
-export default ProtectedRoute
+import { Navigate } from 'react-router-dom';
+
+const ProtectedRoute = ({ session, children }) => {
+  if (!session) {
+    return <Navigate to="/signin" replace />;
+  }
+
+  return children;
+};
+
+export default ProtectedRoute;

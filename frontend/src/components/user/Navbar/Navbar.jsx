@@ -11,7 +11,7 @@ const Navbar = () => {
 
   const links = [
     { link: 'Home', section: '/' },
-    { link: 'Collection', section: '/collection' },
+    { link: 'Collections', section: '/collections' },
     { link: 'About', section: '/about' },
     { link: 'Contact', section: '/contact' },
   ];
