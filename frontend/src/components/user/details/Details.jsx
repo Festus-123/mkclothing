@@ -2,8 +2,6 @@ import { IMAGES } from '../../../assets/images-list';
 import MiniCard from '../../../components/user/MiniCards/MiniCard';
 import { FaArrowRight } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
-import FooterMain from '../Footer/FooterMain';
-import CollectionItems from '../collection-items/CollectionItems';
 
 const Details = () => {
   const cards = [
