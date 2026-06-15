@@ -27,7 +27,7 @@ const Hero = () => {
         <h1 className="text-[2em] sm:text-[3em] md:text-[4em] lg:text-[5em]  uppercase text-center text-white font-bold mt-10 md:mt-20">
           Welcome to M&K Clothing
         </h1>
-        <p className="text-lg md:text-xl text-center text-white mt-4">
+        <p className="text-sm sm:text-base md:text-lg text-center text-white mt-4">
           Discover the latest trends in fashion and elevate your style with our
           exclusive collection.
         </p>

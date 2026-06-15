@@ -1,10 +1,14 @@
 // holds all data file 
-import hero_img from "./images/hero.png";
 import hero_img2 from "./images/hero2.png";
 import hero_bg from "./images/hero-bg.png";
 import hero_bg2 from "./images/hero-bg2.png";
 import hero from "./images/hero-bg.jpg";
 import hero2 from "./images/hero-bg2.jpg";
+
+import cargo_pants_badge from "./images/hero.png";
+import jacket_badge from "./images/jacket-badge.png";
+import coursette_badge from "./images/coursette-badge.png";
+import feminin_badge from "./images/feminin-badge.png";
 
 import jacket from "./images/jacket.jpg";
 import jacket2 from "./images/jacket2.jpg";
@@ -23,7 +27,11 @@ import stylish  from "./images/stylish.jpg";
 import mission_img from "./images/mission.png"
 
 export const IMAGES = {
-    hero_img: hero_img,
+    cargo_pants_badge: cargo_pants_badge,
+    jacket_badge: jacket_badge,
+    coursette_badge: coursette_badge,
+    feminin_badge: feminin_badge,
+
     hero_img2: hero_img2,
     hero_bg: hero_bg,
     hero_bg2: hero_bg2,

@@ -1,43 +1,41 @@
 import { IMAGES } from '../../../assets/images-list';
 import MiniCard from '../../../components/user/MiniCards/MiniCard';
-import { FaArrowRight, } from 'react-icons/fa';
+import { FaArrowRight } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import FooterMain from '../Footer/FooterMain';
-import CollectionItems from '../../collection-items/CollectionItems';
+import CollectionItems from '../collection-items/CollectionItems';
 
 const Details = () => {
-
-
   const cards = [
     {
       bg: '#07dc3c9f',
-      img: IMAGES.hero_img,
+      img: IMAGES.coursette_badge,
       title: 'Coursette',
       des: 'A stylish and comfortable coursette perfect for casual outings and everyday wear.',
     },
     {
       bg: '#dc92078a',
-      img: IMAGES.hero_img2,
+      img: IMAGES.jacket_badge,
       title: 'Jacket',
       des: 'A versatile jacket that combines fashion and functionality, ideal for layering and adding a touch of style to any outfit.',
     },
     {
       bg: '#c691d2b5',
-      img: IMAGES.hero_img,
+      img: IMAGES.feminin_badge,
       title: 'Feminine',
       des: 'A feminine piece that adds a touch of elegance to any outfit.',
     },
     {
       bg: '#fbbf24b5',
-      img: IMAGES.hero_img,
+      img: IMAGES.cargo_pants_badge,
       title: 'Cargo Pants',
       des: 'A trendy and functional pair of cargo pants that combines style with practicality, perfect for those who want to make a fashion statement while staying comfortable.',
     },
   ];
 
-
   return (
     <div className="overflow-hidden">
+
       {/* Category and featuring stocks sections */}
       <section className="flex flex-col items-center gap-10">
         {/* cards */}
@@ -53,23 +51,6 @@ const Details = () => {
           ))}
         </div>
 
-
-        {/* Categories */}
-        <div>
-          <CollectionItems 
-            mapLenght={5}/>
-        </div>
-
-        <div className="w-full flex justify-end px-4 md:px-16">
-          <Link 
-            to={"/collections"}
-            className="border p-3 rounded-lg uppercase text-sm flex items-center gap-2">
-            <span>Go to Collections</span>
-            <span>
-              <FaArrowRight />
-            </span>
-          </Link>
-        </div>
       </section>
 
       {/* A different Section */}
@@ -263,7 +244,6 @@ const Details = () => {
         </div>
       </section>
 
-      <FooterMain />
     </div>
   );
 };

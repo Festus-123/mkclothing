@@ -1,6 +1,6 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
-import { supabase } from '../../supabse/supabaseClient';
+import { supabase } from '../../../supabse/supabaseClient';
 import { toast } from 'sonner';
 import {
   FaTshirt,
@@ -116,25 +116,28 @@ const CollectionItems = ({ mapLenght = 50 }) => {
             </h1>
           </div>
         ) : (
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4 ">
+          <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-4 ">
             {products.slice(0, mapLenght).map((item, index) => (
-              <div key={index} className="relative flex flex-col gap-2 group min-h-90">
+              <div
+                key={index}
+                className="relative flex flex-col gap-2 group min-h-40"
+              >
                 <img
                   src={`${import.meta.env.VITE_SUPABASE_URL}/storage/v1/object/public/product-images/${item.image_urls[0]}`}
                   alt={item.name}
                   loading="lazy"
-                  className="w-full max-h-75 object-cover rounded-lg shadow-md group-hover:-translate-y-2 transition-all duration-300"
+                  className="w-full h-40 object-cover rounded-lg shadow-md group-hover:-translate-y-2 transition-all duration-300"
                 />
-                <h2 className="text-lg font-semibold mt-2 group-hover:-translate-y-3 transition-all duration-300 flex justify-between ">
+                <h2 className="text-sm md:text-sm font-bold mt-2 group-hover:-translate-y-3 transition-all duration-300 flex justify-between ">
                   <span>{item.name}</span>
                   <span className="text-xs italic text-gray-700">
                     {item.quantity}
                   </span>
                 </h2>
-                <p className="text-gray-500 text-xs md:text-sm group-hover:-translate-y-5 transition-all duration-300">
+                {/* <p className="text-gray-500 text-xs md:text-sm group-hover:-translate-y-5 transition-all duration-300">
                   {item.description}
-                </p>
-                <p className="w-full flex items-center justify-between group-hover:-translate-y-5 transition-all duration-300">
+                </p> */}
+                <p className="hidden w-full flex items-center justify-between group-hover:-translate-y-5 transition-all duration-300">
                   <span className=" italic text-xs flex flex-wrap">
                     {/* Main price */}
                     <span className="font-bold">
@@ -156,7 +159,6 @@ const CollectionItems = ({ mapLenght = 50 }) => {
           </div>
         )}
       </div>
-
     </section>
   );
 };
