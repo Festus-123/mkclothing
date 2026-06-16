@@ -37,7 +37,7 @@ const Hero = () => {
       </div>
 
       {/* social medias */}
-      <div className="absolute right-5 md:right-0 bottom-5 bg-[#331818] flex items-center gap-2">
+      <div className="absolute right-5 md:right-0 bottom-5 flex items-center gap-2">
         {links.map((item, index) => {
           let Icon = item.icon;
           return (

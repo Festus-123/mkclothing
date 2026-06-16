@@ -50,7 +50,7 @@ const Collection = () => {
       console.error('error message in display', error.message);
       toast.error("Can't seem to connect to server", { id: 'fetch error' });
     } finally {
-      setLoading(true);
+      setLoading(false);
     }
   };
 
