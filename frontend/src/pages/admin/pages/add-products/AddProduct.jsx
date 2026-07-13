@@ -124,7 +124,7 @@ const AddProduct = () => {
   };
 
   return (
-    <div className="fixed inset-0 z-40 bg-black/40 flex items-center justify-center p-2 backdrop-blur-md">
+    <div className="fixed inset-0 z-400 bg-black/40 flex items-center justify-center p-2 backdrop-blur-md">
       <div className="flex flex-col bg-white/90 rounded-xl p-4 w-full md:w-[60%] gap-2">
         <h1 className="text-lg md:text-2xl text-amber-600">Add Product</h1>
         <div className="w-full flex flex-col">

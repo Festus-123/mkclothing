@@ -3,9 +3,10 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Toaster } from 'sonner';
 
 import MainRoutes from './routes/MainRoutes.jsx';
+// Import the CartProvider you just created
+import { CartProvider } from '../src/context/CartContext.jsx'; 
 
 function App() {
-
   return (
     <>
       <Toaster
@@ -19,7 +20,10 @@ function App() {
         }}
       />
       <BrowserRouter>
-        <MainRoutes />
+        {/* Wrap your routes inside the CartProvider */}
+        <CartProvider>
+          <MainRoutes />
+        </CartProvider>
       </BrowserRouter>
     </>
   );

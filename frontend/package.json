@@ -23,6 +23,7 @@
     "react-scroll": "^1.9.3",
     "react-slick": "^0.31.0",
     "recharts": "^3.5.0",
+    "resend": "^6.17.2",
     "slick-carousel": "^1.8.1",
     "sonner": "^2.0.7"
   },

@@ -6,35 +6,58 @@ import AddProduct from '../pages/admin/pages/add-products/AddProduct.jsx';
 import Record from '../pages/admin/pages/records/Record.jsx';
 import DisplayProducts from '../pages/admin/pages/display-products/DisplayProducts.jsx';
 import EditProducts from '../pages/admin/pages/edit-products/EditProducts.jsx';
-import Annoucement from '../pages/admin/pages/announcement/Annoucement.jsx';
+import Settings from '../pages/admin/pages/settings/Settings.jsx';
+import Announcement from '../pages/admin/pages/announcement/Annoucement.jsx';
+import AddAnnouncement from '../pages/admin/pages/announcement/AddAnnouncement.jsx';
+import EditAnnouncement from '../pages/admin/pages/announcement/EditAnnouncement.jsx';
+import OrdersManagement from '../pages/admin/pages/orders/Orders.jsx';
+
+import RecoverySetupModal from '../pages/admin/register/RecoverySetupModal.jsx.jsx';
 
 const AdminRoutes = () => {
   const location = useLocation();
-  const state = location.state;
+  const backgroundLocation = location.state?.backgroundLocation;
 
   return (
-    <Routes>
-      {/* Dashbaord */}
-      <Route path="/dashboard" element={<Dashboard />}>
-        <Route index element={<DisplayProducts />} />
-        <Route path="products/:id/edit" element={<EditProducts />} />
-        <Route path="add-product" element={<AddProduct />} />
-        <Route path="records" element={<Record />} />
-        <Route path="annoucemnets" element={<Annoucement />} />
-      </Route>
-
-      {/* Full page edit fallback */}
-      <Route path="dashboard/product/:id/edit" element={<EditProducts />} />
-      <Route path="/dashboard/add-product" element={<AddProduct />} />
-
-      {/* MODAL ROUTE */}
-      {state?.backgroundLocation && (
-        <Route>
-          <Route path="/dashboard/products/:id/edit" element={<EditProducts />} />
-          <Route path="/dashboard/add-product" element={<AddProduct />} />
+    <>
+    {/* <RecoverySetupModal session={session}/> */}
+      <Routes location={backgroundLocation || location}>
+        {/* 
+          Changed path from "/dashboard" to "/" 
+          because the parent route "/dashboard/*" already handles the prefix!
+        */}
+        <Route path="/" element={<Dashboard />}>
+          <Route index element={<DisplayProducts />} />
+          <Route path="products/:id/edit" element={<EditProducts />} />
+          <Route path="add-product" element={<AddProduct />} />
+          <Route path="records" element={<Record />} />
+          <Route path="announcements" element={<Announcement />} />
+          <Route path="add-announcement" element={<AddAnnouncement />} />
+          <Route path="edit-announcement/:id" element={<EditAnnouncement />} />
+          <Route path="settings" element={<Settings />} />
+          <Route path="orders" element={<OrdersManagement />} />
         </Route>
+      </Routes>
+
+      {/* ADMIN MODAL OVERLAYS */}
+      {backgroundLocation && (
+        <Routes>
+          <Route
+            path="/dashboard/products/:id/edit"
+            element={<EditProducts />}
+          />
+          <Route path="/dashboard/add-product" element={<AddProduct />} />
+          <Route
+            path="/dashboard/add-announcement"
+            element={<AddAnnouncement />}
+          />
+          <Route
+            path="/dashboard/edit-announcement/:id"
+            element={<EditAnnouncement />}
+          />
+        </Routes>
       )}
-    </Routes>
+    </>
   );
 };
 

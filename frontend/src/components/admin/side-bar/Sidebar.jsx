@@ -22,19 +22,22 @@ const Sidebar = ({ onclick }) => {
 
   const Links = [
     {
-      name: 'Products', icon: <FiPackage />, link: '/dashboard', state: ""
+      name: 'Products', icon: <FiPackage />, link: '/dashboard', state: null
     },
     {
-      name: 'Add Products', icon: <FiPlusCircle />, link: 'add-product', state: { backgroundLocation: location }
+      name: 'Add Products', icon: <FiPlusCircle />, link: '/dashboard/add-product', state: { backgroundLocation: location }
     },
     {
-      name: 'Logs', icon: <FiFileText />, link: '/dashboard/records', state: ""
+      name: 'Logs', icon: <FiFileText />, link: '/dashboard/records', state: null
     },
     {
-      name: "Annoucemnets", icon: <FiBell />, link: '/dashboard/announcements', state: ""
+      name: "Annoucemnets", icon: <FiBell />, link: '/dashboard/announcements', state: null
     },
     {
-      name: 'Settings', icon: <FiSettings />, link: '/dashboard/settings', state: ""
+      name: 'Orders', icon: <FiPackage />, link: '/dashboard/orders', state: null
+    },
+    {
+      name: 'Settings', icon: <FiSettings />, link: '/dashboard/settings', state: null
     },
   ];
 
