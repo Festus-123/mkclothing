@@ -26,6 +26,8 @@ import stylish  from "./images/stylish.jpg";
 
 import mission_img from "./images/mission.png"
 
+import why_us from "./images/why-us.jpg"
+
 export const IMAGES = {
     cargo_pants_badge: cargo_pants_badge,
     jacket_badge: jacket_badge,
@@ -52,5 +54,7 @@ export const IMAGES = {
 
     stylish: stylish,
 
-    mission: mission_img
+    mission: mission_img,
+
+    why_us: why_us
 }

@@ -120,8 +120,7 @@ const CartOverlayModal = ({ isOpen, onClose }) => {
       // 4. Fire the confirmation email using your dedicated Node.js custom backend
       try {
         // Replace with your real backend port/host URL config
-        const apiUrl =
-          'http://localhost:5000/api/orders/send-confirmation';
+        const apiUrl = 'http://localhost:5000/api/emails/send';
 
         const res = await fetch(apiUrl, {
           method: 'POST',
@@ -129,10 +128,10 @@ const CartOverlayModal = ({ isOpen, onClose }) => {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
-            email: formData.email,
+            customerEmail: formData.email,
             customerName: formData.customerName,
-            customOrderId: customOrderId,
-            totalPrice: totalAmount.toFixed(2),
+            customOrderId,
+            totalAmount,
           }),
         });
 
@@ -150,16 +149,26 @@ const CartOverlayModal = ({ isOpen, onClose }) => {
         console.error('Email delivery route failed:', emailError.message);
       }
 
-      // 5. Copy Custom Order ID to Clipboard
-      if (navigator.clipboard) {
-        await navigator.clipboard.writeText(customOrderId); // Copies MK-XXXX instead of boring UUID
-        toast.success('Order logged safely!', {
-          description: `Order ID ${customOrderId} has been copied to your clipboard.`,
-        });
-      } else {
+      // 5. Copy Custom Order ID to Clipboard with strict focus check & crash safeguards
+      try {
+        if (navigator.clipboard && document.hasFocus()) {
+          await navigator.clipboard.writeText(`${customOrderId}`);
+          toast.success('Order logged safely!', {
+            description: `Order ID ${customOrderId} has been copied to your clipboard.`,
+          });
+        } else {
+          // Fallback if document isn't focused or clipboard API is missing
+          toast.success(`Order logged! ID: ${customOrderId}`);
+        }
+      } catch (clipboardError) {
+        // Prevent clipboard errors from crashing checkout state resets
+        console.warn(
+          'Clipboard write blocked by browser security:',
+          clipboardError.message
+        );
         toast.success(`Order logged! ID: ${customOrderId}`);
-        console.log(`Clipboard API not supported. Order ID: ${customOrderId}`);
       }
+      
       // Clear state and close modal
       clearCart();
       setFormData({ customerName: '', email: '', phone: '', address: '' });

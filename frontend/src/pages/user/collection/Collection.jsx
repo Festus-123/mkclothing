@@ -186,6 +186,7 @@ import { FaCartShopping, FaX } from 'react-icons/fa6';
 import { GiClothes, GiArmorVest, GiCancel } from 'react-icons/gi';
 import CardPlaceholder from '../../../components/user/card-placeholder/CardPlaceholder';
 import CartOverlayModal from '../../../components/user/cart-overlay/CartOverlayModal';
+import ProductCard from '../../../components/user/product-card/ProductCard';
 
 const Collection = () => {
   const [showCategory, setShowCategory] = useState(false);
@@ -254,152 +255,105 @@ const Collection = () => {
   });
 
   return (
-    <div className="overflow-hidden">
+    <div className="py-20 px-4 md:px-8 bg-gray-50/50">
       <Navbar />
-      <section className="flex flex-col gap-4">
-        <div className="w-full h-full flex flex-col gap-4 items-start mt-20 p-4 md:p-8">
-          {/* Controls Bar */}
-          <div className="relative w-full flex flex-col md:flex-row items-center justify-between gap-10 text-[#8b4a1f] border-b border-orange-700 pb-4">
-            <h1 className="text-[#8b4a1f] italic text-xl tracking-tight uppercase">
-              M & K Collections
-            </h1>
+      <div className=" max-w-7xl max-auto ">
+        <section className="flex flex-col  gap-4 ">
+          <div className="w-full h-full flex flex-col gap-4 items-start mt-20 p-4 md:p-8">
+            {/* Controls Bar */}
+            <div className="relative w-full flex flex-col md:flex-row items-center justify-between gap-10 text-[#8b4a1f] border-b border-orange-700 pb-4">
+              <h1 className="text-[#8b4a1f] italic text-xl tracking-tight uppercase">
+                M & K Collections
+              </h1>
 
-            <div className="w-full md:w-auto flex flex-row items-center gap-4">
-              {/* Search input */}
-              <div className="relative border border-amber-950/80 rounded-lg w-full md:w-sm bg-white">
-                <input
-                  type="text"
-                  placeholder="Search products..."
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className="p-2 pr-8 w-full border-none outline-none text-sm text-gray-800"
-                />
-                <div className="absolute top-1/2 -translate-y-1/2 right-3 text-amber-950/60">
-                  <FaSearch />
+              <div className="w-full md:w-auto flex flex-row items-center gap-4">
+                {/* Search input */}
+                <div className="relative border border-amber-950/80 rounded-lg w-full md:w-sm bg-white">
+                  <input
+                    type="text"
+                    placeholder="Search products..."
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    className="p-2 pr-8 w-full border-none outline-none text-sm text-gray-800"
+                  />
+                  <div className="absolute top-1/2 -translate-y-1/2 right-3 text-amber-950/60">
+                    <FaSearch />
+                  </div>
                 </div>
-              </div>
 
-              {/* Filter toggle button */}
-              <button
-                onClick={() => setShowCategory(!showCategory)}
-                className={`text-xs border p-3 rounded-lg hover:scale-105 cursor-pointer transition-all ${
-                  showCategory
-                    ? 'bg-[#8b4a1f] text-white border-[#8b4a1f]'
-                    : 'border-[#8b4a1f]'
-                }`}
-              >
-                {showCategory ? <FaX /> : <FaFilter />}
-              </button>
+                {/* Filter toggle button */}
+                <button
+                  onClick={() => setShowCategory(!showCategory)}
+                  className={`text-xs border p-3 rounded-lg hover:scale-105 cursor-pointer transition-all ${
+                    showCategory
+                      ? 'bg-[#8b4a1f] text-white border-[#8b4a1f]'
+                      : 'border-[#8b4a1f]'
+                  }`}
+                >
+                  {showCategory ? <FaX /> : <FaFilter />}
+                </button>
+              </div>
             </div>
+
+            {/* Dynamic Categories Container */}
+            {showCategory && (
+              <div className="flex flex-row flex-wrap items-center justify-center gap-2 md:gap-4 w-full py-2 transition-all duration-300">
+                {categories.map((category, index) => {
+                  const Icon = category.icon;
+                  const isActive = selectedCategory === category.name;
+                  return (
+                    <button
+                      key={index}
+                      onClick={() => setSelectedCategory(category.name)}
+                      className={`border border-amber-950/80 p-2 px-4 rounded-full hover:scale-105 cursor-pointer text-xs flex items-center gap-2 transition-all duration-200 ${
+                        isActive
+                          ? 'bg-[#8b4a1f] text-white'
+                          : 'text-[#8b4a1f] bg-transparent'
+                      }`}
+                    >
+                      <Icon />
+                      {category.name}
+                    </button>
+                  );
+                })}
+              </div>
+            )}
+
+            {/* Product Items Canvas */}
+            {loading ? (
+              <div className="w-full h-full grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-6 justify-center place-items-center">
+                {Array.from({ length: 16 }).map((_, index) => (
+                  <CardPlaceholder key={index} />
+                ))}
+              </div>
+            ) : filteredProducts.length === 0 ? (
+              <div className="w-full py-20 text-center text-gray-500 italic text-sm">
+                No products found matching the criteria.
+              </div>
+            ) : (
+              <div className="w-full grid grid-cols-2 sm:grid-cols-4 md:grid-cols-4 gap-4">
+                {filteredProducts.map((item) => (
+                  <ProductCard item={item} />
+                ))}
+              </div>
+            )}
           </div>
 
-          {/* Dynamic Categories Container */}
-          {showCategory && (
-            <div className="flex flex-row flex-wrap items-center justify-center gap-2 md:gap-4 w-full py-2 transition-all duration-300">
-              {categories.map((category, index) => {
-                const Icon = category.icon;
-                const isActive = selectedCategory === category.name;
-                return (
-                  <button
-                    key={index}
-                    onClick={() => setSelectedCategory(category.name)}
-                    className={`border border-amber-950/80 p-2 px-4 rounded-full hover:scale-105 cursor-pointer text-xs flex items-center gap-2 transition-all duration-200 ${
-                      isActive
-                        ? 'bg-[#8b4a1f] text-white'
-                        : 'text-[#8b4a1f] bg-transparent'
-                    }`}
-                  >
-                    <Icon />
-                    {category.name}
-                  </button>
-                );
-              })}
-            </div>
+          {cartOpen && (
+            <CartOverlayModal
+              isOpen={cartOpen}
+              onClose={() => setCartOpen(false)}
+            />
           )}
+          <button
+            onClick={() => setCartOpen(!cartOpen)}
+            className="fixed bottom-5 right-5 bg-orange-400 text-white text-2xl md:text-4xl p-3 rounded-full cursor-pointer "
+          >
+            <FaCartShopping />
+          </button>
+        </section>
+      </div>
 
-          {/* Product Items Canvas */}
-          {loading ? (
-            <div className="w-full h-full grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-6 justify-center place-items-center">
-              {Array.from({ length: 16 }).map((_, index) => (
-                <CardPlaceholder key={index} />
-              ))}
-            </div>
-          ) : filteredProducts.length === 0 ? (
-            <div className="w-full py-20 text-center text-gray-500 italic text-sm">
-              No products found matching the criteria.
-            </div>
-          ) : (
-            <div className="w-full grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-4">
-              {filteredProducts.map((item) => (
-                <div
-                  key={item.id}
-                  className="relative flex flex-col gap-2 group min-h-65 bg-white rounded-xl p-2 shadow-sm hover:shadow-md transition-all duration-300 border border-gray-100"
-                >
-                  {/* Image Frame */}
-                  <div className="overflow-hidden rounded-lg h-40 w-full relative">
-                    <img
-                      src={`${import.meta.env.VITE_SUPABASE_URL}/storage/v1/object/public/product-images/${item.image_urls?.[0]}`}
-                      alt={item.name}
-                      loading="lazy"
-                      className="w-full h-full object-cover group-hover:scale-105 transition-all duration-300"
-                    />
-
-                    {/* Floating Add-to-Cart Action */}
-                  </div>
-
-                  {/* Product Info Metadata */}
-                  <div className="flex flex-col gap-0.5 mt-1">
-                    <div className="flex items-start justify-between gap-1">
-                      <h2 className="text-xs font-bold text-gray-800 line-clamp-1">
-                        {item.name}
-                      </h2>
-                      <span
-                        className={`text-[10px] px-1.5 py-0.5 rounded-full ${
-                          item.quantity > 0
-                            ? 'bg-green-50 text-green-700'
-                            : 'bg-red-50 text-red-700'
-                        }`}
-                      >
-                         {item.quantity}
-                      </span>
-                    </div>
-
-                    {/* Cleaned Layout Pricing Structure */}
-                    <div className="flex items-center gap-1.5 mt-1">
-                      <span className="font-extrabold text-xs text-[#8b4a1f]">
-                        ${item.price?.toFixed(2)}
-                      </span>
-                      {item.discount > 0 && (
-                        <span className="line-through text-gray-400 text-[10px]">
-                          ${(item.price * (1 + item.discount)).toFixed(2)}
-                        </span>
-                      )}
-                    </div>
-                    <button
-                      onClick={() => handleAddToCart(item)}
-                      className=" bg-green-400 hover:bg-green-300 text-[#8b4a1f] hover:text-black font-semibold text-xs py-1.5 px-3 cursor-pointer rounded-md  transition-all duration-300"
-                    >
-                      + Cart
-                    </button>
-                  </div>
-                </div>
-              ))}
-            </div>
-          )}
-        </div>
-        {cartOpen && (
-          <CartOverlayModal
-            isOpen={cartOpen}
-            onClose={() => setCartOpen(false)}
-          />
-        )}
-        <button
-          onClick={() => setCartOpen(!cartOpen)}
-          className="fixed bottom-5 right-5 bg-orange-400 text-white text-2xl md:text-4xl p-3 rounded-full cursor-pointer "
-        >
-          <FaCartShopping />
-        </button>
-      </section>
       <FooterMain />
     </div>
   );

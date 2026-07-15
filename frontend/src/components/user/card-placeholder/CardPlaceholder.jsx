@@ -1,18 +1,34 @@
-import React from 'react'
+import React from 'react';
 
 const CardPlaceholder = () => {
   return (
-    <div
-        className='group animate-pulse flex flex-col gap-4'>
-        
-        <div className='w-40 sm:w-65 md:w-40 h-40 sm:h-65 md:h-40 rounded-lg bg-gray-200 '></div>
-        <span className='w-full flex items-center justify-between'>
-            <span className='rounded-lg p-2 w-30 h-5 bg-gray-200'></span>
-            <span className='rounded-full p-3 bg-gray-200'></span>
-        </span>
-      
-    </div>
-  )
-}
+    <div className="group cursor-pointer">
+      {/* Image */}
+      <div className="relative overflow-hidden bg-gray-100">
+        <div className="w-full h-105 object-cover transition-all duration-700 group-hover:scale-110" />
+      </div>
 
-export default CardPlaceholder
+      {/* Product Info */}
+      <div className="space-y-2 pt-4">
+        <p className="line-clamp-2 text-sm leading-6 text-gray-700"></p>
+
+        <div className="flex items-center gap-3">
+          <span className="text-lg font-semibold"></span>
+
+          <span className="text-sm text-gray-400 line-through"></span>
+        </div>
+
+        {/* Badges */}
+        <div className="flex flex-wrap gap-2">
+          <span className="bg-red-100 px-2 py-1 text-xs uppercase text-red-700">
+            Sale
+          </span>
+
+          <span className="bg-gray-100 px-2 py-1 text-xs uppercase">New</span>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default CardPlaceholder;
