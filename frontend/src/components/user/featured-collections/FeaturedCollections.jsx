@@ -43,8 +43,8 @@ const FeaturedCollections = () => {
   }
 
   return (
-    <div className="py-20 px-4 md:px-8 border-t border-gray-200 bg-gray-50">
-      <div className="max-w-7xl mx-auto">
+    <div className="py-16 md:py-24 border-t border-gray-200 bg-gray-50">
+      <div className="max-w-7xl mx-auto px-4">
         <div className="flex justify-between items-center mb-10">
           <h2 className="text-3xl md:text-5xl font-light">Our Collections</h2>
 

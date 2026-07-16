@@ -24,7 +24,7 @@ const FeaturedCategories = () => {
 
   return (
     <section className="py-24 bg-gray-50">
-      <div className="max-w-7xl mx-auto px-6">
+      <div className="max-w-7xl mx-auto px-4 ">
 
         <h2 className="text-3xl md:text-5xl font-light mb-14">
           Featured Categories

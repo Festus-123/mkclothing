@@ -2,7 +2,7 @@ import React from 'react';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { GiHamburgerMenu } from 'react-icons/gi';
-import { FaRemoveFormat } from 'react-icons/fa';
+import { FaRemoveFormat, FaSearch } from 'react-icons/fa';
 import { FiSearch } from 'react-icons/fi';
 import { IoArrowDown, IoClose } from 'react-icons/io5';
 // import { pathname } from "react-router-dom";
@@ -26,7 +26,7 @@ const Navbar = () => {
   ];
 
   return (
-    <nav className="fixed top-0 w-full z-50 flex items-center justify-center p-4 bg-white ">
+    <nav className="fixed top-0 left-0  w-full z-50 flex items-center justify-center p-4 bg-white ">
       <div
         className='w-full max-w-7xl mx-auto flex items-center justify-between'>
 
@@ -35,21 +35,16 @@ const Navbar = () => {
 
       {/* Search bar for items and categories */}
       {!isSearch && (
-        <div
-          onClick={() => setIsSearch(true)}
-          className="relative hidden  md:flex items-center px-5 py-3 border rounded-xl border-gray-400"
-        >
-          {/* Search Icon */}
-          <FiSearch className="text-gray-400 text-xl mr-3" />
+        <div className="">
+          <div className="relative hidden md:block max-w-2xl">
+            <FaSearch className="absolute left-5 top-1/2 -translate-y-1/2 text-gray-400 text-lg" />
 
-          {/* Input */}
-          <input
-            type="text"
-            onChange={() => setIsSearch(true)}
-            placeholder="Search products, collections, eccentrics..."
-            className=" flex-1 outline-none text-lg placeholder:text-gray-400"
-            autoFocus
-          />
+            <input
+              type="text"
+              placeholder="Search jackets, cargo pants, tops..."
+              className="w-full rounded-full border border-gray-300 bg-white py-4 pl-14 pr-6 text-sm outline-none transition focus:border-orange-500"
+            />
+          </div>
         </div>
       )}
 

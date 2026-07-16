@@ -3,8 +3,8 @@ import { Customer_Reviews } from "../../../data/customer_reviews";
 
 const CustomerReviews = () => {
   return (
-    <section className="py-24 px-4 md:px-8 bg-gray-50">
-      <div className="max-w-7xl mx-auto">
+    <section className="py-16 md:py-24 bg-gray-50">
+      <div className="max-w-7xl mx-auto px-4 ">
 
         {/* Heading */}
 
@@ -36,7 +36,7 @@ const CustomerReviews = () => {
           {Customer_Reviews.map((customer, index) => (
             <div
               key={index}
-              className="rounded-3xl border border-gray-200 bg-white p-8 transition-all duration-300"
+              className={`${index > 2 ? "hidden md:block" : ""} rounded-3xl border border-gray-200 bg-white p-8 transition-all duration-300`}
             >
 
               {/* Customer */}

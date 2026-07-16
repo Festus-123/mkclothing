@@ -29,8 +29,8 @@ const WhyUs = () => {
   ];
 
   return (
-    <div className="py-16 md:py-20 px-4 md:px-8 border-t border-gray-200">
-      <div className="max-w-7xl mx-auto px-6">
+    <div className="py-16 md:py-20 border-t border-gray-200">
+      <div className="max-w-7xl mx-auto px-4">
         <div className="">
           {/* Image Section */}
 

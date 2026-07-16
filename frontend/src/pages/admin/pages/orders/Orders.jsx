@@ -85,7 +85,7 @@ const getStatusBadge = (status) => {
 };
 
   return (
-    <div className="p-6 max-w-7xl mx-auto min-h-screen bg-gray-50/50 mt-10">
+    <div className="px-4 max-w-7xl mx-auto min-h-screen bg-gray-50/50">
       <div className="flex items-center justify-between border-b border-gray-200 pb-4 mb-6">
         <div>
           <h1 className="text-xl font-black text-gray-800 tracking-tight">ORDER FULFILLMENT</h1>

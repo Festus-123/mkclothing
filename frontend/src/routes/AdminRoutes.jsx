@@ -18,9 +18,11 @@ const AdminRoutes = () => {
   const location = useLocation();
   const backgroundLocation = location.state?.backgroundLocation;
 
+  // console.log(backgroundLocation, "bgl")
+  // console.log("location", location)
+
   return (
     <>
-    {/* <RecoverySetupModal session={session}/> */}
       <Routes location={backgroundLocation || location}>
         {/* 
           Changed path from "/dashboard" to "/" 
@@ -43,16 +45,16 @@ const AdminRoutes = () => {
       {backgroundLocation && (
         <Routes>
           <Route
-            path="/dashboard/products/:id/edit"
+            path="products/:id/edit"
             element={<EditProducts />}
           />
-          <Route path="/dashboard/add-product" element={<AddProduct />} />
+          <Route path="add-product" element={<AddProduct />} />
           <Route
-            path="/dashboard/add-announcement"
+            path="add-announcement"
             element={<AddAnnouncement />}
           />
           <Route
-            path="/dashboard/edit-announcement/:id"
+            path="edit-announcement/:id"
             element={<EditAnnouncement />}
           />
         </Routes>

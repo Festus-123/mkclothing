@@ -10,11 +10,11 @@ const Visuals = () => {
   ];
 
   return (
-    <section className="py-24">
+    <section className="">
       <div className="w-full border-t border-gray-200">
 
         {/* Heading */}
-        <div className="mx-auto max-w-7xl py-16 px-4 md:px-8">
+        <div className="mx-auto max-w-7xl px-4 py-16 md:py-24">
 
           <p className="mb-3 text-sm font-semibold uppercase tracking-[0.3em] text-orange-500">
             Editorial Gallery

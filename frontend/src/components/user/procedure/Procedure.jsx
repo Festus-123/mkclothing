@@ -57,8 +57,8 @@ const Procedure = () => {
   ];
 
   return (
-    <section className="py-24 px-4 md:px-8 bg-gray-50">
-      <div className="max-w-7xl mx-auto">
+    <section className="py-16 md:py-24 bg-gray-50">
+      <div className="max-w-7xl mx-auto px-4 ">
 
         {/* Heading */}
 

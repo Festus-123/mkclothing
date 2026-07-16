@@ -12,8 +12,8 @@ import Logo from '../logo/Logo';
 
 const FooterMain = () => {
   return (
-    <footer className="mt-8 md:mt-16 pt-24 border-t border-gray-200 bg-gray-50">
-      <div className="max-w-7xl mx-auto px-4 py-20">
+    <footer className=" border-t border-gray-300 bg-gray-50 pt-16 md:pt-24">
+      <div className="max-w-7xl mx-auto p-4">
         <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-5">
           {/* Brand */}
 
@@ -151,8 +151,7 @@ const FooterMain = () => {
                 className="flex-1 px-6 py-4 outline-none"
               />
 
-              <button className="flex items-center gap-2 bg-black px-8 text-white transition hover:bg-orange-500 duration-500 transition-all cursor-pointer">
-                Subscribe
+              <button className="flex items-center gap-2 bg-black px-8 text-white hover:bg-orange-500 duration-500 transition-all cursor-pointer">
                 <FiSend />
               </button>
             </form>

@@ -3,11 +3,11 @@ import { IMAGES } from '../../../assets/images-list';
 
 const About = () => {
   return (
-    <section className="py-16 md:py-20 px-4 md:px-8 border-t border-gray-200 bg-gray-50">
+    <section className="py-16 md:py-24 border-t border-gray-200 bg-gray-50">
       {/* <h2 className="p-8 md:p-16 text-3xl md:text-6xl text-gray-700 font-bold  text-center mb-8">
         M&K Clothing brand
       </h2> */}
-      <div className="max-w-7xl mx-auto rounded-3xl ">
+      <div className="max-w-7xl mx-auto px-4 ">
         <div className="grid md:grid-cols-2 gap-12 items-center">
           {/* Image Section */}
           <div className="relative">

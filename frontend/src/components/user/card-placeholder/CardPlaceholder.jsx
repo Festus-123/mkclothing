@@ -5,7 +5,7 @@ const CardPlaceholder = () => {
     <div className="group cursor-pointer">
       {/* Image */}
       <div className="relative overflow-hidden bg-gray-100">
-        <div className="w-full h-105 object-cover transition-all duration-700 group-hover:scale-110" />
+        <div className="w-65 h-105 object-cover transition-all duration-700 group-hover:scale-110" />
       </div>
 
       {/* Product Info */}
