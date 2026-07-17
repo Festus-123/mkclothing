@@ -66,12 +66,13 @@ const ProductStats = ({ products = [] }) => {
             className="bg-white rounded-2xl border border-gray-200 p-5 shadow-sm hover:border-amber-300/50 transition-all duration-300"
           >
             <div className="flex items-start justify-between">
-              <div>
+              <div
+                className=' '>
                 <p className="text-xs uppercase tracking-wide text-gray-500">
                   {item.title}
                 </p>
 
-                <h2 className="text-lg sm:text-xl md:text-2xl font-bold mt-2 text-gray-800 w-fit">
+                <h2 className="text-sm sm:text-xl md:text-2xl font-bold mt-2 text-gray-800 ">
                   {item.value}
                 </h2>
 

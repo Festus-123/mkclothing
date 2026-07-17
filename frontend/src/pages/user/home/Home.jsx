@@ -55,6 +55,7 @@ const Home = () => {
     <div className="bg-gray-100 min-h-screen overflow-hidden">
       <Navbar />
       <Hero />
+      {/* <Details /> */}
       <FeaturedCategories />
       <About />
       <FeaturedCollections />

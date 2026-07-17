@@ -10,8 +10,6 @@
 //   const location = useLocation();
 //   const navigate = useNavigate();
 
-
-
 //   const handleLogout = async () => {
 //     toast.success('Logged out successfully');
 //     // function to logout the user
@@ -81,7 +79,6 @@
 //             <h1>Log Out</h1>
 //           </div>
 //         </div>
-        
 
 //       </div>
 //     </div>
@@ -99,6 +96,7 @@ import {
   FiMenu,
   FiFileText,
   FiBox,
+  FiX,
 } from 'react-icons/fi';
 import { FaSignOutAlt } from 'react-icons/fa';
 import { supabase } from '../../../supabse/supabaseClient';
@@ -166,26 +164,18 @@ const Sidebar = ({ onClose }) => {
   ];
 
   return (
-    <aside className="h-full w-full bg-white border-r border-gray-200 shadow-xl flex flex-col">
-
+    <aside className="h-full w-full bg-white border-r border-gray-200 shadow-md flex flex-col">
       {/* Header */}
 
       <div className="flex items-center justify-between px-6 py-6 border-b border-gray-200">
-
         <div className="flex items-center gap-3">
-
           <Logo />
 
           <div>
-            <h2 className="font-bold text-gray-800">
-              M&K Clothing
-            </h2>
+            <h2 className="font-bold text-gray-800">M&K Clothing</h2>
 
-            <p className="text-xs text-gray-500">
-              Admin Workspace
-            </p>
+            <p className="text-xs text-gray-500">Admin Workspace</p>
           </div>
-
         </div>
 
         {onClose && (
@@ -193,29 +183,23 @@ const Sidebar = ({ onClose }) => {
             onClick={onClose}
             className="lg:hidden p-2 rounded-xl hover:bg-gray-100 transition"
           >
-            <FiMenu size={20} />
+            <FiX size={20} />
           </button>
         )}
-
       </div>
 
       {/* Navigation */}
 
       <div className="flex-1 overflow-y-auto px-4 py-6 space-y-8">
-
         {navigation.map((section) => (
-
           <div key={section.title}>
-
             <p className="text-xs uppercase tracking-wider text-gray-400 font-semibold px-3 mb-3">
               {section.title}
             </p>
 
             <div className="space-y-2">
-
               {section.links.map((item) => {
-                const active =
-                  location.pathname === item.path;
+                const active = location.pathname === item.path;
 
                 return (
                   <Link
@@ -227,7 +211,7 @@ const Sidebar = ({ onClose }) => {
 
                     ${
                       active
-                        ? 'bg-amber-50 text-amber-700 font-semibold shadow-sm'
+                        ? 'bg-amber-50 text-amber-700 font-semibold'
                         : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900'
                     }
                     `}
@@ -242,34 +226,24 @@ const Sidebar = ({ onClose }) => {
                   </Link>
                 );
               })}
-
             </div>
-
           </div>
         ))}
-
       </div>
 
       {/* Footer */}
 
       <div className="border-t border-gray-200 p-4">
-
         <div className="flex items-center gap-3 mb-4">
-
           <div className="w-11 h-11 rounded-full bg-linear-to-br from-gray-700 to-gray-900 flex items-center justify-center text-white font-semibold">
             A
           </div>
 
           <div>
-            <h3 className="font-medium text-gray-800">
-              Administrator
-            </h3>
+            <h3 className="font-medium text-gray-800">Administrator</h3>
 
-            <p className="text-xs text-gray-500">
-              M&K Dashboard
-            </p>
+            <p className="text-xs text-gray-500">M&K Dashboard</p>
           </div>
-
         </div>
 
         <button
@@ -277,12 +251,9 @@ const Sidebar = ({ onClose }) => {
           className="w-full flex items-center justify-center gap-3 rounded-xl border border-red-200 py-3 text-red-600 hover:bg-red-50 transition"
         >
           <FaSignOutAlt />
-
           Logout
         </button>
-
       </div>
-
     </aside>
   );
 };

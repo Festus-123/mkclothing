@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { supabase } from '../../../../supabse/supabaseClient';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
-import Slider from 'react-slick';
+import { FiX } from 'react-icons/fi';
 
 const EditProducts = () => {
   const navigate = useNavigate();
@@ -15,10 +15,10 @@ const EditProducts = () => {
   const [loading, setLoading] = useState(false);
 
   const handleEdit = async (id) => {
-    setLoading(true); 
+    setLoading(true);
     const toastId = toast.loading('Editing product...');
 
-    let updatedImagePaths = product.image_urls;
+    let updatedImagePaths = [...product.image_urls];
 
     try {
       if (newImages.length > 0) {
@@ -57,18 +57,16 @@ const EditProducts = () => {
       if (logError) throw logError;
 
       setLoading(false);
-      toast.success('Product edited successfully', { id: toastId });
+      toast.success('Product Item edited successfully', { id: toastId });
       navigate('/dashboard', { state: { refresh: true } });
     } catch (err) {
       console.error(err.message);
-      toast.error('Failed to edit product', { id: toastId });
+      toast.error('Error Editing Product item', { id: toastId });
     }
   };
 
   const handleImage = (e) => {
     const files = Array.from(e.target.files);
-
-    if (!files.length) return;
 
     if (files.length > 3) {
       toast.error('Maximum of 3 images allowed');
@@ -77,59 +75,115 @@ const EditProducts = () => {
 
     setNewImages(files);
 
-    const previewUrl = files.map((file) => URL.createObjectURL(file));
-    setPreviewImages(previewUrl);
+    setPreviewImages(files.map((file) => URL.createObjectURL(file)));
   };
 
-  const settings = {
-    dots: true,
-    infinite: false,
-    speed: 500,
-    slidesToShow: 1,
-    slidesToScroll: 1,
+  const removePreview = (index) => {
+    setPreviewImages((prev) => prev.filter((_, i) => i !== index));
+
+    if (newImages.length > 0) {
+      setNewImages((prev) => prev.filter((_, i) => i !== index));
+    } else {
+      setProduct((prev) => ({
+        ...prev,
+        image_urls: prev.image_urls.filter((_, i) => i !== index),
+      }));
+    }
   };
 
   return (
-    <div className="fixed inset-0 z-40 bg-black/40 flex items-center justify-center p-2  backdrop-blur-md overflow-y-hidden">
-      {/* Modal content */}
-      <div className="bg-white/90 rounded-xl shadow-md p-6 w-full md:w-[60%] flex flex-col gap-5">
-        <div className="w-full">
-          <h1 className="font-medium text-xl md:text-2xl text-amber-600">
-            Edit Products
-          </h1>
+    <div className="fixed inset-0 z-400 bg-black/60 backdrop-blur-md flex items-center justify-center p-4">
+      <div className="bg-white rounded-3xl shadow-2xl w-full max-w-4xl max-h-[85vh] overflow-y-auto">
+        {/* Header */}
+
+        <div className="border-b border-gray-200 px-8 py-6">
+          <h1 className="text-3xl font-bold text-gray-800">Edit Product</h1>
+
+          <p className="text-gray-500 mt-2">
+            Update product information and save your changes.
+          </p>
         </div>
-        <Slider {...settings}>
-          <div className="flex flex-col gap-5 text-black/90">
-            <fieldset className="border rounded-lg border-black/60">
-              <legend className="px-2 ">Product Name*</legend>
-              <input
-                type="text"
-                value={product.name}
-                onChange={(e) =>
-                  setProduct((prev) => ({ ...prev, name: e.target.value }))
-                }
-                className="w-full p-2 outline-none"
-              />
-            </fieldset>
 
-            <fieldset className="border rounded-lg w-full border-black/60">
-              <legend className="px-2 ">Product Description*</legend>
-              <textarea
-                type="text"
-                value={product.description}
-                onChange={(e) =>
-                  setProduct((prev) => ({
+        {/* Body */}
+
+        <div className="max-h-[75vh] overflow-y-auto p-8 space-y-8">
+          {/* Product Information */}
+
+          <section className="rounded-2xl border border-gray-200 p-6">
+            <h2 className="text-xl font-semibold mb-6">Product Information</h2>
+
+            <div className="space-y-5">
+              <div>
+                <label className="block text-sm font-medium mb-2">
+                  Product Name
+                </label>
+
+                <input
+                  type="text"
+                  value={product.name}
+                  onChange={(e) =>
+                    setProduct((prev) => ({
+                      ...prev,
+                      name: e.target.value,
+                    }))
+                  }
+                  className="w-full rounded-xl border border-gray-300 px-4 py-3 outline-none focus:border-amber-400 transition"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium mb-2">
+                  Description
+                </label>
+
+                <textarea
+                  rows={5}
+                  value={product.description}
+                  onChange={(e) =>
+                    setProduct((prev) => ({
+                      ...prev,
+                      description: e.target.value,
+                    }))
+                  }
+                  className="w-full rounded-xl border border-gray-300 px-4 py-3 resize-none outline-none focus:border-amber-400 transition"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Category
+                </label>
+
+                <select
+                  name=""
+                  id=""
+                  value={product.category}
+                  onChange={(e) => setProduct((prev) => ({
                     ...prev,
-                    description: e.target.value,
-                  }))
-                }
-                className="w-full p-2 outline-none min-h-15 max-h-30 font-mono"
-              />
-            </fieldset>
+                    category: e.target.value
+                  }))}
+                  className="w-full rounded-xl border border-gray-300 px-4 py-3 outline-none focus:border-amber-300 cursor-pointer transition"
+                >
+                  <option value="tops">Tops</option>
+                  <option value="jackets">Jackets</option>
+                  <option value="sport wears">Sports Wears</option>
+                  <option value="cargo pants">Cargo Pants</option>
+                </select>
+              </div>
+            </div>
+          </section>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-2 text-black/90">
-              <fieldset className="border rounded-lg border-black/60">
-                <legend className="px-2 ">Quntity*</legend>
+          {/* Inventory */}
+
+          <section className="rounded-2xl border border-gray-200 p-6">
+            <h2 className="text-xl font-semibold mb-6">Inventory & Pricing</h2>
+
+            <div className="grid md:grid-cols-3 gap-5">
+              <div>
+                <label className="block text-sm font-medium mb-2">
+                  Quantity
+                </label>
+
                 <input
                   type="number"
                   value={product.quantity}
@@ -139,11 +193,13 @@ const EditProducts = () => {
                       quantity: Number(e.target.value),
                     }))
                   }
-                  className="w-full p-2 md:p-1 outline-none "
+                  className="w-full rounded-xl border border-gray-300 px-4 py-3 outline-none focus:border-amber-400"
                 />
-              </fieldset>
-              <fieldset className="border rounded-lg border-black/60">
-                <legend className="px-2 ">Price*</legend>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium mb-2">Price</label>
+
                 <input
                   type="number"
                   value={product.price}
@@ -153,11 +209,15 @@ const EditProducts = () => {
                       price: Number(e.target.value),
                     }))
                   }
-                  className="w-full p-2 md:p-1 outline-none"
+                  className="w-full rounded-xl border border-gray-300 px-4 py-3 outline-none focus:border-amber-400"
                 />
-              </fieldset>
-              <fieldset className="border rounded-lg border-black/60">
-                <legend className="px-2 ">Discount (if any)*</legend>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium mb-2">
+                  Discount %
+                </label>
+
                 <input
                   type="number"
                   value={product.discount}
@@ -167,51 +227,118 @@ const EditProducts = () => {
                       discount: Number(e.target.value),
                     }))
                   }
-                  className="w-full p-2 md:p-2 outline-none"
+                  className="w-full rounded-xl border border-gray-300 px-4 py-3 outline-none focus:border-amber-400"
                 />
-              </fieldset>
+              </div>
             </div>
-          </div>
+          </section>
 
-          {/* Image preview */}
-          <div className="">
-            <input
-              type="file"
-              onChange={handleImage}
-              multiple
-              className="rounded-xl w-full border border-gray-300 p-2 cursor-pointer m-2 text-gray-500"
-            />
-            <div className=' hide-scrollbar flex flex-row p-2 gap-2 mt-4 overflow-x-auto'>
-            {previewImages?.length > 0 &&
-              previewImages.map((fileName, index) => (
-                <img
-                  key={index}
-                  src={
-                    fileName.startsWith('blob:')
-                      ? `${fileName}`
-                      : `${import.meta.env.VITE_SUPABASE_URL}/storage/v1/object/public/product-images/${fileName}`
-                  }
-                  alt="preview"
-                  className="w-40 h-40 md:w-60 md:h-60 object-cover rounded-xl m-2"
+          {/* Image section goes here (Part B) */}
+          {/* Images */}
+
+          <section className="rounded-2xl border border-gray-200 p-6">
+            <div className="flex items-center justify-between mb-6">
+              <div>
+                <h2 className="text-xl font-semibold">Product Images</h2>
+
+                <p className="text-sm text-gray-500 mt-1">
+                  Upload new images to replace the current ones.
+                </p>
+              </div>
+
+              <span className="bg-amber-100 text-amber-700 text-sm px-3 py-1 rounded-full">
+                {previewImages.length}/3 
+              </span>
+            </div>
+
+            {/* Upload */}
+
+            <label
+              htmlFor="edit-product-images"
+              className="border-2 border-dashed border-gray-300 rounded-2xl p-10 flex flex-col items-center justify-center cursor-pointer hover:border-amber-500 hover:bg-amber-50 transition"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="w-12 h-12 text-amber-500"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                strokeWidth={1.5}
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M12 16V4m0 0l-4 4m4-4l4 4M4 20h16"
                 />
-              ))}
-            </div>
-          </div>
-        </Slider>
+              </svg>
 
-        <div className="flex flex-row items-center w-full gap-2 p-y-2 border-t border-black/60 pt-2">
+              <h3 className="text-lg font-semibold mt-4">
+                Replace Product Images
+              </h3>
+
+              <p className="text-sm text-gray-500 mt-2">
+                Click here to choose up to 3 new images.
+              </p>
+
+              <input
+                id="edit-product-images"
+                type="file"
+                multiple
+                accept="image/*"
+                onChange={handleImage}
+                className="hidden"
+              />
+            </label>
+
+            {/* Preview */}
+
+            {previewImages.length > 0 && (
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-5 mt-8">
+                {previewImages.map((image, index) => (
+                  <div
+                    key={index}
+                    className="relative rounded-2xl overflow-hidden border border-gray-200 group"
+                  >
+                    <img
+                      src={
+                        image.startsWith('blob:')
+                          ? image
+                          : `${import.meta.env.VITE_SUPABASE_URL}/storage/v1/object/public/product-images/${image}`
+                      }
+                      alt=""
+                      className="w-full h-40 object-cover group-hover:scale-105 transition duration-500"
+                    />
+
+                    <button
+                      type="button"
+                      onClick={() => removePreview(index)}
+                      className="absolute top-3 right-3 w-9 h-9 rounded-full bg-white shadow flex items-center justify-center text-red-700 hover:bg-red-500 hover:text-white transition"
+                    >
+                      <FiX />
+                    </button>
+                  </div>
+                ))}
+              </div>
+            )}
+          </section>
+        </div>
+
+        {/* Footer */}
+
+        <div className="border-t border-gray-200 bg-gray-50 px-8 py-5 flex justify-end gap-4">
           <button
             onClick={() => navigate(-1)}
-            className="rounded-xl p-3 bg-red-400 w-full"
+            className="px-6 py-3 rounded-xl border border-gray-300 hover:bg-gray-100 cursor-pointer transition"
           >
-            Close
+            Cancel
           </button>
+
           <button
-            onClick={() => handleEdit(product.id)}
             disabled={loading}
-            className="cursor-pointer rounded-xl p-3 bg-amber-400 w-full"
+            onClick={() => handleEdit(product.id)}
+            className="px-8 py-3 rounded-xl bg-amber-50 hover:bg-amber-100/50 border border-amber-200 hover:border-amber-300/50 text-black cursor-pointer transition disabled:opacity-50"
           >
-            Edit
+            {loading ? 'Saving...' : 'Save Changes'}
           </button>
         </div>
       </div>

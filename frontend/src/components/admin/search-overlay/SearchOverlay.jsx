@@ -1,13 +1,8 @@
-import React, { useMemo, useState } from "react";
-import { FiSearch, FiX } from "react-icons/fi";
+import React, { useMemo, useState } from 'react';
+import { FiSearch, FiX } from 'react-icons/fi';
 
-const SearchOverlay = ({
-  products,
-  open,
-  onClose,
-  onSelectProduct,
-}) => {
-  const [query, setQuery] = useState("");
+const SearchOverlay = ({ products, open, onClose, onSelectProduct }) => {
+  const [query, setQuery] = useState('');
 
   const filteredProducts = useMemo(() => {
     if (!query.trim()) return products;
@@ -21,20 +16,13 @@ const SearchOverlay = ({
 
   return (
     <div className="fixed inset-0 bg-black/40 backdrop-blur-sm z-200 flex justify-center items-start pt-8 md:pt-16 px-4">
-
       <div className="bg-white rounded-2xl shadow-xl w-full max-w-4xl overflow-hidden">
-
         {/* Header */}
 
-        <div className="flex items-center justify-between p-5 border-b">
-          <h2 className="text-xl font-semibold">
-            Search Products
-          </h2>
+        <div className="flex items-center justify-between p-5 border-b border-gray-300">
+          <h2 className="text-xl font-semibold">Search Products</h2>
 
-          <button
-            onClick={onClose}
-            className="text-gray-500 hover:text-black"
-          >
+          <button onClick={onClose} className="text-gray-500 hover:text-black">
             <FiX size={22} />
           </button>
         </div>
@@ -42,7 +30,7 @@ const SearchOverlay = ({
         {/* Search */}
 
         <div className="p-5">
-          <div className="flex items-center gap-3 border rounded-xl px-4 py-3">
+          <div className="flex items-center gap-3 border border-gray-300 rounded-xl px-4 py-3">
             <FiSearch size={20} className="text-gray-500" />
 
             <input
@@ -59,7 +47,6 @@ const SearchOverlay = ({
         {/* Results */}
 
         <div className="max-h-100 overflow-y-auto">
-
           {filteredProducts.length === 0 ? (
             <div className="text-center py-12 text-gray-500">
               No matching products.
@@ -81,9 +68,7 @@ const SearchOverlay = ({
                 />
 
                 <div className="flex-1">
-                  <h3 className="font-medium">
-                    {product.name}
-                  </h3>
+                  <h3 className="font-medium">{product.name}</h3>
 
                   <p className="text-sm text-gray-500">
                     ₦{product.price.toLocaleString()}
@@ -92,11 +77,8 @@ const SearchOverlay = ({
               </button>
             ))
           )}
-
         </div>
-
       </div>
-
     </div>
   );
 };

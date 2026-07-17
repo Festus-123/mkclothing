@@ -1,123 +1,3 @@
-// import React, { useState } from 'react';
-// // eslint-disable-next-line no-unused-vars
-// import { motion } from 'motion/react';
-// import { toast } from 'sonner';
-// import { useNavigate } from 'react-router-dom';
-// import { supabase } from '../../../supabse/supabaseClient';
-
-// const SignIn = () => {
-//   const navigate = useNavigate();
-//   const [email, setEmail] = useState('');
-//   const [password, setPassword] = useState('');
-//   const [loading, setLoading] = useState('');
-
-//   // console.log(motion)
-
-//   const handleLogIn = async (e) => {
-//     e.preventDefault();
-//     if (loading) return;
-
-//     if (email.trim() && password.trim()) {
-//       setLoading(true);
-//       const { error } = await supabase.auth.signInWithPassword({
-//         email,
-//         password,
-//       });
-//       if (error) {
-//         console.error('Error signing in', error.message);
-//         setLoading(false);
-//         return;
-//       }
-//       toast.success('User successfully logged in ✅');
-//       setEmail('');
-//       setPassword('');
-//       setLoading(false);
-//       navigate('/dashboard');
-//     } else {
-//       toast.error('Error logging in');
-//       setLoading(false);
-//     }
-//   };
-
-//   return (
-//     <div className="relative w-full h-screen">
-//       {/* Sign In form  */}
-
-//       <div
-//         style={{ backgroundImage: "url('auth-img.jpg')" }}
-//         className="absolute inset-0 w-full h-full"
-//       />
-
-//       <div className="absolute inset-0 bg-black/60 w-full h-full backdrop-blur-md" />
-
-//       <div className="relative bg-[#ede0e022] w-full h-full flex flex-col items-center justify-center">
-//         <div className="w-[90%] md:w-120 text-white border border-white/40 p-4 md:p-6 rounded-2xl flex flex-col gap-5">
-//           <h1 className="text-center font-medium text-xl md:text-2xl">
-//             SIgn In
-//           </h1>
-//           <fieldset className="border border-[#f8f2f276] rounded-xl text-sm">
-//             <legend>Email *</legend>
-//             <input
-//               type="email"
-//               value={email}
-//               onChange={(e) => setEmail(e.target.value)}
-//               className="p-2 w-full outline-none"
-//             />
-//           </fieldset>
-//           <fieldset className="border border-[#f8f3f376] rounded-xl text-sm">
-//             <legend>Password *</legend>
-//             <input
-//               type="password"
-//               value={password}
-//               onChange={(e) => setPassword(e.target.value)}
-//               className="p-2 w-full outline-none"
-//             />
-//           </fieldset>
-//           <a
-//             href=""
-//             className="text-center underline cursor-pointer hover:decoration-0"
-//           >
-//             forgot password?
-//           </a>
-//           <button
-//             disabled={loading}
-//             onClick={handleLogIn}
-//             className="text-white font-medium p-2 bg-amber-400 rounded-xl cursor-pointer hover:bg-amber-500"
-//           >
-//             {loading ? (
-//               <motion.fieldset
-//                 initial={{}}
-//                 animate={{ rotate: '360deg' }}
-//                 transition={{
-//                   duration: 0.8,
-//                   repeat: Infinity,
-//                   ease: 'linear',
-//                 }}
-//                 className="w-6 h-2 p-3 rounded-full border-t-2 border-r-2 border-[white] place-self-center"
-//               />
-//             ) : (
-//               'Sign In'
-//             )}
-//           </button>
-//           <p className="text-center font-light text-sm">
-//             <span>Don't have an account? </span>
-//             <span>
-//               <a
-//                 href=""
-//                 onClick={() => navigate('/signup')}
-//                 className="underline hover:decoration-0 cursor-pointer"
-//               >
-//                 Sign Up
-//               </a>
-//             </span>
-//           </p>
-//         </div>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default SignIn;
 
 import React, { useState } from 'react';
 import { motion } from 'motion/react';
@@ -150,11 +30,11 @@ const SignIn = () => {
         password: password.trim(),
       });
       if (error) {
-        toast.error(error.message);
+        toast.error("CHeck your internet connection ⚠️");
         setLoading(false);
         return;
       }
-      toast.success('User successfully logged in ✅');
+      toast.success('Successfully logged in ✅');
       setLoading(false);
       navigate('/dashboard');
     } else {
@@ -215,7 +95,7 @@ const SignIn = () => {
     setLoading(true);
 
     // Call the RPC function we created in your database
-    const { data, error } = await supabase.rpc('update_admin_password_via_recovery', {
+    const { error } = await supabase.rpc('update_admin_password_via_recovery', {
       target_email: email.trim(),
       provided_question: fetchedQuestion,
       provided_answer: securityAnswer.trim().toLowerCase(),
@@ -223,12 +103,12 @@ const SignIn = () => {
     });
 
     if (error) {
-      toast.error(error.message);
+      toast.error("Error failed to reset password");
       setLoading(false);
       return;
     }
 
-    toast.success("Password updated successfully! Log in now.");
+    toast.success("Password reset successful! Log in now.");
     resetRecoveryState();
   };
 
@@ -246,7 +126,13 @@ const SignIn = () => {
       <div className="absolute inset-0 bg-black/60 w-full h-full backdrop-blur-md" />
 
       <div className="relative bg-[#ede0e022] w-full h-full flex flex-col items-center justify-center">
-        <div className="w-[90%] md:w-120 text-white border border-white/40 p-4 md:p-6 rounded-2xl flex flex-col gap-5 bg-neutral-900/50 backdrop-blur-md">
+        <div className="w-[90%] sm:w-[70%] md:w-120 text-white border border-white/40 p-4 md:p-6 rounded-2xl flex flex-col gap-5 bg-neutral-900/50 backdrop-blur-md">
+
+          <h1
+            className='text-3xl md:text-3xl text-center uppercase text-orange-300 py-8'>
+            M & K {' '} <span className='text-white italic'>Clothing</span>
+          </h1>
+
           <h1 className="text-center font-medium text-xl md:text-2xl">
             {isForgotMode ? `Account Recovery (Step ${recoveryStep}/3)` : 'Sign In'}
           </h1>

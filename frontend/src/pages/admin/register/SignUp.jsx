@@ -21,11 +21,12 @@ const SignUp = () => {
     if (name.trim() && email.trim() && password.trim()) {
       const { error } = await supabase.auth.signUp({ email, password });
       if (error) {
+        toast.error("check your internet connection")
         console.error("Couldn't sign up", error.message);
         setLoading(false);
         return;
       }
-      toast.success('User successfully Sign up ✅');
+      toast.success('Admin successfully Signed up ✅');
       setEmail('');
       setPassword('');
       setName('');
@@ -50,6 +51,12 @@ const SignUp = () => {
 
       <div className="relative bg-[#e8dada11] w-full h-full flex flex-col items-center justify-center">
         <div className="relative text-white  w-[90%] md:w-120  border border-white/40 p-4 md:p-6 rounded-2xl flex flex-col gap-5">
+
+          <h1
+            className='text-3xl md:text-3xl text-center uppercase text-orange-300 py-8'>
+            M & K {' '} <span className='text-white italic'>Clothing</span>
+          </h1>
+
           <h1 className="text-center font-medium text-xl md:text-2xl">
             SIgn Up
           </h1>

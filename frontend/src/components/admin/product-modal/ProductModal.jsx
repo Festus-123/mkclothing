@@ -20,12 +20,12 @@ const ProductModal = ({ product, open, onClose, onDelete }) => {
 
   return (
     <div className="fixed inset-0 z-300 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4">
-      <div className="relative bg-white rounded-3xl shadow-2xl w-full max-w-6xl max-h-[92vh] overflow-y-auto">
+      <div className="relative bg-white rounded-xl shadow-2xl w-full max-w-5xl max-h-[92vh] overflow-y-auto">
         {/* Close */}
 
         <button
           onClick={onClose}
-          className="absolute right-5 top-5 z-20 p-2 rounded-full hover:bg-gray-100 cursor-pointer"
+          className="absolute right-5 top-5 z-20 bg-gray-50 rounded-full p-2 hover:bg-gray-100 cursor-pointer"
         >
           <FiX size={22} />
         </button>
@@ -41,7 +41,9 @@ const ProductModal = ({ product, open, onClose, onDelete }) => {
 
           <div className="flex-1 flex flex-col gap-6">
             <div>
-              <h1 className="text-2xl md:text-3xl font-semibold">{product.name}</h1>
+              <h1 className="text-2xl md:text-3xl font-semibold">
+                {product.name}
+              </h1>
 
               <p className="text-gray-500 mt-2">Product #{product.id}</p>
             </div>
