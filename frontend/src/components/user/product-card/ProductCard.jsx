@@ -10,7 +10,7 @@ const ProductCard = ({ item }) => {
         <img
           src={`${import.meta.env.VITE_SUPABASE_URL}/storage/v1/object/public/product-images/${item.image_urls?.[0]}`}
           alt={item.name}
-          className="w-full h-105 object-cover transition-all duration-700 group-hover:scale-110"
+          className="w-full h-75 md:h-105 object-cover transition-all duration-700 group-hover:scale-110"
         />
 
         <div className="absolute inset-0 bg-black/0 transition duration-500 group-hover:bg-black/10 cursor-pointer" />

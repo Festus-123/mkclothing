@@ -5,16 +5,16 @@ import { IMAGES } from "../../../assets/images-list";
 const FeaturedCategories = () => {
   const categories = [
     {
-      img: IMAGES.jacket3,
-      name: "Jackets",
-    },
-    {
       img: IMAGES.top,
       name: "Tops",
     },
     {
       img: IMAGES.stylish,
       name: "Cargo Pants",
+    },
+    {
+      img: IMAGES.jacket3,
+      name: "Jackets",
     },
     {
       img: IMAGES.cargo_pants2,
@@ -26,16 +26,16 @@ const FeaturedCategories = () => {
     <section className="py-24 bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 ">
 
-        <h2 className="text-3xl md:text-5xl font-light mb-14">
+        <h2 className="text-3xl md:text-5xl font-light mb-14 ">
           Featured Categories
         </h2>
 
-        <div className="flex gap-6 overflow-x-auto pb-6">
+        <div className="flex gap-4 md:gap-6 overflow-x-auto pb-6">
 
           {categories.map((category, index) => (
             <div
               key={category.name}
-              className={`group relative min-w-[320px] h-125 rounded-3xl overflow-hidden cursor-pointer shrink-0 shadow-2xs ${index % 2 !== 0 ? "mt-16" : ""} `}
+              className={`group relative min-w-[320px] h-125 rounded-3xl overflow-hidden cursor-pointer shrink-0 shadow-2xs ${index % 2 !== 0 ? "mt-8" : ""} `}
             >
               <img
                 src={category.img}
@@ -61,10 +61,10 @@ const FeaturedCategories = () => {
 
         </div>
 
-        <h1
+        {/* <h1
             className="font-medium text-2xl md:text-3xl text-center text-gray-500 italic py-8 mt-4">
            " With Every Thread We Make a Difference!"
-        </h1>
+        </h1> */}
 
       </div>
     </section>
