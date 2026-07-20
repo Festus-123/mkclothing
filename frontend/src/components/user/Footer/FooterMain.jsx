@@ -144,14 +144,14 @@ const FooterMain = () => {
               </p>
             </div>
 
-            <form className="flex w-full max-w-lg overflow-hidden rounded-full border border-gray-300">
+            <form className="flex flex-col gap-2 md:flex-row md:gap-0 w-full max-w-lg overflow-hidden rounded-lg md:rounded-full border border-gray-300 ">
               <input
                 type="email"
                 placeholder="Enter your email address"
                 className="flex-1 px-6 py-4 outline-none"
               />
 
-              <button className="flex items-center gap-2 bg-black px-8 text-white hover:bg-orange-500 duration-500 transition-all cursor-pointer">
+              <button className=" bg-black px-8 py-3 flex items-center justify-center text-white hover:bg-orange-500 rounded-lg duration-500 transition-all cursor-pointer">
                 <FiSend />
               </button>
             </form>

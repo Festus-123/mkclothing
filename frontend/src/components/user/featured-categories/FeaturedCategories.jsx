@@ -1,41 +1,56 @@
-import { Link } from "react-router-dom";
-import { IMAGES } from "../../../assets/images-list";
+import { Link } from 'react-router-dom';
+import { IMAGES } from '../../../assets/images-list';
 // import motion from "motion";
 
 const FeaturedCategories = () => {
   const categories = [
     {
       img: IMAGES.top,
-      name: "Tops",
+      name: 'Tops',
     },
     {
       img: IMAGES.stylish,
-      name: "Cargo Pants",
+      name: 'Cargo Pants',
     },
     {
       img: IMAGES.jacket3,
-      name: "Jackets",
+      name: 'Jackets',
     },
     {
       img: IMAGES.cargo_pants2,
-      name: "Sport Outfits",
+      name: 'Sport Outfits',
     },
   ];
 
   return (
     <section className="py-24 bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 ">
+        <div>
+          <div>
+            <p className="uppercase tracking-[0.3em] text-orange-500 text-sm font-semibold mb-4">
+              Featured Categories
+            </p>
 
-        <h2 className="text-3xl md:text-5xl font-light mb-14 ">
-          Featured Categories
-        </h2>
+            <h2 className="text-4xl md:text-5xl font-semibold leading-tight mb-5">
+              Discover Signature Styles,
+              <br />
+              Crafted to Make a Statement.
+            </h2>
+
+            <p className="text-gray-500 leading-8 mb-10">
+              Explore carefully curated collections designed for every
+              occasion—from contemporary essentials to bold statement pieces.
+              Every category reflects M&amp;K's commitment to exceptional
+              craftsmanship, premium quality, and effortless sophistication.
+            </p>
+          </div>
+        </div>
 
         <div className="flex gap-4 md:gap-6 overflow-x-auto pb-6">
-
           {categories.map((category, index) => (
             <div
               key={category.name}
-              className={`group relative min-w-[320px] h-125 rounded-3xl overflow-hidden cursor-pointer shrink-0 shadow-2xs ${index % 2 !== 0 ? "mt-8" : ""} `}
+              className={`group relative min-w-[320px] h-125 rounded-3xl overflow-hidden cursor-pointer shrink-0 shadow-2xs ${index % 2 !== 0 ? 'mt-8' : ''} `}
             >
               <img
                 src={category.img}
@@ -46,26 +61,25 @@ const FeaturedCategories = () => {
               <div className="absolute inset-0 bg-black/25 group-hover:bg-black/40 transition" />
 
               <div className="absolute bottom-8 left-8 text-white">
-                <h3 className="text-3xl font-semibold mb-4">
-                  {category.name}
-                </h3>
+                <h3 className="text-3xl font-semibold mb-4">{category.name}</h3>
 
-                <Link 
-                    href="/collections"
-                    className=" border border-white px-5 py-2 rounded-full hover:bg-white hover:text-black transition">
+                <Link
+                  to="/collections"
+                  className=" border border-white px-5 py-2 rounded-full hover:bg-white hover:text-black transition"
+                >
                   Shop Now
                 </Link>
               </div>
             </div>
           ))}
-
         </div>
 
-        {/* <h1
-            className="font-medium text-2xl md:text-3xl text-center text-gray-500 italic py-8 mt-4">
-           " With Every Thread We Make a Difference!"
-        </h1> */}
-
+        <p className="text-gray-500 leading-8 py-8 md:py-16">
+          Every collection is thoughtfully designed to combine modern style with
+          lasting quality. Whether you're dressing for everyday confidence or
+          special occasions, M&amp;K delivers fashion that speaks through
+          detail, comfort, and timeless elegance.
+        </p>
       </div>
     </section>
   );

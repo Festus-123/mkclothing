@@ -49,7 +49,7 @@ const FeaturedCollections = () => {
           <h2 className="text-3xl md:text-5xl font-light">Our Collections</h2>
 
           <Link 
-            href="/collections"
+            to="/collections"
             className="text-sm border p-2 border-black hover:scale-105 cursor-pointer transition">
             View All
           </Link>
@@ -58,7 +58,7 @@ const FeaturedCollections = () => {
         </div>
 
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
-          {products.slice(0, 4).map((item) => (
+          {products.slice(0, 8).map((item) => (
             <ProductCard 
                 item={item}/>
           ))}

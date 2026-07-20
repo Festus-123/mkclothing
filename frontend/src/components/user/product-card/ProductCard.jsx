@@ -2,7 +2,7 @@ import React from 'react';
 import { FaCartPlus, FaPlus } from 'react-icons/fa';
 
 
-const ProductCard = ({ item }) => {
+const ProductCard = ({ item, onAddToCart }) => {
   return (
     <div key={item.id} className="group cursor-pointer">
       {/* Image */}
@@ -15,7 +15,9 @@ const ProductCard = ({ item }) => {
 
         <div className="absolute inset-0 bg-black/0 transition duration-500 group-hover:bg-black/10 cursor-pointer" />
 
-        <button className="absolute bottom-5 right-5 flex h-11 w-11 items-center overflow-hidden rounded-full bg-white shadow-lg transition-all duration-300 hover:w-40 group/button">
+        <button 
+          onClick={onAddToCart}
+          className="absolute bottom-5 right-5 flex h-11 w-11 items-center overflow-hidden rounded-full bg-white shadow-lg transition-all duration-300 hover:w-40 group/button">
           <div className="flex h-11 w-11 shrink-0 items-center justify-center">
             <FaCartPlus className="text-md text-gray-700" />
           </div>

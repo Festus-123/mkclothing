@@ -12,7 +12,7 @@ import {
 } from 'react-icons/fa';
 // import resend from "../../../utils/resend"
 
-const CartOverlayModal = ({ isOpen, onClose }) => {
+const CartOverlayModal = ({ isOpen, onClose, }) => {
   const {
     cart,
     addToCart,
@@ -181,6 +181,7 @@ const CartOverlayModal = ({ isOpen, onClose }) => {
     }
   };
 
+
   return (
     <div className="fixed inset-0 z-50 flex justify-end bg-black/50 backdrop-blur-sm transition-opacity">
       <div className="w-full max-w-md h-full bg-white shadow-2xl flex flex-col p-6 animate-slide-in relative overflow-y-auto">
@@ -241,7 +242,7 @@ const CartOverlayModal = ({ isOpen, onClose }) => {
                   >
                     <FaMinus />
                   </button>
-                  <span className="text-xs font-bold text-gray-700 min-w-[12px] text-center">
+                  <span className="text-xs font-bold text-gray-700 min-w-3 text-center">
                     {item.quantity}
                   </span>
                   <button
@@ -320,7 +321,7 @@ const CartOverlayModal = ({ isOpen, onClose }) => {
               >
                 {checkoutLoading
                   ? 'Processing Checkout...'
-                  : 'Place Secure Order'}
+                  : 'Place Order'}
               </button>
             </form>
           </div>

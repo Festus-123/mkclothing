@@ -4,9 +4,7 @@ import { IMAGES } from '../../../assets/images-list';
 const About = () => {
   return (
     <section className="py-16 md:py-24 border-t border-gray-200 bg-gray-50">
-      {/* <h2 className="p-8 md:p-16 text-3xl md:text-6xl text-gray-700 font-bold  text-center mb-8">
-        M&K Clothing brand
-      </h2> */}
+
       <div className="max-w-7xl mx-auto px-4 ">
         <div className="grid md:grid-cols-2 gap-12 items-center">
           {/* Image Section */}
@@ -18,7 +16,7 @@ const About = () => {
             />
 
             <div
-              className="absolute -bottom-6 -right-6 bg-orange-500 text-white px-6 py-4 rounded-2xl shadow-xl "
+              className="absolute -bottom-6 -right-1  md:-right-6 bg-orange-500 text-white px-6 py-4 rounded-2xl shadow-xl "
             >
               <h3 className="text-2xl font-bold">100%</h3>
               <p className="text-sm">Premium Quality</p>

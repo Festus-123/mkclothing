@@ -70,7 +70,7 @@ const WhyUs = () => {
             </div>
 
             <Link 
-                href="/collections"
+                to="/collections"
                 className="mt-10 bg-black px-8 py-4 text-white transition hover:scale-105 hover:bg-orange-500">
               Shop Collection
             </Link>

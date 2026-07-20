@@ -2,9 +2,10 @@ import React from 'react';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { GiHamburgerMenu } from 'react-icons/gi';
-import { FaRemoveFormat, FaSearch } from 'react-icons/fa';
 import { FiSearch } from 'react-icons/fi';
-import { IoArrowDown, IoClose } from 'react-icons/io5';
+import { FaSearch } from 'react-icons/fa';
+import {  IoClose } from 'react-icons/io5';
+// import { motion } from "motion";
 // import { pathname } from "react-router-dom";
 
 import Logo from '../logo/Logo';
@@ -35,7 +36,9 @@ const Navbar = () => {
 
       {/* Search bar for items and categories */}
       {!isSearch && (
-        <div className="">
+        <div 
+          onClick={() => setIsSearch(true)}
+          className="">
           <div className="relative hidden md:block max-w-2xl">
             <FaSearch className="absolute left-5 top-1/2 -translate-y-1/2 text-gray-400 text-lg" />
 
@@ -76,12 +79,12 @@ const Navbar = () => {
 
       {/* Links for mobile */}
       {menuOpen && (
-        <div className="absolute bg-white md:hidden border-t border-gray-300 top-full left-0 w-full p-4 flex flex-col items-end gap-10">
+        <div className="md:hidden absolute bg-white border-t border-gray-300 top-full left-0 w-full p-4 flex flex-col items-start gap-4">
           {links.map((item, index) => (
             <Link
               key={index}
               to={item.section}
-              className="text-gray-600 hover:text-gray-900 transition"
+              className="w-full border border-gray-300 p-4 rounded-2xl text-gray-600 hover:text-gray-900 transition"
             >
               {item.link}
             </Link>

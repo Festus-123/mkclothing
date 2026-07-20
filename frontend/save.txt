@@ -1,0 +1,186 @@
+
+// import React, { useState, useEffect } from 'react';
+// import { supabase } from '../../../supabse/supabaseClient';
+// import { toast } from 'sonner';
+// import { UseCart } from '../../../context/CartContext';
+// import { FaTshirt, FaShoePrints, FaSearch, FaFilter } from 'react-icons/fa';
+// import Navbar from '../../../components/user/Navbar/Navbar';
+// import FooterMain from '../../../components/user/Footer/FooterMain';
+// import { FaCartShopping, FaX } from 'react-icons/fa6';
+// import { GiClothes, GiArmorVest, GiCancel } from 'react-icons/gi';
+// import CardPlaceholder from '../../../components/user/card-placeholder/CardPlaceholder';
+// import CartOverlayModal from '../../../components/user/cart-overlay/CartOverlayModal';
+// import ProductCard from '../../../components/user/product-card/ProductCard';
+
+// const Collection = () => {
+//   const [showCategory, setShowCategory] = useState(false);
+//   const [products, setProducts] = useState([]);
+//   const [loading, setLoading] = useState(true);
+//   const [searchQuery, setSearchQuery] = useState('');
+//   const [selectedCategory, setSelectedCategory] = useState('All');
+//   const [cartOpen, setCartOpen] = useState(false);
+
+//   // Consume your cart actions
+//   const { addToCart } = UseCart();
+
+//   const categories = [
+//     { name: 'All', icon: GiClothes },
+//     { name: 'Jackets', icon: GiClothes },
+//     { name: 'cargo pants', icon: GiArmorVest },
+//     { name: 'Tops', icon: FaTshirt },
+//     { name: 'sport wears', icon: FaShoePrints },
+//   ];
+
+//   const fetchProducts = async () => {
+//     try {
+//       setLoading(true);
+//       const { error, data } = await supabase
+//         .from('products')
+//         .select('*')
+//         .order('created_at', { ascending: true });
+
+//       if (error) throw error;
+
+//       if (data) {
+//         setProducts(data);
+//       }
+//     } catch (error) {
+//       console.error('Error fetching products:', error.message);
+//       toast.error("Can't seem to connect to server", { id: 'fetch error' });
+//     } finally {
+//       setLoading(false);
+//     }
+//   };
+
+//   useEffect(() => {
+//     fetchProducts();
+//   }, []);
+
+  // const handleAddToCart = (item) => {
+  //   if (item.quantity <= 0) {
+  //     toast.error(`${item.name} is currently out of stock!`);
+  //     return;
+  //   }
+  //   // Default size to 'M' for rapid orders, customizable during final checkout
+  //   addToCart(item, 'M');
+  //   toast.success(`${item.name} added to your cart!`);
+  // };
+
+//   // Filter products based on search term and active categories
+//   const filteredProducts = products.filter((product) => {
+//     const matchesSearch = product.name
+//       .toLowerCase()
+//       .includes(searchQuery.toLowerCase());
+//     const matchesCategory =
+//       selectedCategory === 'All' ||
+//       (product.category &&
+//         product.category.toLowerCase() === selectedCategory.toLowerCase());
+//     return matchesSearch && matchesCategory;
+//   });
+
+//   return (
+//     <div className=" bg-gray-50/50 min-h-screen">
+//       <Navbar />
+//       <div className=" max-w-7xl mx-auto py-16 md:py-24 px-4">
+//         <section className="flex flex-col  gap-4 ">
+//           <div className="w-full h-full flex flex-col gap-4 items-start mt-20">
+//             {/* Controls Bar */}
+//             <div className="relative w-full flex flex-col md:flex-row items-center justify-between gap-10 text-[#8b4a1f] border-b border-orange-700 pb-4">
+//               <h1 className="text-[#8b4a1f] italic text-xl tracking-tight uppercase">
+//                 M & K Collections
+//               </h1>
+
+//               <div className="w-full md:w-auto flex flex-row items-center gap-4">
+//                 {/* Search input */}
+//                 <div className="relative border border-amber-950/80 rounded-lg w-full md:w-sm bg-white">
+//                   <input
+//                     type="text"
+//                     placeholder="Search products..."
+//                     value={searchQuery}
+//                     onChange={(e) => setSearchQuery(e.target.value)}
+//                     className="p-2 pr-8 w-full border-none outline-none text-sm text-gray-800"
+//                   />
+//                   <div className="absolute top-1/2 -translate-y-1/2 right-3 text-amber-950/60">
+//                     <FaSearch />
+//                   </div>
+//                 </div>
+
+//                 {/* Filter toggle button */}
+//                 <button
+//                   onClick={() => setShowCategory(!showCategory)}
+//                   className={`text-xs border p-3 rounded-lg hover:scale-105 cursor-pointer transition-all ${
+//                     showCategory
+//                       ? 'bg-[#8b4a1f] text-white border-[#8b4a1f]'
+//                       : 'border-[#8b4a1f]'
+//                   }`}
+//                 >
+//                   {showCategory ? <FaX /> : <FaFilter />}
+//                 </button>
+//               </div>
+//             </div>
+
+//             {/* Dynamic Categories Container */}
+//             {showCategory && (
+//               <div className="flex flex-row flex-wrap items-center justify-center gap-2 md:gap-4 w-full py-2 transition-all duration-300">
+//                 {categories.map((category, index) => {
+//                   const Icon = category.icon;
+//                   const isActive = selectedCategory === category.name;
+//                   return (
+//                     <button
+//                       key={index}
+//                       onClick={() => setSelectedCategory(category.name)}
+//                       className={`border border-amber-950/80 p-2 px-4 rounded-full hover:scale-105 cursor-pointer text-xs flex items-center gap-2 transition-all duration-200 ${
+//                         isActive
+//                           ? 'bg-[#8b4a1f] text-white'
+//                           : 'text-[#8b4a1f] bg-transparent'
+//                       }`}
+//                     >
+//                       <Icon />
+//                       {category.name}
+//                     </button>
+//                   );
+//                 })}
+//               </div>
+//             )}
+
+//             {/* Product Items Canvas */}
+//             {loading ? (
+//               <div className="w-full h-full grid grid-cols-2 md:grid-cols-4 gap-4 justify-center place-items-center">
+//                 {Array.from({ length: 16 }).map((_, index) => (
+//                   <CardPlaceholder key={index} />
+//                 ))}
+//               </div>
+//             ) : filteredProducts.length === 0 ? (
+//               <div className="w-full py-20 text-center text-gray-500 italic text-sm">
+//                 No products found matching the criteria.
+//               </div>
+//             ) : (
+//               <div className="w-full grid grid-cols-2 sm:grid-cols-4 md:grid-cols-4 gap-4">
+//                 {filteredProducts.map((item) => (
+//                   <ProductCard item={item} />
+//                 ))}
+//               </div>
+//             )}
+//           </div>
+
+//           {cartOpen && (
+//             <CartOverlayModal
+//               isOpen={cartOpen}
+//               onClose={() => setCartOpen(false)}
+//             />
+//           )}
+//           <button
+//             onClick={() => setCartOpen(!cartOpen)}
+//             className="fixed bottom-5 right-5 bg-orange-400 text-white text-2xl md:text-4xl p-3 rounded-full cursor-pointer "
+//           >
+//             <FaCartShopping />
+//           </button>
+//         </section>
+//       </div>
+
+//       <FooterMain />
+//     </div>
+//   );
+// };
+
+// export default Collection;

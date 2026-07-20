@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { IoClose } from 'react-icons/io5';
 import { FiSearch } from 'react-icons/fi';
 
 const SearchModal = ({ onClose }) => {
+  const [products, setProducts] = useState([])
+  
   return (
     <div
       className=" fixed inset-0 bg-black/50 backdrop-blur-sm flex justify-center items-start p-8 md:p-16 z-50"
