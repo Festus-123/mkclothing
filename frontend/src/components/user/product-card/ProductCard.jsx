@@ -3,6 +3,8 @@ import { FaCartPlus, FaPlus } from 'react-icons/fa';
 
 
 const ProductCard = ({ item, onAddToCart }) => {
+  const dicountedPrice = Math.round(item.price / (1 - item.discount / 100)) - item.price;
+
   return (
     <div key={item.id} className="group cursor-pointer">
       {/* Image */}
@@ -17,7 +19,7 @@ const ProductCard = ({ item, onAddToCart }) => {
 
         <button 
           onClick={onAddToCart}
-          className="absolute bottom-5 right-5 flex h-11 w-11 items-center overflow-hidden rounded-full bg-white shadow-lg transition-all duration-300 hover:w-40 group/button">
+          className="absolute bottom-5 right-5 flex h-11 w-11 items-center overflow-hidden rounded-full bg-white shadow-lg cursor-pointer transition-all duration-300 hover:w-40 group/button">
           <div className="flex h-11 w-11 shrink-0 items-center justify-center">
             <FaCartPlus className="text-md text-gray-700" />
           </div>
@@ -29,17 +31,17 @@ const ProductCard = ({ item, onAddToCart }) => {
       </div>
 
       {/* Product Info */}
-      <div className="space-y-2 pt-4">
+      <div className="space-y-2 pt-2">
         <p className="line-clamp-2 text-sm leading-6 text-gray-700">
           {item.name}
         </p>
 
         <div className="flex items-center gap-3">
-          <span className="text-lg font-semibold">₦{item.price}</span>
+          <span className="text-lg font-semibold">₦{(item.price - dicountedPrice).toLocaleString()}</span>
 
           {item.discount > 0 && (
             <span className="text-sm text-gray-400 line-through">
-              ₦{Math.round(item.price / (1 - item.discount / 100))}
+              ₦{item.price}
             </span>
           )}
         </div>
@@ -53,6 +55,11 @@ const ProductCard = ({ item, onAddToCart }) => {
           )}
 
           <span className="bg-gray-100 px-2 py-1 text-xs uppercase">New</span>
+
+          <span
+            className='uppercase text-gray-400 text-sm md:bg-gray-100 p-1'>
+            Sizes: {item.size}
+          </span>
         </div>
       </div>
     </div>

@@ -13,6 +13,7 @@ import ProductCard from '../../../components/user/product-card/ProductCard';
 import Filter from '../../../components/user/filter-tab/Filter';
 import FilterBar from '../../../components/user/filter-tab/FilterBar';
 import FilterMobile from '../../../components/user/filter-tab/FilterMobile';
+import ProductModal from '../../../components/user/productModal/ProductModal';
 import { motion, AnimatePresence } from 'motion/react';
 
 const Collection = () => {
@@ -28,7 +29,8 @@ const Collection = () => {
   const [showFilters, setShowFilters] = useState(false);
   const [added, setAdded] = useState(false);
   let [count, setCount] = useState(0);
-  const { getCartCount } = UseCart()
+  const { getCartCount } = UseCart();
+  // const [modal, setModal] = useState(false)
 
   const categories = [
     { name: 'All', icon: GiClothes },
@@ -84,8 +86,8 @@ const Collection = () => {
     }
 
     const cartCount = getCartCount();
-    if(cartCount === 0){
-      setCount(0)
+    if (cartCount === 0) {
+      setCount(0);
     }
     // Default size to 'M' for rapid orders, customizable during final checkout
     addToCart(item, 'M');
@@ -273,23 +275,40 @@ const Collection = () => {
         />
 
         {/* Cart */}
+        <AnimatePresence>
+          {cartOpen && (
+            <motion.div
+              className="fixed inset-0 z-50"
+              initial={{ opacity: 0, }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.25 }}
+            >
+              {/* Backdrop */}
+              <div
+                className="absolute inset-0 bg-black/50 backdrop-blur-sm w-full "
+                onClick={() => setCartOpen(false)}
+              />
 
-        {cartOpen && (
-          <CartOverlayModal
-            isOpen={cartOpen}
-            onClose={() => setCartOpen(false)}
-          />
-        )}
+              {/* Cart */}
+              
+                <CartOverlayModal
+                  isOpen={cartOpen}
+                  onClose={() => setCartOpen(false)}
+                />{' '}
+            </motion.div>
+          )}
+        </AnimatePresence>
 
         <AnimatePresence>
           {added && (
             <motion.div
               key={count}
               initial={{ opacity: 0.2, y: 60, scale: 0.7 }}
-              animate={{ opacity: .9, y: -20, scale: .9 }}
-              exit={{ opacity: 0, y: -50, scale: .5 }}
-              transition={{ duration: .6, ease: 'easeOut' }}
-              className={`fixed top-1/4 left-1/4 flex items-center justify-center w-10 h-10 md:w-20 md:h-20 ${count > 10 ? "bg-green-400" : "bg-orange-300"} text-white p-4 rounded-full transition-all`}
+              animate={{ opacity: 0.9, y: -20, scale: 0.9 }}
+              exit={{ opacity: 0, y: -50, scale: 0.5 }}
+              transition={{ duration: 0.6, ease: 'easeOut' }}
+              className={`fixed top-1/4 left-1/4 flex items-center justify-center w-10 h-10 md:w-20 md:h-20 bg-green-400 text-white p-4 rounded-full transition-all`}
             >
               {count}
             </motion.div>

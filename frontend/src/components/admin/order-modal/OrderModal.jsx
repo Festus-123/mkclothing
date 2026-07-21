@@ -25,7 +25,9 @@ const OrderModal = ({ selectedOrder, setSelectedOrder, getStatusBadge }) => {
           <div>
             <h2 className="font-bold text-xl">
               Order MK-
-              {selectedOrder.id.slice(0, 5).toUpperCase()}
+              {selectedOrder?.id
+                ? `MK-${selectedOrder.id.slice(0, 5).toUpperCase()}`
+                : 'Loading...'}{' '}
             </h2>
 
             <p className="text-sm text-gray-500 mt-1">

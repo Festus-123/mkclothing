@@ -10,6 +10,8 @@ import {
   FaTimes,
   FaShoppingBag,
 } from 'react-icons/fa';
+import CartItem from './CartItem';
+import CartForm from './CartForm';
 // import resend from "../../../utils/resend"
 
 const CartOverlayModal = ({ isOpen, onClose, }) => {
@@ -128,10 +130,11 @@ const CartOverlayModal = ({ isOpen, onClose, }) => {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
+            emailType: 'confirmation',
             customerEmail: formData.email,
             customerName: formData.customerName,
-            customOrderId,
-            totalAmount,
+            customerOrderId: customOrderId,
+            totalAmount: totalAmount
           }),
         });
 
@@ -183,7 +186,7 @@ const CartOverlayModal = ({ isOpen, onClose, }) => {
 
 
   return (
-    <div className="fixed inset-0 z-50 flex justify-end bg-black/50 backdrop-blur-sm transition-opacity">
+    <div className="fixed inset-0 z-50 flex justify-end  backdrop-blur-sm transition-opacity">
       <div className="w-full max-w-md h-full bg-white shadow-2xl flex flex-col p-6 animate-slide-in relative overflow-y-auto">
         {/* Header Grid Section */}
         <div className="flex items-center justify-between pb-4 border-b border-gray-100">
@@ -202,60 +205,10 @@ const CartOverlayModal = ({ isOpen, onClose, }) => {
         </div>
 
         {/* Dynamic Items Iteration Scroll Box */}
-        <div className="flex-1 overflow-y-auto my-4 space-y-3 pr-1">
-          {cart.length === 0 ? (
-            <div className="h-40 flex flex-col items-center justify-center text-gray-400 gap-2 text-xs italic">
-              <span>Your basket is completely empty.</span>
-            </div>
-          ) : (
-            cart.map((item) => (
-              <div
-                key={`${item.id}-${item.size}`}
-                className="flex items-center gap-3 p-2 bg-gray-50 rounded-lg border border-gray-100"
-              >
-                <img
-                  src={`${import.meta.env.VITE_SUPABASE_URL}/storage/v1/object/public/product-images/${item.image_urls?.[0]}`}
-                  alt={item.name}
-                  className="w-12 h-12 object-cover rounded-md"
-                />
-
-                <div className="flex-1 min-w-0">
-                  <h4 className="text-xs font-bold text-gray-800 truncate">
-                    {item.name}
-                  </h4>
-                  <p className="text-[10px] text-gray-400">
-                    Size:{' '}
-                    <span className="text-gray-600 font-semibold">
-                      {item.size}
-                    </span>
-                  </p>
-                  <span className="text-xs font-black text-orange-400">
-                    ${(item.price * item.quantity).toFixed(2)}
-                  </span>
-                </div>
-
-                {/* Counter Management Tools */}
-                <div className="flex items-center gap-2 border border-gray-200 bg-white rounded-md px-1.5 py-1">
-                  <button
-                    onClick={() => removeFromCart(item.id, item.size)}
-                    className="text-gray-500 hover:text-red-500 cursor-pointer text-[10px]"
-                  >
-                    <FaMinus />
-                  </button>
-                  <span className="text-xs font-bold text-gray-700 min-w-3 text-center">
-                    {item.quantity}
-                  </span>
-                  <button
-                    onClick={() => addToCart(item, item.size)}
-                    className="text-gray-500 hover:text-green-600 cursor-pointer text-[10px]"
-                  >
-                    <FaPlus />
-                  </button>
-                </div>
-              </div>
-            ))
-          )}
-        </div>
+        <CartItem 
+          cart={cart}
+          removeFromCart={removeFromCart}
+          addToCart={addToCart}/>
 
         {/* Dynamic Billing Footer Context */}
         {cart.length > 0 && (
@@ -263,67 +216,16 @@ const CartOverlayModal = ({ isOpen, onClose, }) => {
             <div className="flex items-center justify-between font-black text-sm text-gray-800">
               <span>Est. Total Amount:</span>
               <span className="text-orange-500 text-base">
-                ${getCartTotal().toFixed(2)}
+                ₦{getCartTotal().toLocaleString()}
               </span>
             </div>
 
             {/* Order Form Context */}
-            <form onSubmit={handleCheckout} className="space-y-2 text-xs">
-              <h4 className="font-bold text-gray-500 tracking-tight uppercase text-[10px]">
-                Shipping Metadata
-              </h4>
-
-              <input
-                type="text"
-                name="customerName"
-                required
-                placeholder="Full Name"
-                value={formData.customerName}
-                onChange={handleInputChange}
-                className="w-full p-2 border border-gray-200 rounded-md outline-none focus:border-[#8b4a1f] text-gray-800"
-              />
-
-              <div className="grid grid-cols-2 gap-2">
-                <input
-                  type="email"
-                  name="email"
-                  required
-                  placeholder="Email Address"
-                  value={formData.email}
-                  onChange={handleInputChange}
-                  className="w-full p-2 border border-gray-200 rounded-md outline-none focus:border-[#8b4a1f] text-gray-800"
-                />
-                <input
-                  type="tel"
-                  name="phone"
-                  required
-                  placeholder="Phone Number"
-                  value={formData.phone}
-                  onChange={handleInputChange}
-                  className="w-full p-2 border border-gray-200 rounded-md outline-none focus:border-[#8b4a1f] text-gray-800"
-                />
-              </div>
-
-              <textarea
-                name="address"
-                required
-                rows="2"
-                placeholder="Full Delivery Address..."
-                value={formData.address}
-                onChange={handleInputChange}
-                className="w-full p-2 border border-gray-200 rounded-md outline-none focus:border-[#8b4a1f] text-gray-800 resize-none"
-              />
-
-              <button
-                type="submit"
-                disabled={checkoutLoading}
-                className="w-full py-3 bg-orange-400 text-white font-bold tracking-wider rounded-lg hover:bg-orange-600 transition-colors cursor-pointer disabled:bg-gray-300 disabled:cursor-not-allowed mt-2"
-              >
-                {checkoutLoading
-                  ? 'Processing Checkout...'
-                  : 'Place Order'}
-              </button>
-            </form>
+            <CartForm 
+              formData={formData}
+              checkoutLoading={checkoutLoading}
+              handleCheckout={handleCheckout}
+              handleInputChange={handleInputChange}/>
           </div>
         )}
       </div>
