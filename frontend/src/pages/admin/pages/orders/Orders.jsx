@@ -324,7 +324,7 @@ const handleDelete = async (order) => {
   };
 
   return (
-    <div className="h-full flex flex-col max-w-7xl mx-auto space-y-8">
+    <div className="h-full flex flex-col max-w-7xl mx-auto space-y-8 ">
       {/* Header */}
 
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-5">

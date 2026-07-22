@@ -69,7 +69,7 @@ const Collection = () => {
       }
     } catch (error) {
       console.error('Error fetching products:', error.message);
-      toast.error("Can't seem to connect to server", { id: 'fetch error' });
+      toast.error("There seem to be a bit of a problem. Check your internet conectiion ⚠️", { id: 'fetch error' });
     } finally {
       setLoading(false);
     }
@@ -258,28 +258,11 @@ const Collection = () => {
         </div>
 
         {/* Mobile Filter Drawer */}
-
-        <FilterMobile
-          selectedAvailability={selectedAvailability}
-          categories={categories}
-          prices={prices}
-          availability={availability}
-          selectedPrice={selectedPrice}
-          setSelectedPrice={setSelectedPrice}
-          setSelectedAvailability={setSelectedAvailability}
-          setSelectedCategory={setSelectedCategory}
-          selectedCategory={selectedCategory}
-          showFilters={showFilters}
-          setShowFilters={setShowFilters}
-          clearFilters={clearFilters}
-        />
-
-        {/* Cart */}
         <AnimatePresence>
           {cartOpen && (
             <motion.div
               className="fixed inset-0 z-50"
-              initial={{ opacity: 0, }}
+              initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.25 }}
@@ -289,13 +272,44 @@ const Collection = () => {
                 className="absolute inset-0 bg-black/50 backdrop-blur-sm w-full "
                 onClick={() => setCartOpen(false)}
               />
+              <FilterMobile
+                selectedAvailability={selectedAvailability}
+                categories={categories}
+                prices={prices}
+                availability={availability}
+                selectedPrice={selectedPrice}
+                setSelectedPrice={setSelectedPrice}
+                setSelectedAvailability={setSelectedAvailability}
+                setSelectedCategory={setSelectedCategory}
+                selectedCategory={selectedCategory}
+                showFilters={showFilters}
+                setShowFilters={setShowFilters}
+                clearFilters={clearFilters}
+              />
+            </motion.div>
+          )}
+        </AnimatePresence>
 
+        {/* Cart */}
+        <AnimatePresence>
+          {cartOpen && (
+            <motion.div
+              className="fixed inset-0 z-50"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.25 }}
+            >
+              {/* Backdrop */}
+              <div
+                className="absolute inset-0 bg-black/50 backdrop-blur-sm w-full "
+                onClick={() => setCartOpen(false)}
+              />
               {/* Cart */}
-              
-                <CartOverlayModal
-                  isOpen={cartOpen}
-                  onClose={() => setCartOpen(false)}
-                />{' '}
+              <CartOverlayModal
+                isOpen={cartOpen}
+                onClose={() => setCartOpen(false)}
+              />{' '}
             </motion.div>
           )}
         </AnimatePresence>

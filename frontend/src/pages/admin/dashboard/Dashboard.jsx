@@ -79,11 +79,11 @@ const Dashboard = () => {
             {/* Right */}
 
             <div className="flex items-center gap-4">
-              {/* <button className="relative p-3 rounded-xl hover:bg-gray-100 transition">
+              <button className="relative p-3 rounded-xl hover:bg-gray-100 transition">
                 <FiBell size={20} />
 
                 <span className="absolute top-2 right-2 w-2 h-2 rounded-full bg-red-500" />
-              </button> */}
+              </button>
 
               <div className="hidden sm:flex items-center gap-3 bg-gray-100 rounded-xl px-4 py-2">
                 <div className="w-10 h-10 rounded-full bg-linear-to-br from-amber-500 to-orange-600 text-white flex items-center justify-center font-bold">
@@ -102,7 +102,7 @@ const Dashboard = () => {
 
         {/* Page */}
 
-        <section className="p-5 md:p-8 flex-1 overflow-hidden ">
+        <section className="px-2 pt-8 md:px-8  flex-1 overflow-hidden ">
           <Outlet />
         </section>
       </main>

@@ -1,9 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
-import { FiSearch, FiX, FiPlus, FiEdit2, FiTrash2 } from 'react-icons/fi';
+import { useLocation } from 'react-router-dom';
 import { toast } from 'sonner';
 import Confirm from '../../../../components/confirm/Confirm';
 import { supabase } from '../../../../supabse/supabaseClient';
+import AnnouncementHeader from '../../../../components/admin/announcements/announcement-header/AnnouncementHeader';
+import AnnouncementSearch from '../../../../components/admin/announcements/announcement-search/AnnouncementSearch';
+import { AnimatePresence } from 'motion/react';
+import Placeholder from '../../../../components/admin/announcements/placeholder/Placeholder';
+import EmptyState from '../../../../components/admin/announcements/empty-state/EmptyState';
+import AnnouncementDisplay from '../../../../components/admin/announcements/announcement-display/AnnouncementDisplay';
 
 const Announcement = () => {
   const location = useLocation();
@@ -96,14 +101,6 @@ const Announcement = () => {
     setSearchResult([]);
   };
 
-  // const handleRowClick = (item) => {
-  //   if (selectedAnnouncement?.id === item.id) {
-  //     setSelectedAnnouncement(null);
-  //   } else {
-  //     setSelectedAnnouncement(item);
-  //   }
-  // };
-
   useEffect(() => {
     fetchAnnouncement();
   }, []);
@@ -119,35 +116,11 @@ const Announcement = () => {
 
   return (
     <div className="p-6">
-      <div className="flex flex-row items-center justify-between">
-        <h1 className="flex flex-col gap-2">
-          <span className="font-medium text-lg md:text-xl text-amber-800">
-            Announcement
-          </span>
-          <span className="font-light text-xs md:text-sm">
-            Advertisements or warning made to inform users
-          </span>
-        </h1>
-
-        <div className="flex flex-row items-center bg-gray-100 p-2 gap-2">
-          <div className="bg-green-300 p-2 cursor-pointer">
-            <Link
-              to={`/dashboard/add-announcement`}
-              state={{ backgroundLocation: location }}
-            >
-              <FiPlus />
-            </Link>
-          </div>
-
-          <button
-            disabled={searching}
-            onClick={() => setSearching(true)}
-            className="bg-gray-300 p-2 cursor-pointer"
-          >
-            <FiSearch />
-          </button>
-        </div>
-      </div>
+      <AnnouncementHeader
+        searching={searching}
+        setSearching={setSearching}
+        location={location}
+      />
 
       {/* confirm delete */}
       {close && selectedAnnouncement && (
@@ -158,64 +131,32 @@ const Announcement = () => {
       )}
 
       {/* Search Area */}
-      {searching && (
-        <div className=" sticky top-18 bg-white z-20 p-2 flex flex-row items-center justify-between gap-4 mt-2">
-          <input
-            placeholder="search Announcement..."
-            type="text"
-            onChange={handleSearch}
-            className="rounded w-full p-2 border "
+      <AnimatePresence mode="wait">
+        {searching && (
+          <AnnouncementSearch
+            searching={searching}
+            searchResult={searchResult}
+            handleSearch={handleSearch}
+            handleCLoseSearch={handleCLoseSearch}
           />
-          <FiX className="cursor-pointer" onClick={handleCLoseSearch} />
-          <span className='absolute top-1/2 text-gray-400 right-15 text-xs'>
-            { searchResult.length === 0 ? 'No "item" found' : `found ${searchResult.length} items`}
-          </span>
-        </div>
-      )}
+        )}
+      </AnimatePresence>
 
       {/* Display Announcement */}
       <div>
-        {loading && (
-          <p className="font-light text-gray-500 mt-5">
-            Loading announcement...
-          </p>
-        )}
+        {loading && <Placeholder />}
 
-        {!loading && announcement?.length === 0 && (
-          <p className="font-light text-gray-500 mt-5">
-            No announcement found!
-          </p>
-        )}
+        {!loading && announcement?.length === 0 && <EmptyState />}
 
         {!loading && announcement?.length > 0 && (
-          displaySearchResult.map((item, index) => (
-            <div 
-              key={index}
-              className={`flex flex-row items-end justify-between mt-5 p-2 rounded-xl ${
-                item.level === "less" ? "border border-green-400"
-                : item.level === "moderate" ? "border border-blue-400"
-                : "border border-red"
-              }`}>
-                <p className='flex flex-col gap-1'>
-                  <span className='text-gray-600 font-medium text-xs md:text-sm'>{item.title}</span>
-                  <span className='font-light text-xs max-w-[70%] md:max-w-[90%'>{item.description}</span>
-                </p>
-                  <div className='flex flex-row items-center gap-4 cursor-pointer'>
-                  <p className='text-gray-500 text-xs md:text-sm'>{item.expiry_date} days..</p>
-                  <Link 
-                    to={`/dashboard/edit-announcement/${item.id}`}
-                    state={{ backgroundLocation: location}}>
-                    <FiEdit2 size={14}/>
-                  </Link>
-                  <FiTrash2 
-                    className='text-red-500 text-sm'
-                    onClick={() => {
-                    setClose(true)
-                    setSelectedAnnouncement(item)
-                  }}/>
-                </div>
-            </div>
-          ))
+          <AnnouncementDisplay
+            loading={loading}
+            announcement={announcement}
+            displaySearchResult={displaySearchResult}
+            location={location}
+            setClose={setClose}
+            setSelectedAnnouncement={setSelectedAnnouncement}
+          />
         )}
       </div>
     </div>

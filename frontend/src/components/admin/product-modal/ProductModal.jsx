@@ -20,7 +20,7 @@ const ProductModal = ({ product, open, onClose, onDelete }) => {
 
   return (
     <div className="fixed inset-0 z-300 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4">
-      <div className="relative bg-white rounded-xl shadow-2xl w-full max-w-5xl max-h-[92vh] overflow-y-auto">
+      <div className="relative bg-white rounded-xl shadow-2xl w-full max-w-5xl max-h-[85vh] overflow-y-auto">
         {/* Close */}
 
         <button

@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { motion } from 'motion/react';
 import { toast } from 'sonner';
@@ -125,13 +124,14 @@ const SignIn = () => {
       <div style={{ backgroundImage: "url('auth-img.jpg')" }} className="absolute inset-0 w-full h-full bg-cover bg-center" />
       <div className="absolute inset-0 bg-black/60 w-full h-full backdrop-blur-md" />
 
+      <div
+        className='absolute bottom-5 right-0 w-full max-w-md text-lg md:text-xl uppercase bg-orange-500 p-4 rounded-lg text-white font-bold tracking-widest'>
+        M & K Clothing 
+      </div>
+
       <div className="relative bg-[#ede0e022] w-full h-full flex flex-col items-center justify-center">
         <div className="w-[90%] sm:w-[70%] md:w-120 text-white border border-white/40 p-4 md:p-6 rounded-2xl flex flex-col gap-5 bg-neutral-900/50 backdrop-blur-md">
 
-          <h1
-            className='text-3xl md:text-3xl text-center uppercase text-orange-300 py-8'>
-            M & K {' '} <span className='text-white italic'>Clothing</span>
-          </h1>
 
           <h1 className="text-center font-medium text-xl md:text-2xl">
             {isForgotMode ? `Account Recovery (Step ${recoveryStep}/3)` : 'Sign In'}
