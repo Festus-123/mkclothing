@@ -14,9 +14,8 @@ import {
 import { FaEye } from 'react-icons/fa';
 import OrderModal from '../../../../components/admin/order-modal/OrderModal';
 import { FaTrashCan } from 'react-icons/fa6';
-import Confirm from "../../../../components/confirm/Confirm";
+import DeleteOrderReason from '../../../../components/admin/delete-order-reason/DeleteOrderReason';
 // import OrderDetailsModal from '../../../../components/admin/order-modal/OrderDetailsModal';
-
 
 const OrdersManagement = () => {
   const [orders, setOrders] = useState([]);
@@ -65,77 +64,122 @@ const OrdersManagement = () => {
     }
   };
 
-const handleDelete = async (order) => {
-  const toastId = toast.loading("Deleting customer order...");
+  const sendDeletedOrderEmail = async (order, reason) => {
+    const customerOrderId = `MK-${order.id.slice(0, 5)}`;
 
-  try {
+    try {
+      const res = await fetch('http://localhost:5000/api/emails/send', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          emailType: 'orderDeleted',
 
-    // Delete all items belonging to this order first
-    const { error: itemsError } = await supabase
-      .from("order_items")
-      .delete()
-      .eq("order_id", order.id);
+          customerEmail: order.customer_email,
+          customerName: order.customer_name,
 
-    if (itemsError) throw itemsError;
+          customerOrderId,
+          totalAmount: order.total_price,
 
-    // Delete the order
-    const { error: orderError } = await supabase
-      .from("orders")
-      .delete()
-      .eq("id", order.id);
+          reason,
+        }),
+      });
 
-    if (orderError) throw orderError;
+      const data = await res.json();
 
-    // Remove from local state immediately
-    setOrders((prev) =>
-      prev.filter((item) => item.id !== order.id)
-    );
+      if (!res.ok) {
+        throw new Error(data.error || 'Failed to send email');
+      }
 
-    // Close modals
-    setDeleteOrder(null);
-    setIsDelete(false)
+      toast.success('Deletion email sent to customer.');
 
-    if (selectedOrder?.id === order.id) {
-      setSelectedOrder(null);
+      console.log('Deleted order email sent successfully.');
+    } catch (err) {
+      console.error(err.message);
+
+      toast.warning(
+        'Order was deleted, but the notification email could not be delivered.'
+      );
     }
+  };
 
-    toast.success("Customer order deleted successfully.", {
-      id: toastId,
-    });
+  const handleDelete = async (order, reason) => {
+    const toastId = toast.loading('Deleting customer order...');
 
-  } catch (err) {
-    console.error(err);
+    try {
+      // Delete all items belonging to this order first
+      const { error: itemsError } = await supabase
+        .from('order_items')
+        .delete()
+        .eq('order_id', order.id);
 
-    toast.error("Unable to delete customer order.", {
-      id: toastId,
-    });
-  }
-};
+      if (itemsError) throw itemsError;
+
+      // Delete the order
+      const { error: orderError } = await supabase
+        .from('orders')
+        .delete()
+        .eq('id', order.id);
+
+      if (orderError) throw orderError;
+
+      const { error: deletedErrorLog } = await supabase
+        .from('products_logs')
+        .insert({
+          action: 'deleted',
+          product_id: order.id,
+          details: `deleted ${order.title} described ${order.description}, `,
+        });
+
+      if (deletedErrorLog) {
+        console.error('error message in display', deletedErrorLog.message);
+      }
+
+      // Remove from local state immediately
+      setOrders((prev) => prev.filter((item) => item.id !== order.id));
+
+      // Close modals
+      await sendDeletedOrderEmail(order, reason);
+      setDeleteOrder(null);
+      setIsDelete(false);
+
+      if (selectedOrder?.id === order.id) {
+        setSelectedOrder(null);
+      }
+
+      toast.success('Customer order deleted successfully.', {
+        id: toastId,
+      });
+    } catch (err) {
+      console.error(err);
+
+      toast.error('Unable to delete customer order.', {
+        id: toastId,
+      });
+    }
+  };
 
   useEffect(() => {
     fetchOrders();
   }, []);
 
-  
   const sendProcessingEmail = async (order) => {
-    const customerOrderId = `MK- ${order.id.slice(0, 5)}`
+    const customerOrderId = `MK- ${order.id.slice(0, 5)}`;
     try {
-      const res = await fetch(
-        'http://localhost:5000/api/emails/send',
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            emailType: 'processing',
-            customerEmail: order.customer_email,
-            customerName: order.customer_name,
-            customerOrderId: customerOrderId,
-            totalAmount: order.total_price,
-          }),
-        }
-      );
+      const res = await fetch('http://localhost:5000/api/emails/send', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          emailType: 'processing',
+          customerEmail: order.customer_email,
+          customerName: order.customer_name,
+          customerOrderId: customerOrderId,
+          totalAmount: order.total_price,
+        }),
+      });
 
       const data = await res.json();
 
@@ -143,36 +187,31 @@ const handleDelete = async (order) => {
         throw new Error(data.error);
       }
 
-      toast.success("Customer is being sent a processing Email")
+      toast.success('Customer is being sent a processing Email');
       console.log('Processing email sent.');
     } catch (err) {
       console.error(err.message);
 
-      toast.warning(
-        'Order email could not be delivered.'
-      );
+      toast.warning('Order email could not be delivered.');
     }
   };
-  
+
   const sendShippedEmail = async (order) => {
-    const customerOrderId = `MK- ${order.id.slice(0, 5)}`
+    const customerOrderId = `MK- ${order.id.slice(0, 5)}`;
     try {
-      const res = await fetch(
-        'http://localhost:5000/api/emails/send',
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            emailType: 'shipped',
-            customerEmail: order.customer_email,
-            customerName: order.customer_name,
-            customerOrderId: customerOrderId,
-            totalAmount: order.total_price,
-          }),
-        }
-      );
+      const res = await fetch('http://localhost:5000/api/emails/send', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          emailType: 'shipped',
+          customerEmail: order.customer_email,
+          customerName: order.customer_name,
+          customerOrderId: customerOrderId,
+          totalAmount: order.total_price,
+        }),
+      });
 
       const data = await res.json();
 
@@ -180,36 +219,31 @@ const handleDelete = async (order) => {
         throw new Error(data.error);
       }
 
-      toast.success("Customer is being sent a Shipment Email")
+      toast.success('Customer is being sent a Shipment Email');
       console.log('Shipment email sent.');
     } catch (err) {
       console.error(err.message);
 
-      toast.warning(
-        'Order email could not be delivered.'
-      );
+      toast.warning('Order email could not be delivered.');
     }
   };
-  
+
   const sendDeliveredEmail = async (order) => {
-    const customerOrderId = `MK- ${order.id.slice(0, 5)}`
+    const customerOrderId = `MK- ${order.id.slice(0, 5)}`;
     try {
-      const res = await fetch(
-        'http://localhost:5000/api/emails/send',
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            emailType: 'delivered',
-            customerEmail: order.customer_email,
-            customerName: order.customer_name,
-            customerOrderId: customerOrderId,
-            totalAmount: order.total_price,
-          }),
-        }
-      );
+      const res = await fetch('http://localhost:5000/api/emails/send', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          emailType: 'delivered',
+          customerEmail: order.customer_email,
+          customerName: order.customer_name,
+          customerOrderId: customerOrderId,
+          totalAmount: order.total_price,
+        }),
+      });
 
       const data = await res.json();
 
@@ -217,19 +251,17 @@ const handleDelete = async (order) => {
         throw new Error(data.error);
       }
 
-      toast.success("Customer is being sent a Delivered Email")
+      toast.success('Customer is being sent a Delivered Email');
       console.log('Delivered email sent.');
     } catch (err) {
       console.error(err.message);
 
-      toast.warning(
-        'Order email could not be delivered.'
-      );
+      toast.warning('Order email could not be delivered.');
     }
   };
 
   const handleStatusChange = async (order, status) => {
-    const toastId = toast.loading("updating order status...")
+    const toastId = toast.loading('updating order status...');
     try {
       setUpdatingId(order.id);
 
@@ -244,13 +276,13 @@ const handleDelete = async (order) => {
 
       if (status === 'Processing') {
         await sendProcessingEmail(order);
-      } else if( status === "Shipped"){
-        await sendShippedEmail(order)
-      }else if( status === "Delivered") {
-        await sendDeliveredEmail(order)
+      } else if (status === 'Shipped') {
+        await sendShippedEmail(order);
+      } else if (status === 'Delivered') {
+        await sendDeliveredEmail(order);
       }
 
-      toast.success(`Order marked as ${status}`, {id: toastId});
+      toast.success(`Order marked as ${status}`, { id: toastId });
 
       setOrders((prev) =>
         prev.map((item) =>
@@ -263,7 +295,7 @@ const handleDelete = async (order) => {
         )
       );
 
-      console.log("SelectedOrder", selectedOrder)
+      console.log('SelectedOrder', selectedOrder);
 
       if (selectedOrder?.id === order.id) {
         setSelectedOrder({
@@ -274,7 +306,7 @@ const handleDelete = async (order) => {
     } catch (err) {
       console.error(err.message);
 
-      toast.error('Failed to update order.', {id: toastId});
+      toast.error('Failed to update order.', { id: toastId });
     } finally {
       setUpdatingId(null);
     }
@@ -426,10 +458,11 @@ const handleDelete = async (order) => {
 
                         <button
                           onClick={() => {
-                            setDeleteOrder(order)
-                            setIsDelete(true)
+                            setDeleteOrder(order);
+                            setIsDelete(true);
                           }}
-                          className='w-10 h-10 text-xs rounded-lg bg-red-50 hover:bg-red-100/50 border border-red-300/50 transition-all cursor-pointer flex items-center justify-center'>
+                          className="w-10 h-10 text-xs rounded-lg bg-red-50 hover:bg-red-100/50 border border-red-300/50 transition-all cursor-pointer flex items-center justify-center"
+                        >
                           <FaTrashCan />
                         </button>
 
@@ -459,17 +492,20 @@ const handleDelete = async (order) => {
       {/* ===================== Order Details Modal ===================== */}
 
       {selectedOrder && (
-        <OrderModal 
+        <OrderModal
           selectedOrder={selectedOrder}
           setSelectedOrder={setSelectedOrder}
-          getStatusBadge={getStatusBadge}/>
+          getStatusBadge={getStatusBadge}
+        />
       )}
 
       {isDelete && (
-        <Confirm 
+        <DeleteOrderReason
           close={() => setIsDelete(false)}
-          onClick={() => handleDelete(deleteOrder)}/>
+          onClick={(reason) => handleDelete(deleteOrder, reason)}
+        />
       )}
+
     </div>
   );
 };

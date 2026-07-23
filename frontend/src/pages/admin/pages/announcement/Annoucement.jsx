@@ -101,13 +101,35 @@ const Announcement = () => {
     setSearchResult([]);
   };
 
+  const checkExpiredAnnouncements = async () => {
+    const now = new Date();
+
+    for (const item of announcement) {
+      if (new Date(item.expires_at) <= now) {
+        await handleDelete(item);
+      }
+    }
+  };
+
   useEffect(() => {
-    fetchAnnouncement();
+    const move = () => fetchAnnouncement();
+
+    move();
   }, []);
 
   useEffect(() => {
+    if (!announcement.length) return;
+
+    const move = () => checkExpiredAnnouncements();
+
+    move();
+  }, [announcement]);
+
+  useEffect(() => {
     if (location.state?.refresh) {
-      fetchAnnouncement();
+      const move = () => fetchAnnouncement();
+
+      move();
     }
   }, [location.state]);
 
@@ -115,7 +137,7 @@ const Announcement = () => {
     searchResult.length > 0 ? searchResult : announcement;
 
   return (
-    <div className="p-6">
+    <div className="px-2 md:px-0">
       <AnnouncementHeader
         searching={searching}
         setSearching={setSearching}

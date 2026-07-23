@@ -1,17 +1,59 @@
 import React, { useState } from 'react';
-import { supabase } from '../../../../supabse/supabaseClient';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
+import { FiInfo } from 'react-icons/fi';
+
+import { supabase } from '../../../../supabse/supabaseClient';
+import Dropdown from '../../../../components/admin/announcements/dropdown/Dropdown';
 
 const AddAnnouncement = () => {
   const navigate = useNavigate();
 
+  const [loading, setLoading] = useState(false);
+
   const [details, setDetails] = useState({
-    title: '',
+    title: 'Website Maintenance',
     description: '',
     expiry_date: 3,
-    level: 'important',
+    expires_at: '',
+    level: 'Urgent',
   });
+
+  /* ----------------------------- Dropdown Data ---------------------------- */
+
+  const announcementTitles = [
+    'Website Maintenance',
+    'Delivery Delay',
+    'New Collection',
+    'Flash Sale',
+    'Holiday Notice',
+    'Store Update',
+    'Limited Offer',
+    'System Upgrade',
+  ];
+
+  const priorityLevels = ['Information', 'Warning', 'Urgent'];
+
+  const expiryOptions = [
+    {
+      label: '1 Day',
+      value: 1,
+    },
+    {
+      label: '3 Days',
+      value: 3,
+    },
+    {
+      label: '5 Days',
+      value: 5,
+    },
+    {
+      label: '7 Days',
+      value: 7,
+    },
+  ];
+
+  /* ------------------------------ Form Utils ------------------------------ */
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -24,16 +66,22 @@ const AddAnnouncement = () => {
 
   const clearForm = () => {
     setDetails({
-      title: '',
+      title: 'Website Maintenance',
       description: '',
       expiry_date: 3,
-      level: 'important',
+      expires_at: '',
+      level: 'Urgent',
     });
   };
 
+  /* ----------------------------- Form Submit ----------------------------- */
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const toastId = toast.loading('Adding announcement...');
+
+    setLoading(true);
+
+    const toastId = toast.loading('Publishing announcement...');
 
     try {
       if (
@@ -42,137 +90,179 @@ const AddAnnouncement = () => {
         !details.expiry_date ||
         !details.level
       ) {
-        toast.error('Required inputs must be filled', { id: toastId });
+        toast.error('Please complete all required fields.', {
+          id: toastId,
+        });
+        return;
+      }
+
+      const expiryDays = Number(details.expiry_date);
+
+      const expiresAt = new Date();
+      expiresAt.setDate(expiresAt.getDate() + expiryDays);
+
+      const { data: existingAnnouncement } = await supabase
+        .from('announcements')
+        .select('id')
+        .ilike('title', details.title.trim())
+        .limit(1)
+        .maybeSingle();
+
+      if (existingAnnouncement) {
+        toast.error('An announcement with this title already exists.', {
+          id: toastId,
+        });
         return;
       }
 
       const { data, error } = await supabase
         .from('announcements')
-        .insert(details)
+        .insert({
+          ...details,
+          expiry_date: expiryDays,
+          expires_at: expiresAt.toISOString(),
+        })
         .select()
         .single();
 
       if (error) {
-        toast.error('Failed adding announcement', { id: toastId });
+        toast.error('Failed to publish announcement.', {
+          id: toastId,
+        });
         return;
       }
 
-      const { error: errorAddMsg } = await supabase.from('products_logs').insert({
+      const { error: logError } = await supabase.from('products_logs').insert({
         action: 'created',
         product_id: data.id,
-        details: `created ${details.title} described ${details.description}, expiry date at ${details.expiry_date}`,
+        details: `Created announcement "${details.title}" with ${expiryDays} day(s) expiry.`,
       });
 
-      if (errorAddMsg) throw new Error(errorAddMsg.message);
+      if (logError) {
+        throw new Error(logError.message);
+      }
 
-      toast.success('Announcement added successfully', { id: toastId });
+      toast.success('Announcement published successfully.', {
+        id: toastId,
+      });
 
       clearForm();
-
     } catch (err) {
-      console.log('Error', err.message);
-      toast.error('Something went wrong', { id: toastId });
+      console.error(err.message);
+
+      toast.error('Something went wrong.', {
+        id: toastId,
+      });
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <div className="fixed inset-0 z-40 bg-black/40 flex items-center justify-center p-2 backdrop-blur-md">
-      <div
-        className="bg-white/90 rounded-xl p-4 w-[90%] md:w-[50%] flex flex-col gap-2"
-        method="post"
-      >
-        <fieldset className="w-full border text-black/50 border-gray-300 rounded-xl">
-          <legend>title*</legend>
-          <input
-            placeholder="Anoucement title"
-            type="text"
-            name="title"
-            value={details.title}
-            onChange={handleChange}
-            className="w-full p-2 border-none outline-none"
-          />
-        </fieldset>
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4">
+      <div className="w-full max-w-2xl rounded-3xl bg-white shadow-2xl overflow-hidden">
+        {/* Header */}
+        <div className="border-b border-gray-200 px-8 py-6">
+          <div className="flex items-start gap-4">
+            <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-amber-100 text-amber-700">
+              <FiInfo size={22} />
+            </div>
 
-        <fieldset className="border rounded-lg w-full text-black/50 border-gray-300">
-          <legend className="px-2 ">Product Description*</legend>
-          <textarea
-            name="description"
-            value={details.description}
-            onChange={handleChange}
-            className="w-full p-2 outline-none min-h-15 max-h-30 font-mono"
-          />
-        </fieldset>
+            <div>
+              <h1 className="text-2xl font-semibold text-gray-900">
+                Create Announcement
+              </h1>
 
-        <fieldset className="border rounded-lg w-full text-black/50 border-gray-300">
-          <legend>Expiry date (in days)*</legend>
-          <input
-            placeholder="7 days..."
-            type="number"
-            name="expiry_date"
-            value={details.expiry_date}
-            onChange={handleChange}
-            className="w-full p-2 outline-none borer-none"
-          />
-        </fieldset>
-
-        <fieldset className="border rounded-lg w-full text-black/50 border-gray-300">
-          <legend>Level rate *</legend>
-          <div className="flex flex-row items-center gap-5 p-2">
-            <label htmlFor="less">
-              <input
-                type="radio"
-                name="level"
-                id="less"
-                value="less"
-                checked={details.level === 'less'}
-                onChange={handleChange}
-              />
-              less
-            </label>
-
-            <label htmlFor="moderate">
-              <input
-                type="radio"
-                name="level"
-                id="moderate"
-                value="moderate"
-                checked={details.level === 'moderate'}
-                onChange={handleChange}
-              />
-              Moderate
-            </label>
-
-            <label htmlFor="high">
-              <input
-                type="radio"
-                name="level"
-                id="high"
-                value="high"
-                checked={details.level === 'high'}
-                onChange={handleChange}
-              />
-              High
-            </label>
+              <p className="mt-1 text-sm text-gray-500">
+                Notify customers about promotions, maintenance, delivery updates
+                and other important information.
+              </p>
+            </div>
           </div>
-        </fieldset>
-
-        <div className="w-full flex flex-row items-center gap-4 pt-5">
-          <button
-            type="button"
-            onClick={() => navigate(-1)}
-            className="w-full border rounded-lg border-gray-500 p-2 cursor-pointer"
-          >
-            Close
-          </button>
-
-          <button
-            type="submit"
-            onClick={handleSubmit}
-            className="w-full 500 bg-amber-400 rounded-lg p-2 cursor-pointer"
-          >
-            Submit
-          </button>
         </div>
+
+        {/* Body */}
+        <form onSubmit={handleSubmit} className="space-y-6 p-8 overflow-y-auto">
+          {/* Announcement Type */}
+
+          <Dropdown
+            label="Announcement Type"
+            value={details.title}
+            options={announcementTitles}
+            onChange={(value) =>
+              setDetails((prev) => ({
+                ...prev,
+                title: value,
+              }))
+            }
+          />
+
+          {/* Description */}
+
+          <div>
+            <label className="mb-2 block text-sm font-medium text-gray-700">
+              Description
+            </label>
+
+            <textarea
+              name="description"
+              value={details.description}
+              onChange={handleChange}
+              placeholder="Write a short announcement that customers will see..."
+              className="min-h-36 w-full rounded-xl border border-gray-300 px-4 py-3 text-sm outline-none transition focus:border-amber-500"
+            />
+          </div>
+
+          {/* Row */}
+
+          <div className="grid gap-6 md:grid-cols-2">
+            <Dropdown
+              label="Expires After"
+              value={`${details.expiry_date} Day${
+                details.expiry_date > 1 ? 's' : ''
+              }`}
+              options={expiryOptions}
+              onChange={(value) =>
+                setDetails((prev) => ({
+                  ...prev,
+                  expiry_date: value,
+                }))
+              }
+            />
+
+            <Dropdown
+              label="Priority"
+              value={details.level}
+              options={priorityLevels}
+              onChange={(value) =>
+                setDetails((prev) => ({
+                  ...prev,
+                  level: value,
+                }))
+              }
+            />
+          </div>
+
+          {/* Footer */}
+
+          <div className="flex flex-col-reverse gap-3 border-t border-gray-200 pt-6 sm:flex-row sm:justify-end">
+            <button
+              type="button"
+              onClick={() => navigate(-1)}
+              className="rounded-xl border border-gray-300 px-6 py-3 font-medium text-gray-700 transition hover:bg-gray-100"
+            >
+              Cancel
+            </button>
+
+            <button
+              type="submit"
+              disabled={loading}
+              className="rounded-xl bg-amber-500 px-6 py-3 font-medium text-white transition hover:bg-amber-600 disabled:cursor-not-allowed disabled:opacity-70"
+            >
+              {loading ? 'Publishing...' : 'Publish Announcement'}
+            </button>
+          </div>
+        </form>
       </div>
     </div>
   );

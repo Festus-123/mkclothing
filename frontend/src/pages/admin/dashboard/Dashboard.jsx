@@ -53,7 +53,7 @@ const Dashboard = () => {
       <main className="flex flex-col  flex-1 lg:ml-72 min-h-screen overflow-hidden">
         {/* Header */}
 
-        <header className="sticky top-0 z-30 bg-white border-b border-gray-200 px-5 md:px-8 py-5">
+        <header className="sticky top-0 z-30 bg-white border-b border-gray-200 px-4 md:px-8 py-4">
           <div className="flex items-center justify-between">
             {/* Left */}
 
@@ -102,7 +102,7 @@ const Dashboard = () => {
 
         {/* Page */}
 
-        <section className="px-2 pt-8 md:px-8  flex-1 overflow-hidden ">
+        <section className="px-4 pt-8 md:px-8  flex-1 overflow-hidden ">
           <Outlet />
         </section>
       </main>

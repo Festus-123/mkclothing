@@ -137,7 +137,7 @@ const DisplayProducts = () => {
   return (
     // container
 
-    <div className="relative flex flex-col gap-8 h-full overflow-hidden max-w-7xl mx-auto py-8 ">
+    <div className="relative flex flex-col gap-8 h-full overflow-hidden max-w-7xl mx-auto px-2 sm:px-0 py-8 ">
       <ProductHeader
         products={products}
         onOpenSearch={() => setSearching(true)}

@@ -107,20 +107,20 @@ const Record = () => {
   }, [records.length]);
 
   return (
-    <div className="flex flex-col gap-6   ">
+    <div className="flex flex-col gap-6 px-2 md:px-0">
       {/* Header */}
       <RecordHeader searching={searching} setSeaching={setSeaching} />
 
-<AnimatePresence mode="wait">
-  {searching && (
-    <RecordSearch
-      searching={searching}
-      searchResults={searchResults}
-      handleSearch={handleSearch}
-      handleCloseSearch={handleCloseSearch}
-    />
-  )}
-</AnimatePresence>
+      <AnimatePresence mode="wait">
+        {searching && (
+          <RecordSearch
+            searching={searching}
+            searchResults={searchResults}
+            handleSearch={handleSearch}
+            handleCloseSearch={handleCloseSearch}
+          />
+        )}
+      </AnimatePresence>
 
       {/* Total Logs Counts / Stats*/}
       <RecordStats

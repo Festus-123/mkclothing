@@ -8,6 +8,8 @@ const AnnouncementCard = ({
   setClose,
   setSelectedAnnouncement,
 }) => {
+    
+
   const badgeStyle = {
     less: {
       text: 'Information',
@@ -52,12 +54,12 @@ const AnnouncementCard = ({
         {/* Right */}
         <div className="flex flex-row items-end justify-between lg:flex-col lg:items-end">
           {/* Expiry */}
-          <div className="flex items-center gap-2 text-gray-500">
+          <div className="flex items-center gap-2 text-gray-500 bg-orange-50 border border-orange-300/50 rounded-full p-1">
             <FiClock size={15} />
 
             <span className="text-sm">
-              {item.expiry_date} day
-              {Number(item.expiry_date) > 1 && 's'}
+              {item.expires_at}
+              {/* {Number(item.expiry_date) > 1 && 's'} */}
             </span>
           </div>
 

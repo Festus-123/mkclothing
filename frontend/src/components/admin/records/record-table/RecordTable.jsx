@@ -84,7 +84,7 @@ const RecordTable = ({
 
                 <td className="px-6 py-5">
                   {showDetails === record.id ? (
-                    <div className="rounded-xl bg-gray-100 p-3 whitespace-pre-wrap">
+                    <div className="rounded-xl bg-gray-100 p-3 w-100 sm:whitespace-pre-wrap">
                       {record.details || '"empty"'}
                     </div>
                   ) : (
