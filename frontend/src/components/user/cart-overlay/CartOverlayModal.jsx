@@ -14,7 +14,7 @@ import CartItem from './CartItem';
 import CartForm from './CartForm';
 // import resend from "../../../utils/resend"
 
-const CartOverlayModal = ({ isOpen, onClose, }) => {
+const CartOverlayModal = ({ isOpen, onClose }) => {
   const {
     cart,
     addToCart,
@@ -122,7 +122,8 @@ const CartOverlayModal = ({ isOpen, onClose, }) => {
       // 4. Fire the confirmation email using your dedicated Node.js custom backend
       try {
         // Replace with your real backend port/host URL config
-        const apiUrl = 'http://localhost:5000/api/emails/send';
+        const apiUrl = 'https://mk-backend-4wj7.onrender.com/api/emails/send';
+        // const localhostApi = 'http://localhost:5000/api/emails/send';
 
         const res = await fetch(apiUrl, {
           method: 'POST',
@@ -134,7 +135,7 @@ const CartOverlayModal = ({ isOpen, onClose, }) => {
             customerEmail: formData.email,
             customerName: formData.customerName,
             customerOrderId: customOrderId,
-            totalAmount: totalAmount
+            totalAmount: totalAmount,
           }),
         });
 
@@ -171,7 +172,7 @@ const CartOverlayModal = ({ isOpen, onClose, }) => {
         );
         toast.success(`Order logged! ID: ${customOrderId}`);
       }
-      
+
       // Clear state and close modal
       clearCart();
       setFormData({ customerName: '', email: '', phone: '', address: '' });
@@ -183,7 +184,6 @@ const CartOverlayModal = ({ isOpen, onClose, }) => {
       setCheckoutLoading(false);
     }
   };
-
 
   return (
     <div className="fixed inset-0 z-50 flex justify-end  backdrop-blur-sm transition-opacity">
@@ -205,10 +205,11 @@ const CartOverlayModal = ({ isOpen, onClose, }) => {
         </div>
 
         {/* Dynamic Items Iteration Scroll Box */}
-        <CartItem 
+        <CartItem
           cart={cart}
           removeFromCart={removeFromCart}
-          addToCart={addToCart}/>
+          addToCart={addToCart}
+        />
 
         {/* Dynamic Billing Footer Context */}
         {cart.length > 0 && (
@@ -221,11 +222,12 @@ const CartOverlayModal = ({ isOpen, onClose, }) => {
             </div>
 
             {/* Order Form Context */}
-            <CartForm 
+            <CartForm
               formData={formData}
               checkoutLoading={checkoutLoading}
               handleCheckout={handleCheckout}
-              handleInputChange={handleInputChange}/>
+              handleInputChange={handleInputChange}
+            />
           </div>
         )}
       </div>

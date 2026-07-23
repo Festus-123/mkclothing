@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { FaTrashAlt } from 'react-icons/fa';
-import Dropdown from '../announcements/dropdown/Dropdown';
+import Dropdown from '../dropdown/Dropdown';
 
 const DeleteOrderReason = ({ onClick, close }) => {
   const [reason, setReason] = useState(

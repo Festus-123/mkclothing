@@ -4,7 +4,7 @@ import { toast } from 'sonner';
 import Confirm from '../../../../components/confirm/Confirm';
 import { supabase } from '../../../../supabse/supabaseClient';
 import AnnouncementHeader from '../../../../components/admin/announcements/announcement-header/AnnouncementHeader';
-import AnnouncementSearch from '../../../../components/admin/announcements/announcement-search/AnnouncementSearch';
+import Search from '../../../../components/admin/search/Search';
 import { AnimatePresence } from 'motion/react';
 import Placeholder from '../../../../components/admin/announcements/placeholder/Placeholder';
 import EmptyState from '../../../../components/admin/announcements/empty-state/EmptyState';
@@ -155,11 +155,11 @@ const Announcement = () => {
       {/* Search Area */}
       <AnimatePresence mode="wait">
         {searching && (
-          <AnnouncementSearch
+          <Search
             searching={searching}
-            searchResult={searchResult}
+            searchResults={searchResult}
             handleSearch={handleSearch}
-            handleCLoseSearch={handleCLoseSearch}
+            handleCloseSearch={handleCLoseSearch}
           />
         )}
       </AnimatePresence>

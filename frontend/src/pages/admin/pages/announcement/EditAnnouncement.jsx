@@ -3,7 +3,7 @@ import { supabase } from '../../../../supabse/supabaseClient';
 import { useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'sonner';
 import { FiInfo } from 'react-icons/fi';
-import Dropdown from '../../../../components/admin/announcements/dropdown/Dropdown';
+import Dropdown from '../../../../components/admin/dropdown/Dropdown';
 
 const EditAnnouncement = () => {
   const navigate = useNavigate();
@@ -245,7 +245,7 @@ const EditAnnouncement = () => {
           </div> */}
         </form>
 
-        <div className="flex flex-col-reverse gap-3 border-t border-gray-200 p-6 sm:flex-row sm:justify-end">
+        <div className="flex gap-3 border-t border-gray-200 p-6 flex-row sm:justify-end">
           <button
             type="button"
             onClick={() => navigate(-1)}

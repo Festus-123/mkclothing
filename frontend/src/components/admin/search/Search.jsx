@@ -2,7 +2,7 @@ import React from 'react';
 import { FiSearch, FiX } from 'react-icons/fi';
 import { motion } from 'motion/react';
 
-const RecordSearch = ({
+const Search = ({
   searching,
   searchResults,
   handleSearch,
@@ -58,4 +58,4 @@ const RecordSearch = ({
   );
 };
 
-export default RecordSearch;
+export default Search;

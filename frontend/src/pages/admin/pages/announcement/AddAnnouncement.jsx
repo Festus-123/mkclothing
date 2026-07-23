@@ -4,7 +4,7 @@ import { toast } from 'sonner';
 import { FiInfo } from 'react-icons/fi';
 
 import { supabase } from '../../../../supabse/supabaseClient';
-import Dropdown from '../../../../components/admin/announcements/dropdown/Dropdown';
+import Dropdown from '../../../../components/admin/dropdown/Dropdown';
 
 const AddAnnouncement = () => {
   const navigate = useNavigate();
@@ -182,7 +182,7 @@ const AddAnnouncement = () => {
         </div>
 
         {/* Body */}
-        <form onSubmit={handleSubmit} className="space-y-6 p-8 overflow-y-auto">
+        <form onSubmit={handleSubmit} className="space-y-6 p-8 overflow-y-auto py-8">
           {/* Announcement Type */}
 
           <Dropdown
@@ -244,8 +244,8 @@ const AddAnnouncement = () => {
           </div>
 
           {/* Footer */}
-
-          <div className="flex flex-col-reverse gap-3 border-t border-gray-200 pt-6 sm:flex-row sm:justify-end">
+        </form>
+          <div className="flex gap-3 border-t border-gray-200 p-6 flex-row sm:justify-end">
             <button
               type="button"
               onClick={() => navigate(-1)}
@@ -262,7 +262,6 @@ const AddAnnouncement = () => {
               {loading ? 'Publishing...' : 'Publish Announcement'}
             </button>
           </div>
-        </form>
       </div>
     </div>
   );

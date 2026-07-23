@@ -5,8 +5,8 @@ import Confirm from '../../../../components/confirm/Confirm';
 import { AnimatePresence } from 'motion/react';
 import RecordHeader from '../../../../components/admin/records/record-header/RecordHeader';
 import RecordStats from '../../../../components/admin/records/record-stats/RecordStats';
-import RecordSearch from '../../../../components/admin/records/record-search/RecordSearch';
 import RecordTable from '../../../../components/admin/records/record-table/RecordTable';
+import Search from '../../../../components/admin/search/Search';
 
 const Record = () => {
   const [records, setRecords] = useState([]);
@@ -113,7 +113,7 @@ const Record = () => {
 
       <AnimatePresence mode="wait">
         {searching && (
-          <RecordSearch
+          <Search
             searching={searching}
             searchResults={searchResults}
             handleSearch={handleSearch}

@@ -2,15 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { supabase } from '../../../../supabse/supabaseClient';
 import { toast } from 'sonner';
 
-import {
-  FiRefreshCw,
-  FiTruck,
-  FiCheckCircle,
-  FiClock,
-  FiPackage,
-  FiX,
-  FiDelete,
-} from 'react-icons/fi';
+import { FiRefreshCw, FiTruck, FiCheckCircle, FiClock } from 'react-icons/fi';
 import { FaEye } from 'react-icons/fa';
 import OrderModal from '../../../../components/admin/order-modal/OrderModal';
 import { FaTrashCan } from 'react-icons/fa6';
@@ -66,22 +58,20 @@ const OrdersManagement = () => {
 
   const sendDeletedOrderEmail = async (order, reason) => {
     const customerOrderId = `MK-${order.id.slice(0, 5)}`;
+    const apiUrl = "https://mk-backend-4wj7.onrender.com/api/emails/send";
+    // const localhostApi = "http://localhost:5000/api/emails/send"
 
     try {
-      const res = await fetch('http://localhost:5000/api/emails/send', {
+      const res = await fetch(apiUrl, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          emailType: 'orderDeleted',
-
+          emailType: 'deleted',
           customerEmail: order.customer_email,
           customerName: order.customer_name,
-
-          customerOrderId,
-          totalAmount: order.total_price,
-
+          customerOrderId: customerOrderId,
           reason,
         }),
       });
@@ -97,7 +87,6 @@ const OrdersManagement = () => {
       console.log('Deleted order email sent successfully.');
     } catch (err) {
       console.error(err.message);
-
       toast.warning(
         'Order was deleted, but the notification email could not be delivered.'
       );
@@ -116,6 +105,19 @@ const OrdersManagement = () => {
 
       if (itemsError) throw itemsError;
 
+
+      const { error: deletedErrorLog } = await supabase
+        .from('products_logs')
+        .insert({
+          action: 'deleted',
+          product_id: order.id,
+          details: `Deleted customer order ${order.id} belonging to ${order.customer_name}. Reason: ${reason}`,
+        });
+
+      if (deletedErrorLog) {
+        console.error('error message in display', deletedErrorLog.message);
+      }
+
       // Delete the order
       const { error: orderError } = await supabase
         .from('orders')
@@ -124,22 +126,11 @@ const OrdersManagement = () => {
 
       if (orderError) throw orderError;
 
-      const { error: deletedErrorLog } = await supabase
-        .from('products_logs')
-        .insert({
-          action: 'deleted',
-          product_id: order.id,
-          details: `deleted ${order.title} described ${order.description}, `,
-        });
-
-      if (deletedErrorLog) {
-        console.error('error message in display', deletedErrorLog.message);
-      }
 
       // Remove from local state immediately
       setOrders((prev) => prev.filter((item) => item.id !== order.id));
 
-      // Close modals
+      // Close modals send email
       await sendDeletedOrderEmail(order, reason);
       setDeleteOrder(null);
       setIsDelete(false);
@@ -152,9 +143,10 @@ const OrdersManagement = () => {
         id: toastId,
       });
     } catch (err) {
-      console.error(err);
+      console.error('Delete Order Error:', err);
+      console.error('Message:', err.message);
 
-      toast.error('Unable to delete customer order.', {
+      toast.error(err.message || 'Unable to delete customer order.', {
         id: toastId,
       });
     }
@@ -166,8 +158,12 @@ const OrdersManagement = () => {
 
   const sendProcessingEmail = async (order) => {
     const customerOrderId = `MK- ${order.id.slice(0, 5)}`;
+
+    const apiUrl = "https://mk-backend-4wj7.onrender.com/api/emails/send";
+    // const localhostApi = "http://localhost:5000/api/emails/send"
+
     try {
-      const res = await fetch('http://localhost:5000/api/emails/send', {
+      const res = await fetch(apiUrl, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -198,8 +194,10 @@ const OrdersManagement = () => {
 
   const sendShippedEmail = async (order) => {
     const customerOrderId = `MK- ${order.id.slice(0, 5)}`;
+    const apiUrl = "https://mk-backend-4wj7.onrender.com/api/emails/send";
+    // const localhostApi = "http://localhost:5000/api/emails/send"
     try {
-      const res = await fetch('http://localhost:5000/api/emails/send', {
+      const res = await fetch(apiUrl, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -230,8 +228,10 @@ const OrdersManagement = () => {
 
   const sendDeliveredEmail = async (order) => {
     const customerOrderId = `MK- ${order.id.slice(0, 5)}`;
+    const apiUrl = "https://mk-backend-4wj7.onrender.com/api/emails/send";
+    // const localhostApi = "http://localhost:5000/api/emails/send"
     try {
-      const res = await fetch('http://localhost:5000/api/emails/send', {
+      const res = await fetch(apiUrl, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -505,7 +505,6 @@ const OrdersManagement = () => {
           onClick={(reason) => handleDelete(deleteOrder, reason)}
         />
       )}
-
     </div>
   );
 };
